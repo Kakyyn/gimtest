@@ -2,39 +2,71 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>GymFlow - Sistema NFC Móvil</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="GymFlow">
+    <meta name="theme-color" content="#0f0f23">
+    <link rel="apple-touch-icon" href="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/3d36a96f-d43f-4823-8251-e7fb4b166e6b.png" alt="GymFlow app icon with dumbbell symbol and modern gradient background for iPhone home screen">
+    <title>GymFlow - Sistema NFC</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
+        * {
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+        
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background: #0f0f23;
             color: #ffffff;
             margin: 0;
             padding: 0;
             overflow-x: hidden;
-            -webkit-user-select: none;
-            user-select: none;
+            -webkit-overflow-scrolling: touch;
+            height: 100vh;
+            position: fixed;
+            width: 100%;
+        }
+        
+        .app-container {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+        
+        .status-bar-spacer {
+            height: env(safe-area-inset-top, 44px);
+            background: #1a1a2e;
         }
         
         .mobile-header {
             background: #1a1a2e;
-            padding: 16px;
+            padding: 16px 16px 12px 16px;
             border-bottom: 1px solid #16213e;
-            position: sticky;
-            top: 0;
+            position: relative;
             z-index: 30;
         }
         
+        .main-content {
+            flex: 1;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+            padding-bottom: env(safe-area-inset-bottom, 20px);
+        }
+        
         .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
             background: #1a1a2e;
             border-top: 1px solid #16213e;
-            padding: 12px 0 8px 0;
+            padding: 8px 0;
+            padding-bottom: max(8px, env(safe-area-inset-bottom));
+            position: relative;
             z-index: 30;
         }
         
@@ -42,99 +74,116 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 8px;
+            padding: 12px 8px;
             color: #9ca3af;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
+            -webkit-tap-highlight-color: transparent;
         }
         
         .nav-item.active {
             color: #6366f1;
         }
         
+        .nav-item:active {
+            transform: scale(0.95);
+            background: rgba(99, 102, 241, 0.1);
+            border-radius: 12px;
+        }
+        
         .nav-item i {
-            font-size: 20px;
+            font-size: 22px;
             margin-bottom: 4px;
         }
         
         .nav-item span {
-            font-size: 10px;
-            text-transform: uppercase;
+            font-size: 11px;
+            font-weight: 500;
         }
         
         .card {
             background: #1a1a2e;
-            border-radius: 16px;
+            border-radius: 20px;
             border: 1px solid #16213e;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
             margin-bottom: 16px;
+            -webkit-tap-highlight-color: transparent;
         }
         
         .action-card {
             background: #1a1a2e;
-            border-radius: 16px;
+            border-radius: 20px;
             border: 1px solid #16213e;
-            padding: 20px;
+            padding: 24px;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
             position: relative;
             margin-bottom: 16px;
+            -webkit-tap-highlight-color: transparent;
         }
         
         .action-card:active {
             transform: scale(0.98);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
         }
         
         .action-card.attendance {
             border-color: #10b981;
+            background: linear-gradient(135deg, #1a1a2e 0%, rgba(16, 185, 129, 0.05) 100%);
         }
         
         .action-card.measurements {
             border-color: #f59e0b;
+            background: linear-gradient(135deg, #1a1a2e 0%, rgba(245, 158, 11, 0.05) 100%);
         }
         
         .btn-primary {
             background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
             border: none;
             color: white;
-            padding: 16px 24px;
-            border-radius: 12px;
+            padding: 18px 24px;
+            border-radius: 16px;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
             font-weight: 600;
             width: 100%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 16px;
+            -webkit-tap-highlight-color: transparent;
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
         }
         
         .btn-primary:active {
             transform: scale(0.95);
+            box-shadow: 0 2px 10px rgba(99, 102, 241, 0.4);
         }
         
         .btn-secondary {
             background: #374151;
             border: 1px solid #4b5563;
             color: white;
-            padding: 16px 24px;
-            border-radius: 12px;
+            padding: 18px 24px;
+            border-radius: 16px;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
             font-weight: 600;
             width: 100%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 16px;
+            -webkit-tap-highlight-color: transparent;
         }
         
         .btn-secondary:active {
             transform: scale(0.95);
+            background: #4b5563;
         }
         
         .btn-small {
-            padding: 12px 16px;
+            padding: 14px 20px;
             font-size: 14px;
         }
         
@@ -142,18 +191,19 @@
             background: #374151;
             border: 1px solid #4b5563;
             color: white;
-            padding: 16px;
-            border-radius: 12px;
+            padding: 18px 16px;
+            border-radius: 16px;
             width: 100%;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
             font-size: 16px;
             box-sizing: border-box;
+            -webkit-appearance: none;
         }
         
         .input-field:focus {
             outline: none;
             border-color: #6366f1;
-            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
         }
         
         .modal {
@@ -163,35 +213,37 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.9);
+            background: rgba(0, 0, 0, 0.95);
             z-index: 1000;
-            padding: 16px;
+            padding: 20px;
             box-sizing: border-box;
             overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
         }
         
         .modal-content {
             background: #1a1a2e;
             border: 1px solid #16213e;
             padding: 24px;
-            border-radius: 20px;
+            border-radius: 24px;
             width: 100%;
             max-width: 100%;
             box-sizing: border-box;
             margin-top: 40px;
+            margin-bottom: 40px;
         }
         
         .measurement-section {
             background: #16213e;
-            border-radius: 12px;
-            padding: 16px;
+            border-radius: 16px;
+            padding: 20px;
             margin-bottom: 16px;
         }
         
         .form-row {
             display: grid;
             grid-template-columns: 1fr;
-            gap: 12px;
+            gap: 16px;
         }
         
         .form-row-2 {
@@ -202,7 +254,9 @@
         
         .page {
             display: none;
-            padding-bottom: 80px;
+            height: 100%;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
         }
         
         .page.active {
@@ -210,18 +264,19 @@
         }
         
         .tab-button {
-            padding: 12px 8px;
+            padding: 14px 12px;
             background: #374151;
             border: 1px solid #4b5563;
             color: #9ca3af;
-            border-radius: 8px;
+            border-radius: 12px;
             cursor: pointer;
-            transition: all 0.3s ease;
-            margin-right: 4px;
+            transition: all 0.2s ease;
+            margin-right: 6px;
             margin-bottom: 8px;
-            font-size: 12px;
+            font-size: 13px;
             flex: 1;
             text-align: center;
+            -webkit-tap-highlight-color: transparent;
         }
         
         .tab-button.active {
@@ -230,57 +285,58 @@
             border-color: #6366f1;
         }
         
-        .history-item {
-            background: #374151;
-            border-radius: 8px;
-            padding: 12px;
-            margin-bottom: 8px;
-            border-left: 4px solid #6366f1;
+        .tab-button:active {
+            transform: scale(0.96);
         }
         
-        .measurement-comparison {
-            background: #16213e;
-            border-radius: 8px;
-            padding: 8px;
-            margin-top: 8px;
+        .history-item {
+            background: #374151;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 12px;
+            border-left: 4px solid #6366f1;
         }
         
         .info-display {
             background: #2d3748;
             border: 1px solid #4a5568;
             color: #e2e8f0;
-            padding: 12px 16px;
+            padding: 16px;
             border-radius: 12px;
             width: 100%;
             word-wrap: break-word;
-            font-size: 14px;
+            font-size: 15px;
         }
         
         .member-item {
             background: #374151;
-            border-radius: 12px;
-            padding: 16px;
+            border-radius: 16px;
+            padding: 20px;
             margin-bottom: 12px;
             border-left: 4px solid #6366f1;
             cursor: pointer;
+            transition: all 0.2s ease;
+            -webkit-tap-highlight-color: transparent;
         }
         
         .member-item:active {
             transform: scale(0.98);
+            background: #4b5563;
         }
         
         .snackbar {
             position: fixed;
-            bottom: 90px;
+            bottom: calc(80px + env(safe-area-inset-bottom, 0px));
             left: 16px;
             right: 16px;
-            padding: 16px;
-            border-radius: 12px;
+            padding: 16px 20px;
+            border-radius: 16px;
             color: white;
             font-weight: 600;
             transform: translateY(100px);
             transition: transform 0.3s ease;
             z-index: 1001;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
         }
         
         .snackbar.show { 
@@ -303,10 +359,12 @@
             background: #374151;
             border: 1px solid #4b5563;
             color: white;
-            padding: 16px;
-            border-radius: 12px;
+            padding: 18px 16px;
+            border-radius: 16px;
             width: 100%;
             font-size: 16px;
+            -webkit-appearance: none;
+            appearance: none;
         }
         
         .stats-grid {
@@ -317,267 +375,369 @@
         }
         
         .stat-card {
-            background: #374151;
-            border-radius: 12px;
-            padding: 16px;
+            background: linear-gradient(135deg, #374151 0%, #4b5563 100%);
+            border-radius: 16px;
+            padding: 20px;
             text-align: center;
+            border: 1px solid #4b5563;
         }
         
         .floating-action {
             position: fixed;
-            bottom: 90px;
-            right: 16px;
-            width: 56px;
-            height: 56px;
+            bottom: calc(90px + env(safe-area-inset-bottom, 0px));
+            right: 20px;
+            width: 60px;
+            height: 60px;
             background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
             border-radius: 50%;
             border: none;
             color: white;
             font-size: 24px;
             cursor: pointer;
-            box-shadow: 0 8px 25px rgba(99, 102, 241, 0.4);
+            box-shadow: 0 8px 25px rgba(99, 102, 241, 0.5);
             z-index: 20;
+            transition: all 0.2s ease;
+            -webkit-tap-highlight-color: transparent;
         }
         
         .floating-action:active {
             transform: scale(0.9);
         }
+        
+        /* iOS specific adjustments */
+        @supports (-webkit-touch-callout: none) {
+            .input-field {
+                font-size: 16px; /* Prevent zoom on iOS */
+            }
+            
+            .btn-primary, .btn-secondary {
+                -webkit-appearance: none;
+                border-radius: 16px;
+            }
+        }
+        
+        /* Safe area adjustments */
+        .safe-area-top {
+            padding-top: env(safe-area-inset-top);
+        }
+        
+        .safe-area-bottom {
+            padding-bottom: env(safe-area-inset-bottom);
+        }
+        
+        .safe-area-left {
+            padding-left: env(safe-area-inset-left);
+        }
+        
+        .safe-area-right {
+            padding-right: env(safe-area-inset-right);
+        }
+        
+        /* Haptic feedback simulation */
+        .haptic-light:active {
+            animation: hapticLight 0.1s ease;
+        }
+        
+        @keyframes hapticLight {
+            0% { transform: scale(1); }
+            50% { transform: scale(0.98); }
+            100% { transform: scale(1); }
+        }
+        
+        /* Dark mode detection */
+        @media (prefers-color-scheme: dark) {
+            .status-bar-spacer {
+                background: #000000;
+            }
+        }
+        
+        /* Accessibility improvements */
+        .btn-primary:focus, .btn-secondary:focus, .input-field:focus {
+            outline: 2px solid #6366f1;
+            outline-offset: 2px;
+        }
+        
+        /* Loading state */
+        .loading {
+            opacity: 0.6;
+            pointer-events: none;
+        }
+        
+        .spinner {
+            border: 2px solid #374151;
+            border-top: 2px solid #6366f1;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+            margin-right: 8px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
     </style>
 </head>
 <body>
-    <!-- Mobile Header -->
-    <div class="mobile-header">
-        <div class="flex items-center justify-between">
-            <div class="flex items-center space-x-3">
-                <div class="w-10 h-10 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-xl flex items-center justify-center">
-                    <i class="fas fa-dumbbell text-white text-lg"></i>
-                </div>
-                <div>
-                    <h1 class="text-xl font-bold text-white">GymFlow</h1>
-                    <p class="text-xs text-gray-400">Sistema de Tarjetas</p>
-                </div>
-            </div>
-            <span class="text-sm font-bold text-white" id="headerTotal">0 Miembros</span>
-        </div>
-    </div>
-
-    <!-- Main Content -->
-    <div class="min-h-screen">
-        <!-- Home Page -->
-        <div id="homePage" class="page active p-4">
-            <!-- Quick Stats -->
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="text-2xl font-bold text-white" id="totalMembersDisplay">0</div>
-                    <div class="text-xs text-gray-400">Total Miembros</div>
-                </div>
-                <div class="stat-card">
-                    <div class="text-2xl font-bold text-green-400" id="monthlyAttendance">0</div>
-                    <div class="text-xs text-gray-400">Asistencia Mensual</div>
-                </div>
-                <div class="stat-card">
-                    <div class="text-2xl font-bold text-yellow-400" id="measurementsDone">0</div>
-                    <div class="text-xs text-gray-400">Medidas Tomadas</div>
-                </div>
-                <div class="stat-card">
-                    <div class="text-2xl font-bold text-purple-400" id="readyCount">0</div>
-                    <div class="text-xs text-gray-400">Listos para Medidas</div>
-                </div>
-            </div>
-
-            <!-- Main Actions -->
-            <div class="space-y-4">
-                <div class="action-card attendance" id="attendanceCard">
-                    <div class="flex items-center space-x-4">
-                        <div class="w-12 h-12 bg-green-500 bg-opacity-20 rounded-xl flex items-center justify-center">
-                            <i class="fas fa-calendar-check text-2xl text-green-400"></i>
-                        </div>
-                        <div class="flex-1">
-                            <h4 class="text-lg font-bold text-white">Registrar Asistencia</h4>
-                            <p class="text-gray-400 text-sm">Escanear NFC o ingresar ID</p>
-                        </div>
-                        <i class="fas fa-chevron-right text-gray-400"></i>
+    <div class="app-container">
+        <!-- Status Bar Spacer -->
+        <div class="status-bar-spacer"></div>
+        
+        <!-- Mobile Header -->
+        <div class="mobile-header">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-2xl flex items-center justify-center">
+                        <i class="fas fa-dumbbell text-white text-lg"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-xl font-bold text-white">GymFlow</h1>
+                        <p class="text-xs text-gray-400">Sistema NFC</p>
                     </div>
                 </div>
-
-                <div class="action-card measurements" id="measurementsCard">
-                    <div class="flex items-center space-x-4">
-                        <div class="w-12 h-12 bg-yellow-500 bg-opacity-20 rounded-xl flex items-center justify-center">
-                            <i class="fas fa-weight-scale text-2xl text-yellow-400"></i>
-                        </div>
-                        <div class="flex-1">
-                            <h4 class="text-lg font-bold text-white">Medidas Mensuales</h4>
-                            <p class="text-gray-400 text-sm">Registrar peso y medidas corporales</p>
-                        </div>
-                        <i class="fas fa-chevron-right text-gray-400"></i>
-                    </div>
-                </div>
-
-                <div class="card p-4">
-                    <div class="flex items-center justify-between mb-3">
-                        <h4 class="text-lg font-semibold text-white">Acciones Rápidas</h4>
-                    </div>
-                    <button id="exportBtn" class="btn-secondary">
-                        <i class="fas fa-download mr-2"></i>
-                        Exportar Datos
-                    </button>
+                <div class="text-right">
+                    <span class="text-sm font-bold text-white" id="headerTotal">0</span>
+                    <p class="text-xs text-gray-400">Miembros</p>
                 </div>
             </div>
         </div>
 
-        <!-- Members Page -->
-        <div id="membersPage" class="page p-4">
-            <div class="flex items-center justify-between mb-6">
-                <h2 class="text-2xl font-bold text-white">Miembros</h2>
-            </div>
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Home Page -->
+            <div id="homePage" class="page active p-4">
+                <!-- Quick Stats -->
+                <div class="stats-grid">
+                    <div class="stat-card haptic-light">
+                        <div class="text-2xl font-bold text-white mb-1" id="totalMembersDisplay">0</div>
+                        <div class="text-xs text-gray-400">Total Miembros</div>
+                    </div>
+                    <div class="stat-card haptic-light">
+                        <div class="text-2xl font-bold text-green-400 mb-1" id="monthlyAttendance">0</div>
+                        <div class="text-xs text-gray-400">Este Mes</div>
+                    </div>
+                    <div class="stat-card haptic-light">
+                        <div class="text-2xl font-bold text-yellow-400 mb-1" id="measurementsDone">0</div>
+                        <div class="text-xs text-gray-400">Medidas</div>
+                    </div>
+                    <div class="stat-card haptic-light">
+                        <div class="text-2xl font-bold text-purple-400 mb-1" id="readyCount">0</div>
+                        <div class="text-xs text-gray-400">Listos</div>
+                    </div>
+                </div>
 
-            <div class="mb-4">
-                <input type="text" id="searchMembers" class="input-field" placeholder="Buscar miembros...">
-            </div>
-
-            <div id="membersList" class="space-y-3">
-                <!-- Dynamic content -->
-            </div>
-        </div>
-
-        <!-- Register Page -->
-        <div id="registerPage" class="page p-4">
-            <div class="flex items-center justify-between mb-6">
-                <h2 class="text-2xl font-bold text-white">Nuevo Miembro</h2>
-            </div>
-
-            <form id="mobileRegistrationForm">
+                <!-- Main Actions -->
                 <div class="space-y-4">
-                    <!-- Personal Information -->
-                    <div class="measurement-section">
-                        <h4 class="text-lg font-semibold text-white mb-4">Información Personal</h4>
-                        
-                        <div class="form-row">
-                            <div>
-                                <label for="mobileMemberName" class="block text-sm font-medium text-gray-300 mb-2">Nombre Completo *</label>
-                                <input type="text" id="mobileMemberName" class="input-field" placeholder="Ingrese nombre completo" required>
+                    <div class="action-card attendance haptic-light" id="attendanceCard">
+                        <div class="flex items-center space-x-4">
+                            <div class="w-14 h-14 bg-green-500 bg-opacity-20 rounded-2xl flex items-center justify-center">
+                                <i class="fas fa-calendar-check text-2xl text-green-400"></i>
                             </div>
-                            <div>
-                                <label for="mobileMemberPhone" class="block text-sm font-medium text-gray-300 mb-2">Teléfono *</label>
-                                <input type="tel" id="mobileMemberPhone" class="input-field" placeholder="Número de teléfono" required>
+                            <div class="flex-1">
+                                <h4 class="text-lg font-bold text-white">Registrar Asistencia</h4>
+                                <p class="text-gray-400 text-sm">Escanear NFC o ingresar ID</p>
                             </div>
-                            <div>
-                                <label for="mobileMemberEmail" class="block text-sm font-medium text-gray-300 mb-2">Email *</label>
-                                <input type="email" id="mobileMemberEmail" class="input-field" placeholder="Correo electrónico" required>
-                            </div>
-                            <div>
-                                <label for="mobileMemberBirthday" class="block text-sm font-medium text-gray-300 mb-2">Fecha de Nacimiento *</label>
-                                <input type="date" id="mobileMemberBirthday" class="input-field" required>
-                            </div>
-                            <div>
-                                <label for="mobileMemberProgram" class="block text-sm font-medium text-gray-300 mb-2">Tipo de Programa *</label>
-                                <select id="mobileMemberProgram" class="input-field" required>
-                                    <option value="">Seleccione programa...</option>
-                                    <option value="Pérdida de Peso">Pérdida de Peso</option>
-                                    <option value="Ganancia Muscular">Ganancia Muscular</option>
-                                    <option value="Acondicionamiento General">Acondicionamiento General</option>
-                                    <option value="Rehabilitación">Rehabilitación</option>
-                                    <option value="CrossFit">CrossFit</option>
-                                    <option value="Yoga">Yoga</option>
-                                    <option value="Cardio">Cardio</option>
-                                    <option value="Personalizado">Personalizado</option>
-                                </select>
-                            </div>
+                            <i class="fas fa-chevron-right text-gray-400 text-lg"></i>
                         </div>
                     </div>
 
-                    <!-- NFC Information -->
-                    <div class="measurement-section">
-                        <h4 class="text-lg font-semibold text-white mb-4">ID NFC</h4>
-                        <div class="flex space-x-2 mb-4">
-                            <input type="text" id="mobileNfcId" class="input-field" placeholder="ID NFC" required>
-                            <button type="button" id="mobileScanNfcBtn" class="btn-secondary" style="width: 60px;">
-                                <i class="fas fa-wifi"></i>
+                    <div class="action-card measurements haptic-light" id="measurementsCard">
+                        <div class="flex items-center space-x-4">
+                            <div class="w-14 h-14 bg-yellow-500 bg-opacity-20 rounded-2xl flex items-center justify-center">
+                                <i class="fas fa-weight-scale text-2xl text-yellow-400"></i>
+                            </div>
+                            <div class="flex-1">
+                                <h4 class="text-lg font-bold text-white">Medidas Mensuales</h4>
+                                <p class="text-gray-400 text-sm">Registrar peso y medidas</p>
+                            </div>
+                            <i class="fas fa-chevron-right text-gray-400 text-lg"></i>
+                        </div>
+                    </div>
+
+                    <div class="card p-4">
+                        <div class="flex items-center justify-between mb-4">
+                            <h4 class="text-lg font-semibold text-white">Exportar Datos</h4>
+                            <i class="fas fa-download text-indigo-400"></i>
+                        </div>
+                        <button id="exportBtn" class="btn-secondary haptic-light">
+                            <i class="fas fa-download mr-2"></i>
+                            Exportar a CSV
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Members Page -->
+            <div id="membersPage" class="page p-4">
+                <div class="flex items-center justify-between mb-6">
+                    <h2 class="text-2xl font-bold text-white">Miembros</h2>
+                    <span class="text-sm text-gray-400" id="membersCount">0 total</span>
+                </div>
+
+                <div class="mb-4">
+                    <input type="text" id="searchMembers" class="input-field" placeholder="Buscar por nombre, email o teléfono...">
+                </div>
+
+                <div id="membersList" class="space-y-3">
+                    <!-- Dynamic content -->
+                </div>
+            </div>
+
+            <!-- Register Page -->
+            <div id="registerPage" class="page p-4">
+                <div class="flex items-center justify-between mb-6">
+                    <h2 class="text-2xl font-bold text-white">Nuevo Miembro</h2>
+                    <button id="clearFormBtn" class="text-indigo-400 text-sm">Limpiar</button>
+                </div>
+
+                <form id="mobileRegistrationForm">
+                    <div class="space-y-4">
+                        <!-- Personal Information -->
+                        <div class="measurement-section">
+                            <h4 class="text-lg font-semibold text-white mb-4">
+                                <i class="fas fa-user mr-2 text-indigo-400"></i>
+                                Información Personal
+                            </h4>
+                            
+                            <div class="form-row">
+                                <div>
+                                    <label for="mobileMemberName" class="block text-sm font-medium text-gray-300 mb-2">Nombre Completo *</label>
+                                    <input type="text" id="mobileMemberName" class="input-field" placeholder="Ingrese nombre completo" required>
+                                </div>
+                                <div>
+                                    <label for="mobileMemberPhone" class="block text-sm font-medium text-gray-300 mb-2">Teléfono *</label>
+                                    <input type="tel" id="mobileMemberPhone" class="input-field" placeholder="Número de teléfono" required>
+                                </div>
+                                <div>
+                                    <label for="mobileMemberEmail" class="block text-sm font-medium text-gray-300 mb-2">Email *</label>
+                                    <input type="email" id="mobileMemberEmail" class="input-field" placeholder="Correo electrónico" required>
+                                </div>
+                                <div>
+                                    <label for="mobileMemberBirthday" class="block text-sm font-medium text-gray-300 mb-2">Fecha de Nacimiento *</label>
+                                    <input type="date" id="mobileMemberBirthday" class="input-field" required>
+                                </div>
+                                <div>
+                                    <label for="mobileMemberProgram" class="block text-sm font-medium text-gray-300 mb-2">Tipo de Programa *</label>
+                                    <select id="mobileMemberProgram" class="input-field" required>
+                                        <option value="">Seleccione programa...</option>
+                                        <option value="Pérdida de Peso">Pérdida de Peso</option>
+                                        <option value="Ganancia Muscular">Ganancia Muscular</option>
+                                        <option value="Acondicionamiento General">Acondicionamiento General</option>
+                                        <option value="Rehabilitación">Rehabilitación</option>
+                                        <option value="CrossFit">CrossFit</option>
+                                        <option value="Yoga">Yoga</option>
+                                        <option value="Cardio">Cardio</option>
+                                        <option value="Personalizado">Personalizado</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- NFC Information -->
+                        <div class="measurement-section">
+                            <h4 class="text-lg font-semibold text-white mb-4">
+                                <i class="fas fa-wifi mr-2 text-indigo-400"></i>
+                                ID NFC
+                            </h4>
+                            <div class="flex space-x-3">
+                                <input type="text" id="mobileNfcId" class="input-field" placeholder="ID NFC" required>
+                                <button type="button" id="mobileScanNfcBtn" class="btn-secondary haptic-light" style="width: 80px; flex-shrink: 0;">
+                                    <i class="fas fa-wifi text-lg"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Weight -->
+                        <div class="measurement-section">
+                            <h4 class="text-lg font-semibold text-white mb-4">
+                                <i class="fas fa-weight-scale mr-2 text-indigo-400"></i>
+                                Peso Inicial
+                            </h4>
+                            <div>
+                                <label for="mobileInitialWeight" class="block text-sm font-medium text-gray-300 mb-2">Peso (kg) *</label>
+                                <input type="number" id="mobileInitialWeight" step="0.1" class="input-field" placeholder="Peso en kilogramos" required>
+                            </div>
+                        </div>
+
+                        <!-- Body Measurements -->
+                        <div class="measurement-section">
+                            <h4 class="text-lg font-semibold text-white mb-4">
+                                <i class="fas fa-ruler mr-2 text-indigo-400"></i>
+                                Medidas Corporales
+                            </h4>
+                            
+                            <div class="form-row">
+                                <div>
+                                    <label for="mobileInitialAbdomen" class="block text-sm font-medium text-gray-300 mb-2">Abdomen/Pecho (cm) *</label>
+                                    <input type="number" id="mobileInitialAbdomen" step="0.1" class="input-field" placeholder="Medida en cm" required>
+                                </div>
+                                <div>
+                                    <label for="mobileInitialCintura" class="block text-sm font-medium text-gray-300 mb-2">Cintura/Ombligo (cm) *</label>
+                                    <input type="number" id="mobileInitialCintura" step="0.1" class="input-field" placeholder="Medida en cm" required>
+                                </div>
+                                <div>
+                                    <label for="mobileInitialCadera" class="block text-sm font-medium text-gray-300 mb-2">Cadera/Glúteos (cm) *</label>
+                                    <input type="number" id="mobileInitialCadera" step="0.1" class="input-field" placeholder="Medida en cm" required>
+                                </div>
+                                <div>
+                                    <label for="mobileInitialPierna" class="block text-sm font-medium text-gray-300 mb-2">Pierna Cuádriceps (cm) *</label>
+                                    <input type="number" id="mobileInitialPierna" step="0.1" class="input-field" placeholder="Medida en cm" required>
+                                </div>
+                                <div>
+                                    <label for="mobileInitialBrazo" class="block text-sm font-medium text-gray-300 mb-2">Brazo Flexionado (cm) *</label>
+                                    <input type="number" id="mobileInitialBrazo" step="0.1" class="input-field" placeholder="Medida en cm" required>
+                                </div>
+                            </div>
+                            
+                            <div class="form-row-2 mt-4">
+                                <div>
+                                    <label for="mobileInitialTallaPantalon" class="block text-sm font-medium text-gray-300 mb-2">Talla Pantalón *</label>
+                                    <input type="text" id="mobileInitialTallaPantalon" class="input-field" placeholder="32, M, L..." required>
+                                </div>
+                                <div>
+                                    <label for="mobileInitialTallaBlusa" class="block text-sm font-medium text-gray-300 mb-2">Talla Blusa *</label>
+                                    <input type="text" id="mobileInitialTallaBlusa" class="input-field" placeholder="S, M, L..." required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="space-y-3 pb-4">
+                            <button type="submit" class="btn-primary haptic-light">
+                                <i class="fas fa-save mr-2"></i>
+                                Registrar Miembro
+                            </button>
+                            <button type="button" id="mobileCancelRegistration" class="btn-secondary haptic-light">
+                                <i class="fas fa-times mr-2"></i>
+                                Cancelar
                             </button>
                         </div>
                     </div>
-
-                    <!-- Weight -->
-                    <div class="measurement-section">
-                        <h4 class="text-lg font-semibold text-white mb-4">Peso Inicial</h4>
-                        <div>
-                            <label for="mobileInitialWeight" class="block text-sm font-medium text-gray-300 mb-2">Peso (kg) *</label>
-                            <input type="number" id="mobileInitialWeight" step="0.1" class="input-field" placeholder="Peso en kg" required>
-                        </div>
-                    </div>
-
-                    <!-- Body Measurements -->
-                    <div class="measurement-section">
-                        <h4 class="text-lg font-semibold text-white mb-4">Medidas Corporales</h4>
-                        
-                        <div class="form-row">
-                            <div>
-                                <label for="mobileInitialAbdomen" class="block text-sm font-medium text-gray-300 mb-2">Abdomen/Pecho (cm) *</label>
-                                <input type="number" id="mobileInitialAbdomen" step="0.1" class="input-field" placeholder="Medida" required>
-                            </div>
-                            <div>
-                                <label for="mobileInitialCintura" class="block text-sm font-medium text-gray-300 mb-2">Cintura/Ombligo (cm) *</label>
-                                <input type="number" id="mobileInitialCintura" step="0.1" class="input-field" placeholder="Medida" required>
-                            </div>
-                            <div>
-                                <label for="mobileInitialCadera" class="block text-sm font-medium text-gray-300 mb-2">Cadera/Glúteos (cm) *</label>
-                                <input type="number" id="mobileInitialCadera" step="0.1" class="input-field" placeholder="Medida" required>
-                            </div>
-                            <div>
-                                <label for="mobileInitialPierna" class="block text-sm font-medium text-gray-300 mb-2">Pierna Cuádriceps (cm) *</label>
-                                <input type="number" id="mobileInitialPierna" step="0.1" class="input-field" placeholder="Medida" required>
-                            </div>
-                            <div>
-                                <label for="mobileInitialBrazo" class="block text-sm font-medium text-gray-300 mb-2">Brazo Flexionado Derecho (cm) *</label>
-                                <input type="number" id="mobileInitialBrazo" step="0.1" class="input-field" placeholder="Medida" required>
-                            </div>
-                        </div>
-                        
-                        <div class="form-row-2 mt-4">
-                            <div>
-                                <label for="mobileInitialTallaPantalon" class="block text-sm font-medium text-gray-300 mb-2">Talla Pantalón *</label>
-                                <input type="text" id="mobileInitialTallaPantalon" class="input-field" placeholder="ej., 32, M, L" required>
-                            </div>
-                            <div>
-                                <label for="mobileInitialTallaBlusa" class="block text-sm font-medium text-gray-300 mb-2">Talla Blusa *</label>
-                                <input type="text" id="mobileInitialTallaBlusa" class="input-field" placeholder="ej., S, M, L" required>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="space-y-3">
-                        <button type="submit" class="btn-primary">
-                            <i class="fas fa-save mr-2"></i>
-                            Registrar Miembro
-                        </button>
-                        <button type="button" id="mobileCancelRegistration" class="btn-secondary">
-                            Cancelar
-                        </button>
-                    </div>
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
-    </div>
 
-    <!-- Floating Action Button -->
-    <button id="floatingActionBtn" class="floating-action">
-        <i class="fas fa-plus"></i>
-    </button>
+        <!-- Floating Action Button -->
+        <button id="floatingActionBtn" class="floating-action haptic-light">
+            <i class="fas fa-plus"></i>
+        </button>
 
-    <!-- Bottom Navigation -->
-    <div class="bottom-nav">
-        <div class="grid grid-cols-3 h-full">
-            <div class="nav-item active" data-page="home">
-                <i class="fas fa-home"></i>
-                <span>Inicio</span>
-            </div>
-            <div class="nav-item" data-page="members">
-                <i class="fas fa-users"></i>
-                <span>Miembros</span>
-            </div>
-            <div class="nav-item" data-page="register">
-                <i class="fas fa-plus"></i>
-                <span>Registrar</span>
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <div class="grid grid-cols-3 h-full">
+                <div class="nav-item active haptic-light" data-page="home">
+                    <i class="fas fa-home"></i>
+                    <span>Inicio</span>
+                </div>
+                <div class="nav-item haptic-light" data-page="members">
+                    <i class="fas fa-users"></i>
+                    <span>Miembros</span>
+                </div>
+                <div class="nav-item haptic-light" data-page="register">
+                    <i class="fas fa-plus"></i>
+                    <span>Registrar</span>
+                </div>
             </div>
         </div>
     </div>
@@ -593,26 +753,26 @@
             </div>
             
             <div class="space-y-4">
-                <button id="scanAttendanceBtn" class="btn-primary">
+                <button id="scanAttendanceBtn" class="btn-primary haptic-light">
                     <i class="fas fa-wifi mr-2"></i>
-                    Escanear Etiqueta NFC
+                    Escanear NFC
                 </button>
                 
-                <div class="text-center text-gray-400">o</div>
+                <div class="text-center text-gray-400 text-sm">— o —</div>
                 
                 <div>
                     <label class="block text-sm font-medium text-gray-300 mb-2">ID del miembro:</label>
-                    <input type="text" id="manualMemberId" class="input-field" placeholder="Ingrese ID del miembro">
+                    <input type="text" id="manualMemberId" class="input-field" placeholder="Nombre, email, teléfono o ID">
                 </div>
                 
-                <button id="submitManualAttendance" class="btn-secondary">
+                <button id="submitManualAttendance" class="btn-secondary haptic-light">
                     <i class="fas fa-check mr-2"></i>
                     Registrar Asistencia
                 </button>
             </div>
             
-            <div class="mt-4 text-center">
-                <p class="text-sm text-gray-400" id="attendanceStatus">Listo para registrar</p>
+            <div class="mt-6 p-4 bg-gray-800 rounded-2xl">
+                <p class="text-center text-sm text-gray-400" id="attendanceStatus">Listo para registrar asistencia</p>
             </div>
         </div>
     </div>
@@ -642,7 +802,7 @@
                         <h4 class="text-lg font-semibold text-white mb-4">Peso Actual</h4>
                         <div>
                             <label for="currentWeight" class="block text-sm font-medium text-gray-300 mb-2">Peso (kg) *</label>
-                            <input type="number" id="currentWeight" step="0.1" class="input-field" placeholder="Peso actual" required>
+                            <input type="number" id="currentWeight" step="0.1" class="input-field" placeholder="Peso actual en kg" required>
                         </div>
                     </div>
 
@@ -685,10 +845,12 @@
                     </div>
                 </div>
                 
-                <button type="submit" class="btn-primary mt-6">
-                    <i class="fas fa-save mr-2"></i>
-                    Guardar Medidas
-                </button>
+                <div class="pb-4">
+                    <button type="submit" class="btn-primary haptic-light">
+                        <i class="fas fa-save mr-2"></i>
+                        Guardar Medidas
+                    </button>
+                </div>
             </form>
         </div>
     </div>
@@ -705,9 +867,9 @@
             
             <!-- Tab Navigation -->
             <div class="flex space-x-1 mb-6">
-                <button class="tab-button active" data-tab="info">Info</button>
-                <button class="tab-button" data-tab="weightMeasurements">Medidas</button>
-                <button class="tab-button" data-tab="attendance">Asistencia</button>
+                <button class="tab-button active haptic-light" data-tab="info">Info</button>
+                <button class="tab-button haptic-light" data-tab="weightMeasurements">Medidas</button>
+                <button class="tab-button haptic-light" data-tab="attendance">Asistencia</button>
             </div>
 
             <!-- Tab Content -->
@@ -715,7 +877,7 @@
                 <div class="measurement-section">
                     <div class="flex items-center justify-between mb-4">
                         <h4 class="text-lg font-semibold text-white">Información</h4>
-                        <button id="toggleEditMode" class="btn-secondary btn-small">
+                        <button id="toggleEditMode" class="btn-secondary btn-small haptic-light">
                             <i class="fas fa-edit mr-2"></i>
                             Editar
                         </button>
@@ -792,11 +954,12 @@
                                 </div>
                             </div>
                             <div class="space-y-3 mt-6">
-                                <button type="submit" class="btn-primary">
+                                <button type="submit" class="btn-primary haptic-light">
                                     <i class="fas fa-save mr-2"></i>
-                                    Guardar
+                                    Guardar Cambios
                                 </button>
-                                <button type="button" id="cancelEdit" class="btn-secondary">
+                                <button type="button" id="cancelEdit" class="btn-secondary haptic-light">
+                                    <i class="fas fa-times mr-2"></i>
                                     Cancelar
                                 </button>
                             </div>
@@ -827,6 +990,7 @@
 
     <!-- Snackbar -->
     <div id="snackbar" class="snackbar">
+        <i class="fas fa-check-circle mr-2"></i>
         <span id="snackbarText"></span>
     </div>
 
@@ -844,6 +1008,7 @@
         const measurementsDone = document.getElementById('measurementsDone');
         const readyCount = document.getElementById('readyCount');
         const membersList = document.getElementById('membersList');
+        const membersCount = document.getElementById('membersCount');
 
         // Modal elements
         const memberDetailsModal = document.getElementById('memberDetailsModal');
@@ -851,19 +1016,54 @@
         const measurementsModal = document.getElementById('measurementsModal');
         const snackbar = document.getElementById('snackbar');
 
-        // Show snackbar
+        // Haptic feedback (iOS)
+        function hapticFeedback(type = 'light') {
+            if ('vibrate' in navigator) {
+                switch(type) {
+                    case 'light':
+                        navigator.vibrate(10);
+                        break;
+                    case 'medium':
+                        navigator.vibrate(20);
+                        break;
+                    case 'heavy':
+                        navigator.vibrate([30, 10, 30]);
+                        break;
+                }
+            }
+        }
+
+        // Show snackbar with haptic feedback
         function showSnackbar(message, type = 'success') {
+            hapticFeedback(type === 'error' ? 'heavy' : type === 'warning' ? 'medium' : 'light');
+            
+            const iconMap = {
+                'success': 'fas fa-check-circle',
+                'warning': 'fas fa-exclamation-triangle', 
+                'error': 'fas fa-times-circle'
+            };
+            
+            const snackbarIcon = snackbar.querySelector('i');
+            snackbarIcon.className = `${iconMap[type]} mr-2`;
+            
             document.getElementById('snackbarText').textContent = message;
             snackbar.className = `snackbar ${type} show`;
-            setTimeout(() => snackbar.classList.remove('show'), 3000);
+            
+            setTimeout(() => {
+                snackbar.classList.remove('show');
+            }, 3000);
         }
 
         // Save members to localStorage
         function saveMembers() {
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(members));
-            updateStats();
-            updateMemberSelect();
-            renderMembersList();
+            try {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(members));
+                updateStats();
+                updateMemberSelect();
+                renderMembersList();
+            } catch (error) {
+                showSnackbar('Error al guardar datos', 'error');
+            }
         }
 
         // Update stats display
@@ -899,12 +1099,12 @@
                 }
             });
 
-            const membersText = `${total} Miembros`;
-            if (headerTotal) headerTotal.textContent = membersText;
+            if (headerTotal) headerTotal.textContent = total.toString();
             if (totalMembersDisplay) totalMembersDisplay.textContent = total;
             if (monthlyAttendance) monthlyAttendance.textContent = monthlyAttendanceCount;
             if (measurementsDone) measurementsDone.textContent = measurementsDoneCount;
             if (readyCount) readyCount.textContent = readyForMeasurements;
+            if (membersCount) membersCount.textContent = `${total} total`;
         }
 
         // Update member select dropdown
@@ -941,32 +1141,41 @@
                     : 'Nunca';
 
                 const div = document.createElement('div');
-                div.className = 'member-item';
-                div.onclick = () => viewMember(member.nfcId);
+                div.className = 'member-item haptic-light';
+                div.onclick = () => {
+                    hapticFeedback('light');
+                    viewMember(member.nfcId);
+                };
                 
                 div.innerHTML = `
                     <div class="flex items-center space-x-4">
-                        <div class="w-12 h-12 bg-indigo-500 rounded-full flex items-center justify-center">
-                            <span class="text-white font-medium">${member.name.charAt(0).toUpperCase()}</span>
+                        <div class="w-14 h-14 bg-indigo-500 rounded-2xl flex items-center justify-center">
+                            <span class="text-white font-bold text-lg">${member.name.charAt(0).toUpperCase()}</span>
                         </div>
                         <div class="flex-1">
-                            <h4 class="text-white font-semibold">${member.name}</h4>
-                            <p class="text-gray-400 text-sm">${member.program || 'Sin programa'}</p>
-                            <div class="flex items-center space-x-4 mt-1">
+                            <h4 class="text-white font-semibold text-lg">${member.name}</h4>
+                            <p class="text-gray-400 text-sm">${member.program || 'Sin programa asignado'}</p>
+                            <div class="flex items-center space-x-3 mt-2">
                                 <span class="text-xs text-gray-400">${member.phone}</span>
-                                <span class="px-2 py-1 text-xs rounded-full ${member.stamps >= 4 ? 'bg-green-600' : 'bg-gray-600'} text-white">
+                                <span class="px-3 py-1 text-xs rounded-full ${member.stamps >= 4 ? 'bg-green-600' : member.stamps > 0 ? 'bg-yellow-600' : 'bg-gray-600'} text-white font-medium">
                                     ${member.stamps || 0}/4 sellos
                                 </span>
                             </div>
                         </div>
-                        <i class="fas fa-chevron-right text-gray-400"></i>
+                        <i class="fas fa-chevron-right text-gray-400 text-lg"></i>
                     </div>
                 `;
                 membersList.appendChild(div);
             });
 
             if (filteredMembers.length === 0) {
-                membersList.innerHTML = '<div class="text-center text-gray-400 py-8">No se encontraron miembros</div>';
+                membersList.innerHTML = `
+                    <div class="text-center py-12">
+                        <i class="fas fa-users text-4xl text-gray-500 mb-4"></i>
+                        <p class="text-gray-400">No se encontraron miembros</p>
+                        <p class="text-gray-500 text-sm">Intenta con otros términos de búsqueda</p>
+                    </div>
+                `;
             }
         }
 
@@ -977,9 +1186,16 @@
 
             // Reset to view mode
             isEditMode = false;
-            document.getElementById('viewMode').style.display = 'block';
-            document.getElementById('editMode').style.display = 'none';
-            document.getElementById('toggleEditMode').innerHTML = '<i class="fas fa-edit mr-2"></i>Editar';
+            const viewMode = document.getElementById('viewMode');
+            const editMode = document.getElementById('editMode');
+            const toggleBtn = document.getElementById('toggleEditMode');
+            
+            if (viewMode) viewMode.style.display = 'block';
+            if (editMode) editMode.style.display = 'none';
+            if (toggleBtn) {
+                toggleBtn.innerHTML = '<i class="fas fa-edit mr-2"></i>Editar';
+                toggleBtn.className = 'btn-secondary btn-small haptic-light';
+            }
 
             // Populate member details
             document.getElementById('memberDetailsTitle').textContent = member.name;
@@ -989,14 +1205,17 @@
             // Reset to first tab
             document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
             document.querySelectorAll('.tab-content').forEach(c => c.style.display = 'none');
-            document.querySelector('.tab-button[data-tab="info"]').classList.add('active');
-            document.getElementById('infoTab').style.display = 'block';
+            const firstTab = document.querySelector('.tab-button[data-tab="info"]');
+            if (firstTab) {
+                firstTab.classList.add('active');
+                document.getElementById('infoTab').style.display = 'block';
+            }
         }
 
         // Populate member details
         function populateMemberDetails(member) {
             // View mode
-            const elements = {
+            const viewElements = {
                 'displayMemberName': member.name || '-',
                 'displayMemberPhone': member.phone || '-',
                 'displayMemberEmail': member.email || '-',
@@ -1005,7 +1224,7 @@
                 'displayNfcId': member.nfcId || '-'
             };
 
-            Object.entries(elements).forEach(([id, value]) => {
+            Object.entries(viewElements).forEach(([id, value]) => {
                 const el = document.getElementById(id);
                 if (el) el.textContent = value;
             });
@@ -1028,54 +1247,97 @@
 
             // Weight & Measurements History
             const weightMeasurementsHistory = document.getElementById('weightMeasurementsHistory');
-            if (weightMeasurementsHistory && member.measurements) {
+            if (weightMeasurementsHistory) {
                 weightMeasurementsHistory.innerHTML = '';
                 
-                member.measurements.forEach((measurement, index) => {
-                    const div = document.createElement('div');
-                    div.className = 'history-item';
-                    
-                    div.innerHTML = `
-                        <div class="mb-3">
-                            <div class="flex justify-between items-center mb-2">
-                                <h5 class="text-white font-medium">${measurement.type === 'initial' ? 'Inicial' : 'Mensual'} #${index + 1}</h5>
-                                <span class="text-white text-lg font-bold">${measurement.weight} kg</span>
-                            </div>
-                            <p class="text-gray-400 text-xs">${new Date(measurement.date).toLocaleDateString()}</p>
-                        </div>
+                if (member.measurements && member.measurements.length > 0) {
+                    member.measurements.forEach((measurement, index) => {
+                        const div = document.createElement('div');
+                        div.className = 'history-item';
                         
-                        <div class="grid grid-cols-2 gap-2 text-xs">
-                            <div><span class="text-gray-400">Abdomen:</span> <span class="text-white">${measurement.abdomen} cm</span></div>
-                            <div><span class="text-gray-400">Cintura:</span> <span class="text-white">${measurement.cintura} cm</span></div>
-                            <div><span class="text-gray-400">Cadera:</span> <span class="text-white">${measurement.cadera} cm</span></div>
-                            <div><span class="text-gray-400">Pierna:</span> <span class="text-white">${measurement.pierna} cm</span></div>
-                            <div><span class="text-gray-400">Brazo:</span> <span class="text-white">${measurement.brazo} cm</span></div>
-                            <div><span class="text-gray-400">Pantalón:</span> <span class="text-white">${measurement.tallaPantalon}</span></div>
-                        </div>
-                    `;
-                    weightMeasurementsHistory.appendChild(div);
-                });
+                        let changesBadge = '';
+                        if (index > 0) {
+                            const prev = member.measurements[index - 1];
+                            const weightChange = parseFloat(measurement.weight) - parseFloat(prev.weight);
+                            changesBadge = `
+                                <span class="inline-block px-2 py-1 text-xs rounded-full ${weightChange >= 0 ? 'bg-red-600' : 'bg-green-600'} text-white ml-2">
+                                    ${weightChange > 0 ? '+' : ''}${weightChange.toFixed(1)}kg
+                                </span>
+                            `;
+                        }
+                        
+                        div.innerHTML = `
+                            <div class="mb-3">
+                                <div class="flex justify-between items-center mb-2">
+                                    <h5 class="text-white font-semibold">
+                                        ${measurement.type === 'initial' ? 'Inicial' : 'Mensual'} #${index + 1}
+                                        ${changesBadge}
+                                    </h5>
+                                    <span class="text-white text-xl font-bold">${measurement.weight} kg</span>
+                                </div>
+                                <p class="text-gray-400 text-xs">${new Date(measurement.date).toLocaleDateString()}</p>
+                            </div>
+                            
+                            <div class="grid grid-cols-2 gap-2 text-xs">
+                                <div class="bg-gray-800 rounded-lg p-2">
+                                    <span class="text-gray-400">Abdomen:</span>
+                                    <div class="text-white font-medium">${measurement.abdomen} cm</div>
+                                </div>
+                                <div class="bg-gray-800 rounded-lg p-2">
+                                    <span class="text-gray-400">Cintura:</span>
+                                    <div class="text-white font-medium">${measurement.cintura} cm</div>
+                                </div>
+                                <div class="bg-gray-800 rounded-lg p-2">
+                                    <span class="text-gray-400">Cadera:</span>
+                                    <div class="text-white font-medium">${measurement.cadera} cm</div>
+                                </div>
+                                <div class="bg-gray-800 rounded-lg p-2">
+                                    <span class="text-gray-400">Pierna:</span>
+                                    <div class="text-white font-medium">${measurement.pierna} cm</div>
+                                </div>
+                                <div class="bg-gray-800 rounded-lg p-2">
+                                    <span class="text-gray-400">Brazo:</span>
+                                    <div class="text-white font-medium">${measurement.brazo} cm</div>
+                                </div>
+                                <div class="bg-gray-800 rounded-lg p-2">
+                                    <span class="text-gray-400">Tallas:</span>
+                                    <div class="text-white font-medium">${measurement.tallaPantalon} / ${measurement.tallaBlusa}</div>
+                                </div>
+                            </div>
+                        `;
+                        weightMeasurementsHistory.appendChild(div);
+                    });
+                } else {
+                    weightMeasurementsHistory.innerHTML = '<p class="text-gray-400 text-center py-8">Sin registros de medidas</p>';
+                }
             }
 
             // Attendance History
             const attendanceHistory = document.getElementById('attendanceHistory');
-            if (attendanceHistory && member.attendance) {
+            if (attendanceHistory) {
                 attendanceHistory.innerHTML = '';
                 
-                member.attendance.slice().reverse().forEach((attendance, index) => {
-                    const div = document.createElement('div');
-                    div.className = 'history-item';
-                    div.innerHTML = `
-                        <div class="flex justify-between items-center">
-                            <div>
-                                <h5 class="text-white font-medium">Visita #${member.attendance.length - index}</h5>
-                                <p class="text-gray-400 text-xs">${new Date(attendance.date).toLocaleString()}</p>
+                if (member.attendance && member.attendance.length > 0) {
+                    member.attendance.slice().reverse().forEach((attendance, index) => {
+                        const div = document.createElement('div');
+                        div.className = 'history-item';
+                        div.innerHTML = `
+                            <div class="flex justify-between items-center">
+                                <div>
+                                    <h5 class="text-white font-medium">Visita #${member.attendance.length - index}</h5>
+                                    <p class="text-gray-400 text-xs">${new Date(attendance.date).toLocaleString()}</p>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <i class="fas fa-check-circle text-green-400 text-lg"></i>
+                                    <span class="text-xs bg-green-600 text-white px-2 py-1 rounded-full">Completado</span>
+                                </div>
                             </div>
-                            <i class="fas fa-check-circle text-green-400"></i>
-                        </div>
-                    `;
-                    attendanceHistory.appendChild(div);
-                });
+                        `;
+                        attendanceHistory.appendChild(div);
+                    });
+                } else {
+                    attendanceHistory.innerHTML = '<p class="text-gray-400 text-center py-8">Sin registros de asistencia</p>';
+                }
             }
         }
 
@@ -1085,16 +1347,24 @@
             const editMode = document.getElementById('editMode');
             const toggleBtn = document.getElementById('toggleEditMode');
             
+            hapticFeedback('light');
+            
             if (isEditMode) {
                 isEditMode = false;
-                viewMode.style.display = 'block';
-                editMode.style.display = 'none';
-                toggleBtn.innerHTML = '<i class="fas fa-edit mr-2"></i>Editar';
+                if (viewMode) viewMode.style.display = 'block';
+                if (editMode) editMode.style.display = 'none';
+                if (toggleBtn) {
+                    toggleBtn.innerHTML = '<i class="fas fa-edit mr-2"></i>Editar';
+                    toggleBtn.className = 'btn-secondary btn-small haptic-light';
+                }
             } else {
                 isEditMode = true;
-                viewMode.style.display = 'none';
-                editMode.style.display = 'block';
-                toggleBtn.innerHTML = '<i class="fas fa-eye mr-2"></i>Ver';
+                if (viewMode) viewMode.style.display = 'none';
+                if (editMode) editMode.style.display = 'block';
+                if (toggleBtn) {
+                    toggleBtn.innerHTML = '<i class="fas fa-eye mr-2"></i>Ver';
+                    toggleBtn.className = 'btn-primary btn-small haptic-light';
+                }
             }
         }
 
@@ -1108,8 +1378,11 @@
             try {
                 ndef = new NDEFReader();
                 await ndef.scan();
-                ndef.onreading = event => callback(event.serialNumber);
-                showSnackbar('Acerque la etiqueta NFC...', 'warning');
+                ndef.onreading = event => {
+                    hapticFeedback('medium');
+                    callback(event.serialNumber);
+                };
+                showSnackbar('Acerque la etiqueta NFC al dispositivo...', 'warning');
             } catch (error) {
                 showSnackbar('Error al escanear NFC: ' + error.message, 'error');
             }
@@ -1128,11 +1401,30 @@
             return age;
         }
 
+        // Add loading state to buttons
+        function setButtonLoading(button, loading = true) {
+            if (!button) return;
+            
+            if (loading) {
+                button.classList.add('loading');
+                const originalContent = button.innerHTML;
+                button.setAttribute('data-original', originalContent);
+                button.innerHTML = '<div class="spinner"></div>Procesando...';
+            } else {
+                button.classList.remove('loading');
+                const originalContent = button.getAttribute('data-original');
+                if (originalContent) {
+                    button.innerHTML = originalContent;
+                }
+            }
+        }
+
         // Initialize app
         document.addEventListener('DOMContentLoaded', function() {
             // Navigation handling
             document.querySelectorAll('.nav-item').forEach(item => {
                 item.addEventListener('click', () => {
+                    hapticFeedback('light');
                     const page = item.getAttribute('data-page');
                     if (page) {
                         // Update active nav item
@@ -1156,12 +1448,30 @@
             });
 
             // Floating action button
-            document.getElementById('floatingActionBtn').addEventListener('click', () => {
-                document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
-                document.querySelector('.nav-item[data-page="register"]').classList.add('active');
-                document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-                document.getElementById('registerPage').classList.add('active');
-            });
+            const floatingBtn = document.getElementById('floatingActionBtn');
+            if (floatingBtn) {
+                floatingBtn.addEventListener('click', () => {
+                    hapticFeedback('medium');
+                    document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+                    const registerNav = document.querySelector('.nav-item[data-page="register"]');
+                    if (registerNav) registerNav.classList.add('active');
+                    
+                    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+                    const registerPage = document.getElementById('registerPage');
+                    if (registerPage) registerPage.classList.add('active');
+                });
+            }
+
+            // Clear form button
+            const clearFormBtn = document.getElementById('clearFormBtn');
+            if (clearFormBtn) {
+                clearFormBtn.addEventListener('click', () => {
+                    hapticFeedback('light');
+                    const form = document.getElementById('mobileRegistrationForm');
+                    if (form) form.reset();
+                    showSnackbar('Formulario limpiado');
+                });
+            }
 
             // Search functionality
             const searchInput = document.getElementById('searchMembers');
@@ -1172,6 +1482,7 @@
             // Tab functionality
             document.querySelectorAll('.tab-button').forEach(button => {
                 button.addEventListener('click', () => {
+                    hapticFeedback('light');
                     const tab = button.getAttribute('data-tab');
                     
                     document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
@@ -1188,141 +1499,243 @@
             });
 
             // Action cards
-            document.getElementById('attendanceCard').addEventListener('click', () => {
-                attendanceModal.style.display = 'flex';
-            });
+            const attendanceCard = document.getElementById('attendanceCard');
+            if (attendanceCard) {
+                attendanceCard.addEventListener('click', () => {
+                    hapticFeedback('medium');
+                    attendanceModal.style.display = 'flex';
+                });
+            }
 
-            document.getElementById('measurementsCard').addEventListener('click', () => {
-                updateMemberSelect();
-                measurementsModal.style.display = 'flex';
-            });
+            const measurementsCard = document.getElementById('measurementsCard');
+            if (measurementsCard) {
+                measurementsCard.addEventListener('click', () => {
+                    hapticFeedback('medium');
+                    updateMemberSelect();
+                    measurementsModal.style.display = 'flex';
+                });
+            }
 
             // Close modals
-            document.getElementById('closeAttendanceModal').addEventListener('click', () => {
-                attendanceModal.style.display = 'none';
-            });
+            const closeButtons = [
+                { id: 'closeAttendanceModal', modal: attendanceModal },
+                { id: 'closeMeasurementsModal', modal: measurementsModal },
+                { id: 'closeMemberDetailsModal', modal: memberDetailsModal }
+            ];
 
-            document.getElementById('closeMeasurementsModal').addEventListener('click', () => {
-                measurementsModal.style.display = 'none';
-            });
-
-            document.getElementById('closeMemberDetailsModal').addEventListener('click', () => {
-                memberDetailsModal.style.display = 'none';
-                isEditMode = false;
+            closeButtons.forEach(({ id, modal }) => {
+                const btn = document.getElementById(id);
+                if (btn && modal) {
+                    btn.addEventListener('click', () => {
+                        hapticFeedback('light');
+                        modal.style.display = 'none';
+                        if (modal === memberDetailsModal) {
+                            isEditMode = false;
+                        }
+                    });
+                }
             });
 
             // Edit mode toggle
-            document.getElementById('toggleEditMode').addEventListener('click', toggleEditMode);
-            document.getElementById('cancelEdit').addEventListener('click', toggleEditMode);
+            const toggleEditBtn = document.getElementById('toggleEditMode');
+            if (toggleEditBtn) {
+                toggleEditBtn.addEventListener('click', toggleEditMode);
+            }
+            
+            const cancelEditBtn = document.getElementById('cancelEdit');
+            if (cancelEditBtn) {
+                cancelEditBtn.addEventListener('click', toggleEditMode);
+            }
 
             // Registration form
-            document.getElementById('mobileRegistrationForm').addEventListener('submit', (e) => {
-                e.preventDefault();
-                
-                const name = document.getElementById('mobileMemberName').value;
-                const phone = document.getElementById('mobileMemberPhone').value;
-                const email = document.getElementById('mobileMemberEmail').value;
-                const birthday = document.getElementById('mobileMemberBirthday').value;
-                const program = document.getElementById('mobileMemberProgram').value;
-                const nfcId = document.getElementById('mobileNfcId').value;
-                const initialWeight = document.getElementById('mobileInitialWeight').value;
+            const registrationForm = document.getElementById('mobileRegistrationForm');
+            if (registrationForm) {
+                registrationForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    
+                    const submitBtn = e.target.querySelector('button[type="submit"]');
+                    setButtonLoading(submitBtn, true);
+                    
+                    setTimeout(() => { // Simulate processing delay
+                        const name = document.getElementById('mobileMemberName').value;
+                        const phone = document.getElementById('mobileMemberPhone').value;
+                        const email = document.getElementById('mobileMemberEmail').value;
+                        const birthday = document.getElementById('mobileMemberBirthday').value;
+                        const program = document.getElementById('mobileMemberProgram').value;
+                        const nfcId = document.getElementById('mobileNfcId').value;
+                        const initialWeight = document.getElementById('mobileInitialWeight').value;
 
-                const measurements = {
-                    abdomen: document.getElementById('mobileInitialAbdomen').value,
-                    cintura: document.getElementById('mobileInitialCintura').value,
-                    cadera: document.getElementById('mobileInitialCadera').value,
-                    pierna: document.getElementById('mobileInitialPierna').value,
-                    brazo: document.getElementById('mobileInitialBrazo').value,
-                    tallaPantalon: document.getElementById('mobileInitialTallaPantalon').value,
-                    tallaBlusa: document.getElementById('mobileInitialTallaBlusa').value
-                };
+                        const measurements = {
+                            abdomen: document.getElementById('mobileInitialAbdomen').value,
+                            cintura: document.getElementById('mobileInitialCintura').value,
+                            cadera: document.getElementById('mobileInitialCadera').value,
+                            pierna: document.getElementById('mobileInitialPierna').value,
+                            brazo: document.getElementById('mobileInitialBrazo').value,
+                            tallaPantalon: document.getElementById('mobileInitialTallaPantalon').value,
+                            tallaBlusa: document.getElementById('mobileInitialTallaBlusa').value
+                        };
 
-                // Validation
-                if (members.find(m => m.nfcId === nfcId)) {
-                    showSnackbar('¡ID NFC ya registrado!', 'error');
-                    return;
-                }
+                        // Validation
+                        if (members.find(m => m.nfcId === nfcId)) {
+                            setButtonLoading(submitBtn, false);
+                            showSnackbar('¡ID NFC ya registrado!', 'error');
+                            return;
+                        }
 
-                if (members.find(m => m.email === email)) {
-                    showSnackbar('¡Email ya registrado!', 'error');
-                    return;
-                }
+                        if (members.find(m => m.email === email)) {
+                            setButtonLoading(submitBtn, false);
+                            showSnackbar('¡Email ya registrado!', 'error');
+                            return;
+                        }
 
-                const newMember = {
-                    name,
-                    phone,
-                    email,
-                    birthday,
-                    age: calculateAge(birthday),
-                    program,
-                    nfcId,
-                    stamps: 0,
-                    attendance: [],
-                    measurements: [{
-                        date: new Date().toISOString(),
-                        weight: initialWeight,
-                        ...measurements,
-                        type: 'initial'
-                    }],
-                    registrationDate: new Date().toISOString()
-                };
+                        const newMember = {
+                            name,
+                            phone,
+                            email,
+                            birthday,
+                            age: calculateAge(birthday),
+                            program,
+                            nfcId,
+                            stamps: 0,
+                            attendance: [],
+                            measurements: [{
+                                date: new Date().toISOString(),
+                                weight: initialWeight,
+                                ...measurements,
+                                type: 'initial'
+                            }],
+                            registrationDate: new Date().toISOString()
+                        };
 
-                members.push(newMember);
-                saveMembers();
-                showSnackbar(`¡${name} registrado exitosamente!`);
-                
-                // Go back to home
-                document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
-                document.querySelector('.nav-item[data-page="home"]').classList.add('active');
-                document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-                document.getElementById('homePage').classList.add('active');
-                
-                document.getElementById('mobileRegistrationForm').reset();
-            });
+                        members.push(newMember);
+                        saveMembers();
+                        
+                        setButtonLoading(submitBtn, false);
+                        showSnackbar(`¡${name} registrado exitosamente!`);
+                        
+                        // Go back to home
+                        document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+                        const homeNav = document.querySelector('.nav-item[data-page="home"]');
+                        if (homeNav) homeNav.classList.add('active');
+                        
+                        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+                        const homePage = document.getElementById('homePage');
+                        if (homePage) homePage.classList.add('active');
+                        
+                        registrationForm.reset();
+                    }, 500);
+                });
+            }
 
             // Cancel registration
-            document.getElementById('mobileCancelRegistration').addEventListener('click', () => {
-                // Go back to home
-                document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
-                document.querySelector('.nav-item[data-page="home"]').classList.add('active');
-                document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-                document.getElementById('homePage').classList.add('active');
-            });
+            const cancelRegistrationBtn = document.getElementById('mobileCancelRegistration');
+            if (cancelRegistrationBtn) {
+                cancelRegistrationBtn.addEventListener('click', () => {
+                    hapticFeedback('light');
+                    // Go back to home
+                    document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+                    const homeNav = document.querySelector('.nav-item[data-page="home"]');
+                    if (homeNav) homeNav.classList.add('active');
+                    
+                    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+                    const homePage = document.getElementById('homePage');
+                    if (homePage) homePage.classList.add('active');
+                });
+            }
 
             // Edit member form
-            document.getElementById('editMemberForm').addEventListener('submit', (e) => {
-                e.preventDefault();
-                
-                const nfcId = document.getElementById('editMemberId').value;
-                const member = members.find(m => m.nfcId === nfcId);
-                
-                if (member) {
-                    member.name = document.getElementById('editMemberName').value;
-                    member.phone = document.getElementById('editMemberPhone').value;
-                    member.email = document.getElementById('editMemberEmail').value;
-                    member.birthday = document.getElementById('editMemberBirthday').value;
-                    member.age = calculateAge(member.birthday);
-                    member.program = document.getElementById('editMemberProgram').value;
-                    member.nfcId = document.getElementById('editNfcId').value;
+            const editMemberForm = document.getElementById('editMemberForm');
+            if (editMemberForm) {
+                editMemberForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
                     
-                    saveMembers();
-                    showSnackbar(`¡${member.name} actualizado!`);
-                    populateMemberDetails(member);
-                    toggleEditMode();
-                }
-            });
+                    const nfcId = document.getElementById('editMemberId').value;
+                    const member = members.find(m => m.nfcId === nfcId);
+                    
+                    if (member) {
+                        member.name = document.getElementById('editMemberName').value;
+                        member.phone = document.getElementById('editMemberPhone').value;
+                        member.email = document.getElementById('editMemberEmail').value;
+                        member.birthday = document.getElementById('editMemberBirthday').value;
+                        member.age = calculateAge(member.birthday);
+                        member.program = document.getElementById('editMemberProgram').value;
+                        member.nfcId = document.getElementById('editNfcId').value;
+                        
+                        saveMembers();
+                        showSnackbar(`¡${member.name} actualizado!`);
+                        populateMemberDetails(member);
+                        toggleEditMode();
+                    }
+                });
+            }
 
             // NFC Scanning
-            document.getElementById('mobileScanNfcBtn').addEventListener('click', () => {
-                startNFCScan((tagId) => {
-                    document.getElementById('mobileNfcId').value = tagId;
-                    showSnackbar('¡ID NFC capturado!');
+            const mobileScanBtn = document.getElementById('mobileScanNfcBtn');
+            if (mobileScanBtn) {
+                mobileScanBtn.addEventListener('click', () => {
+                    hapticFeedback('medium');
+                    startNFCScan((tagId) => {
+                        const nfcInput = document.getElementById('mobileNfcId');
+                        if (nfcInput) {
+                            nfcInput.value = tagId;
+                            showSnackbar('¡ID NFC capturado!');
+                        }
+                    });
                 });
-            });
+            }
 
-            document.getElementById('scanAttendanceBtn').addEventListener('click', () => {
-                startNFCScan((tagId) => {
-                    const member = members.find(m => m.nfcId === tagId);
+            const scanAttendanceBtn = document.getElementById('scanAttendanceBtn');
+            if (scanAttendanceBtn) {
+                scanAttendanceBtn.addEventListener('click', () => {
+                    hapticFeedback('medium');
+                    setButtonLoading(scanAttendanceBtn, true);
+                    
+                    startNFCScan((tagId) => {
+                        const member = members.find(m => m.nfcId === tagId);
+                        if (!member) {
+                            setButtonLoading(scanAttendanceBtn, false);
+                            showSnackbar('¡Miembro no encontrado!', 'error');
+                            return;
+                        }
+
+                        if (!member.attendance) member.attendance = [];
+                        member.attendance.push({ date: new Date().toISOString() });
+                        member.stamps = (member.stamps || 0) + 1;
+
+                        saveMembers();
+                        setButtonLoading(scanAttendanceBtn, false);
+                        
+                        if (member.stamps >= 4) {
+                            showSnackbar(`¡${member.name} completó 4 sellos! Listo para medidas.`);
+                        } else {
+                            showSnackbar(`¡${member.name}: ${member.stamps}/4 sellos registrados!`);
+                        }
+                        
+                        attendanceModal.style.display = 'none';
+                    });
+                });
+            }
+
+            // Manual attendance
+            const submitManualBtn = document.getElementById('submitManualAttendance');
+            if (submitManualBtn) {
+                submitManualBtn.addEventListener('click', () => {
+                    hapticFeedback('light');
+                    const memberIdInput = document.getElementById('manualMemberId');
+                    const memberId = memberIdInput ? memberIdInput.value : '';
+                    
+                    if (!memberId) {
+                        showSnackbar('¡Ingrese ID del miembro!', 'error');
+                        return;
+                    }
+
+                    const member = members.find(m => 
+                        m.nfcId === memberId || 
+                        m.name.toLowerCase().includes(memberId.toLowerCase()) ||
+                        m.email === memberId ||
+                        m.phone === memberId
+                    );
+                    
                     if (!member) {
                         showSnackbar('¡Miembro no encontrado!', 'error');
                         return;
@@ -1335,107 +1748,119 @@
                     saveMembers();
                     showSnackbar(`¡${member.name}: ${member.stamps}/4 sellos!`);
                     attendanceModal.style.display = 'none';
+                    if (memberIdInput) memberIdInput.value = '';
                 });
-            });
-
-            // Manual attendance
-            document.getElementById('submitManualAttendance').addEventListener('click', () => {
-                const memberId = document.getElementById('manualMemberId').value;
-                if (!memberId) {
-                    showSnackbar('¡Ingrese ID del miembro!', 'error');
-                    return;
-                }
-
-                const member = members.find(m => 
-                    m.nfcId === memberId || 
-                    m.name.toLowerCase().includes(memberId.toLowerCase()) ||
-                    m.email === memberId ||
-                    m.phone === memberId
-                );
-                
-                if (!member) {
-                    showSnackbar('¡Miembro no encontrado!', 'error');
-                    return;
-                }
-
-                if (!member.attendance) member.attendance = [];
-                member.attendance.push({ date: new Date().toISOString() });
-                member.stamps = (member.stamps || 0) + 1;
-
-                saveMembers();
-                showSnackbar(`¡${member.name}: ${member.stamps}/4 sellos!`);
-                attendanceModal.style.display = 'none';
-                document.getElementById('manualMemberId').value = '';
-            });
+            }
 
             // Measurements form
-            document.getElementById('measurementsForm').addEventListener('submit', (e) => {
-                e.preventDefault();
-                
-                const memberId = document.getElementById('selectMember').value;
-                const member = members.find(m => m.nfcId === memberId);
-                
-                if (!member) {
-                    showSnackbar('¡Seleccione un miembro!', 'error');
-                    return;
-                }
+            const measurementsForm = document.getElementById('measurementsForm');
+            if (measurementsForm) {
+                measurementsForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    
+                    const submitBtn = e.target.querySelector('button[type="submit"]');
+                    setButtonLoading(submitBtn, true);
+                    
+                    setTimeout(() => {
+                        const memberSelect = document.getElementById('selectMember');
+                        const memberId = memberSelect ? memberSelect.value : '';
+                        const member = members.find(m => m.nfcId === memberId);
+                        
+                        if (!member) {
+                            setButtonLoading(submitBtn, false);
+                            showSnackbar('¡Seleccione un miembro!', 'error');
+                            return;
+                        }
 
-                const measurements = {
-                    abdomen: document.getElementById('currentAbdomen').value,
-                    cintura: document.getElementById('currentCintura').value,
-                    cadera: document.getElementById('currentCadera').value,
-                    pierna: document.getElementById('currentPierna').value,
-                    brazo: document.getElementById('currentBrazo').value,
-                    tallaPantalon: document.getElementById('currentTallaPantalon').value,
-                    tallaBlusa: document.getElementById('currentTallaBlusa').value
-                };
+                        const measurements = {
+                            abdomen: document.getElementById('currentAbdomen')?.value || '',
+                            cintura: document.getElementById('currentCintura')?.value || '',
+                            cadera: document.getElementById('currentCadera')?.value || '',
+                            pierna: document.getElementById('currentPierna')?.value || '',
+                            brazo: document.getElementById('currentBrazo')?.value || '',
+                            tallaPantalon: document.getElementById('currentTallaPantalon')?.value || '',
+                            tallaBlusa: document.getElementById('currentTallaBlusa')?.value || ''
+                        };
 
-                if (!member.measurements) member.measurements = [];
-                member.measurements.push({
-                    date: new Date().toISOString(),
-                    weight: document.getElementById('currentWeight').value,
-                    ...measurements,
-                    type: 'monthly'
+                        const weightInput = document.getElementById('currentWeight');
+                        const weight = weightInput ? weightInput.value : '';
+
+                        if (!member.measurements) member.measurements = [];
+                        member.measurements.push({
+                            date: new Date().toISOString(),
+                            weight: weight,
+                            ...measurements,
+                            type: 'monthly'
+                        });
+
+                        member.stamps = 0; // Reset stamps
+
+                        saveMembers();
+                        setButtonLoading(submitBtn, false);
+                        showSnackbar(`¡Medidas de ${member.name} guardadas!`);
+                        measurementsModal.style.display = 'none';
+                        measurementsForm.reset();
+                    }, 500);
                 });
-
-                member.stamps = 0; // Reset stamps
-
-                saveMembers();
-                showSnackbar(`¡Medidas de ${member.name} guardadas!`);
-                measurementsModal.style.display = 'none';
-                document.getElementById('measurementsForm').reset();
-            });
+            }
 
             // Export functionality
-            document.getElementById('exportBtn').addEventListener('click', () => {
-                const csv = 'Nombre,Teléfono,Email,Programa,Sellos,Peso,Última Visita\n' +
-                    members.map(m => {
-                        const latest = m.measurements?.[m.measurements.length - 1] || {};
-                        const lastVisit = m.attendance?.length > 0 ? 
-                            new Date(m.attendance[m.attendance.length - 1].date).toLocaleDateString() : 'Nunca';
-                        return `"${m.name}","${m.phone}","${m.email}","${m.program || ''}","${m.stamps || 0}","${latest.weight || ''}","${lastVisit}"`;
-                    }).join('\n');
-                
-                const blob = new Blob([csv], { type: 'text/csv' });
-                const url = URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = 'gimnasio_miembros_' + new Date().toISOString().split('T')[0] + '.csv';
-                a.click();
-                URL.revokeObjectURL(url);
-                showSnackbar('¡Datos exportados!');
-            });
+            const exportBtn = document.getElementById('exportBtn');
+            if (exportBtn) {
+                exportBtn.addEventListener('click', () => {
+                    hapticFeedback('medium');
+                    setButtonLoading(exportBtn, true);
+                    
+                    setTimeout(() => {
+                        const csv = 'Nombre,Teléfono,Email,Programa,Sellos,Peso Actual,Última Visita\n' +
+                            members.map(m => {
+                                const latest = m.measurements?.[m.measurements.length - 1] || {};
+                                const lastVisit = m.attendance?.length > 0 ? 
+                                    new Date(m.attendance[m.attendance.length - 1].date).toLocaleDateString() : 'Nunca';
+                                return `"${m.name}","${m.phone}","${m.email}","${m.program || 'Sin programa'}","${m.stamps || 0}","${latest.weight || 'Sin registro'}","${lastVisit}"`;
+                            }).join('\n');
+                        
+                        const blob = new Blob([csv], { type: 'text/csv' });
+                        const url = URL.createObjectURL(blob);
+                        const a = document.createElement('a');
+                        a.href = url;
+                        a.download = 'gimnasio_miembros_' + new Date().toISOString().split('T')[0] + '.csv';
+                        a.click();
+                        URL.revokeObjectURL(url);
+                        
+                        setButtonLoading(exportBtn, false);
+                        showSnackbar('¡Datos exportados exitosamente!');
+                    }, 800);
+                });
+            }
 
             // Close modals on outside click
             [memberDetailsModal, attendanceModal, measurementsModal].forEach(modal => {
-                modal.addEventListener('click', (e) => {
-                    if (e.target === modal) {
-                        modal.style.display = 'none';
-                    }
+                if (modal) {
+                    modal.addEventListener('click', (e) => {
+                        if (e.target === modal) {
+                            hapticFeedback('light');
+                            modal.style.display = 'none';
+                            if (modal === memberDetailsModal) {
+                                isEditMode = false;
+                            }
+                        }
+                    });
+                }
+            });
+
+            // Prevent iOS zoom on input focus
+            document.querySelectorAll('.input-field').forEach(input => {
+                input.addEventListener('focus', () => {
+                    document.querySelector('meta[name=viewport]').setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no');
+                });
+                
+                input.addEventListener('blur', () => {
+                    document.querySelector('meta[name=viewport]').setAttribute('content', 'width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0');
                 });
             });
 
-            // Initialize
+            // Initialize data
             updateStats();
             updateMemberSelect();
             renderMembersList();
@@ -1443,6 +1868,33 @@
 
         // Global functions for onclick handlers
         window.viewMember = viewMember;
+        
+        // Service Worker registration for PWA capabilities
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(registration => {
+                        console.log('SW registered: ', registration);
+                    })
+                    .catch(registrationError => {
+                        console.log('SW registration failed: ', registrationError);
+                    });
+            });
+        }
+
+        // Add to home screen prompt
+        let deferredPrompt;
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            
+            // Show custom install button if needed
+            setTimeout(() => {
+                if (deferredPrompt) {
+                    showSnackbar('¡Agregar GymFlow a tu pantalla de inicio!', 'warning');
+                }
+            }, 3000);
+        });
     </script>
 </body>
 </html>
