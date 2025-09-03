@@ -13,10 +13,34 @@
             color: #ffffff;
             margin: 0;
             padding: 0;
+            overflow-x: hidden;
         }
         .sidebar {
             background: #1a1a2e;
             border-right: 1px solid #16213e;
+            transition: transform 0.3s ease;
+        }
+        .sidebar.mobile-hidden {
+            transform: translateX(-100%);
+        }
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 40;
+            display: none;
+        }
+        .overlay.active {
+            display: block;
+        }
+        .mobile-header {
+            display: none;
+            background: #1a1a2e;
+            padding: 16px;
+            border-bottom: 1px solid #16213e;
         }
         .card {
             background: #1a1a2e;
@@ -28,7 +52,7 @@
             background: #1a1a2e;
             border-radius: 16px;
             border: 1px solid #16213e;
-            padding: 24px;
+            padding: 20px;
             cursor: pointer;
             transition: all 0.3s ease;
             position: relative;
@@ -52,6 +76,10 @@
             cursor: pointer;
             transition: all 0.3s ease;
             font-weight: 600;
+            min-height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         .btn-primary:hover {
             background: linear-gradient(135deg, #5b5bf6 0%, #7c3aed 100%);
@@ -66,10 +94,15 @@
             cursor: pointer;
             transition: all 0.3s ease;
             font-weight: 600;
+            min-height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         .btn-small {
             padding: 8px 16px;
             font-size: 12px;
+            min-height: 36px;
         }
         .input-field {
             background: #374151;
@@ -79,17 +112,13 @@
             border-radius: 12px;
             width: 100%;
             transition: all 0.3s ease;
+            min-height: 44px;
+            box-sizing: border-box;
         }
         .input-field:focus {
             outline: none;
             border-color: #6366f1;
             box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
-        }
-        .input-field:disabled {
-            background: #2d3748;
-            border-color: #2d3748;
-            color: #a0aec0;
-            cursor: not-allowed;
         }
         .modal {
             display: none;
@@ -103,16 +132,19 @@
             justify-content: center;
             align-items: center;
             z-index: 1000;
+            padding: 16px;
+            box-sizing: border-box;
         }
         .modal-content {
             background: #1a1a2e;
             border: 1px solid #16213e;
-            padding: 32px;
+            padding: 24px;
             border-radius: 20px;
-            width: 90%;
+            width: 100%;
             max-width: 900px;
             max-height: 90vh;
             overflow-y: auto;
+            box-sizing: border-box;
         }
         .sidebar-item {
             display: flex;
@@ -124,6 +156,7 @@
             border-radius: 12px;
             margin: 4px 12px;
             cursor: pointer;
+            min-height: 48px;
         }
         .sidebar-item:hover, .sidebar-item.active {
             background: #6366f1;
@@ -137,15 +170,18 @@
             position: fixed;
             bottom: 24px;
             right: 24px;
+            left: 24px;
             padding: 16px 24px;
             border-radius: 12px;
             color: white;
             font-weight: 600;
-            transform: translateX(400px);
+            transform: translateY(100px);
             transition: transform 0.3s ease;
             z-index: 1001;
+            max-width: calc(100vw - 48px);
+            box-sizing: border-box;
         }
-        .snackbar.show { transform: translateX(0); }
+        .snackbar.show { transform: translateY(0); }
         .snackbar.success { background: linear-gradient(135deg, #10b981 0%, #059669 100%); }
         .snackbar.warning { background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); }
         .snackbar.error { background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); }
@@ -156,6 +192,7 @@
             padding: 12px 16px;
             border-radius: 12px;
             width: 100%;
+            min-height: 44px;
         }
         .form-row {
             display: grid;
@@ -167,11 +204,6 @@
             grid-template-columns: 1fr 1fr 1fr;
             gap: 16px;
         }
-        @media (max-width: 768px) {
-            .form-row, .form-row-3 {
-                grid-template-columns: 1fr;
-            }
-        }
         .measurement-section {
             background: #16213e;
             border-radius: 12px;
@@ -181,18 +213,20 @@
         table {
             width: 100%;
             border-collapse: collapse;
+            min-width: 600px;
         }
         table th, table td {
-            padding: 16px;
+            padding: 12px;
             text-align: left;
             border-bottom: 1px solid #374151;
+            white-space: nowrap;
         }
         table th {
             background: #374151;
             color: #9ca3af;
             font-weight: 600;
             text-transform: uppercase;
-            font-size: 12px;
+            font-size: 11px;
             letter-spacing: 1px;
         }
         table tr:hover {
@@ -205,7 +239,7 @@
             display: block;
         }
         .tab-button {
-            padding: 8px 16px;
+            padding: 8px 12px;
             background: #374151;
             border: 1px solid #4b5563;
             color: #9ca3af;
@@ -213,6 +247,12 @@
             cursor: pointer;
             transition: all 0.3s ease;
             margin-right: 8px;
+            margin-bottom: 8px;
+            min-height: 40px;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         .tab-button.active {
             background: #6366f1;
@@ -239,6 +279,7 @@
             padding: 12px 16px;
             border-radius: 12px;
             width: 100%;
+            word-wrap: break-word;
         }
         .edit-mode {
             display: none;
@@ -246,60 +287,162 @@
         .view-mode {
             display: block;
         }
-        .edit-mode.active {
-            display: block;
+
+        /* Mobile Styles */
+        @media (max-width: 768px) {
+            .sidebar {
+                position: fixed;
+                top: 0;
+                left: 0;
+                height: 100vh;
+                z-index: 50;
+                width: 280px;
+            }
+            .mobile-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+            .main-content {
+                margin-left: 0;
+            }
+            .home-layout {
+                display: block !important;
+            }
+            .home-sidebar {
+                border-left: none !important;
+                border-top: 1px solid #374151;
+                margin-top: 24px;
+                padding-top: 24px;
+                width: 100% !important;
+            }
+            .form-row, .form-row-3 {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+            .modal-content {
+                padding: 20px;
+                margin: 8px;
+                max-height: 85vh;
+            }
+            .action-card {
+                padding: 16px;
+            }
+            .measurement-section {
+                padding: 16px;
+            }
+            .snackbar {
+                right: 16px;
+                left: 16px;
+                bottom: 16px;
+            }
+            .tab-button {
+                font-size: 12px;
+                padding: 6px 10px;
+                flex: 1;
+                margin-right: 4px;
+                text-align: center;
+            }
+            .tab-navigation {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 4px;
+            }
+            table th, table td {
+                padding: 8px;
+                font-size: 12px;
+            }
         }
-        .view-mode.active {
-            display: block;
+
+        /* Tablet Styles */
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .sidebar {
+                width: 240px;
+            }
+            .home-sidebar {
+                width: 300px;
+            }
+            .form-row-3 {
+                grid-template-columns: 1fr 1fr;
+            }
+            .modal-content {
+                max-width: 80vw;
+            }
         }
-        .edit-mode.active ~ .view-mode {
-            display: none;
+
+        /* Large Desktop */
+        @media (min-width: 1400px) {
+            .sidebar {
+                width: 280px;
+            }
+            .home-sidebar {
+                width: 320px;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Mobile Header -->
+    <div class="mobile-header md:hidden">
+        <div class="flex items-center space-x-3">
+            <button id="mobileMenuBtn" class="text-white">
+                <i class="fas fa-bars text-xl"></i>
+            </button>
+            <div class="flex items-center space-x-2">
+                <div class="w-8 h-8 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-lg flex items-center justify-center">
+                    <i class="fas fa-dumbbell text-white text-sm"></i>
+                </div>
+                <h1 class="text-lg font-bold text-white">GymFlow</h1>
+            </div>
+        </div>
+        <span class="text-sm font-bold text-white" id="mobileTotal">0 Miembros</span>
+    </div>
+
+    <!-- Overlay for mobile -->
+    <div id="overlay" class="overlay"></div>
+
     <div class="flex min-h-screen">
         <!-- Sidebar -->
-        <div class="sidebar w-64 min-h-screen relative">
-            <div class="p-6">
+        <div id="sidebar" class="sidebar w-64 md:w-64 min-h-screen relative z-50">
+            <div class="p-4 md:p-6">
                 <div class="flex items-center space-x-3">
-                    <div class="w-10 h-10 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-xl flex items-center justify-center">
-                        <i class="fas fa-dumbbell text-white text-lg"></i>
+                    <div class="w-8 h-8 md:w-10 md:h-10 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-dumbbell text-white text-sm md:text-lg"></i>
                     </div>
                     <div>
-                        <h1 class="text-xl font-bold text-white">GymFlow</h1>
+                        <h1 class="text-lg md:text-xl font-bold text-white">GymFlow</h1>
                         <p class="text-xs text-gray-400">Sistema de Tarjetas</p>
                     </div>
                 </div>
             </div>
             
-            <div class="px-6 mb-4">
+            <div class="px-4 md:px-6 mb-4">
                 <div class="text-xs text-gray-400 mb-2">Menú</div>
             </div>
             
             <nav>
                 <div class="sidebar-item active" data-page="home">
                     <i class="fas fa-home"></i>
-                    Inicio
+                    <span>Inicio</span>
                 </div>
                 <div class="sidebar-item" data-page="members">
                     <i class="fas fa-users"></i>
-                    Miembros
+                    <span>Miembros</span>
                 </div>
             </nav>
         </div>
 
         <!-- Main Content -->
-        <div class="flex-1">
+        <div class="flex-1 main-content">
             <!-- Home Page -->
             <div id="homePage" class="page active">
-                <div class="flex">
+                <div class="flex flex-col lg:flex-row home-layout">
                     <!-- Main Dashboard -->
-                    <div class="flex-1 p-6">
+                    <div class="flex-1 p-4 md:p-6">
                         <!-- Header -->
-                        <div class="flex items-center justify-between mb-8">
-                            <div>
-                                <h2 class="text-3xl font-bold text-white">Panel de Control</h2>
+                        <div class="flex flex-col md:flex-row md:items-center justify-between mb-6 md:mb-8">
+                            <div class="mb-4 md:mb-0">
+                                <h2 class="text-2xl md:text-3xl font-bold text-white">Panel de Control</h2>
                                 <div class="flex items-center space-x-4 mt-2">
                                     <span class="text-lg font-bold text-white" id="totalMembers">0 Miembros</span>
                                 </div>
@@ -307,28 +450,28 @@
                         </div>
 
                         <!-- Main Actions Section -->
-                        <div class="mb-6">
-                            <h3 class="text-xl font-semibold text-white">Acciones Principales</h3>
+                        <div class="mb-4 md:mb-6">
+                            <h3 class="text-lg md:text-xl font-semibold text-white">Acciones Principales</h3>
                         </div>
 
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6 mb-6 md:mb-8">
                             <!-- Register Attendance Card -->
                             <div class="action-card attendance" id="attendanceCard">
                                 <div class="flex items-center justify-between mb-4">
                                     <div class="flex items-center space-x-2">
-                                        <i class="fas fa-calendar-check text-3xl text-green-400"></i>
+                                        <i class="fas fa-calendar-check text-2xl md:text-3xl text-green-400"></i>
                                         <div class="text-xs text-gray-400">●●●</div>
                                     </div>
                                 </div>
                                 
                                 <div class="mb-4">
-                                    <h4 class="text-xl font-bold text-white">Registrar Asistencia</h4>
+                                    <h4 class="text-lg md:text-xl font-bold text-white">Registrar Asistencia</h4>
                                     <p class="text-gray-400 text-sm">Escanear NFC o Ingresar ID manualmente</p>
                                 </div>
                                 
                                 <div class="flex items-center justify-between">
                                     <div class="text-sm text-gray-400">Listo para escanear</div>
-                                    <i class="fas fa-wifi text-green-400 text-xl"></i>
+                                    <i class="fas fa-wifi text-green-400 text-lg md:text-xl"></i>
                                 </div>
                             </div>
 
@@ -336,43 +479,43 @@
                             <div class="action-card measurements" id="measurementsCard">
                                 <div class="flex items-center justify-between mb-4">
                                     <div class="flex items-center space-x-2">
-                                        <i class="fas fa-weight-scale text-3xl text-yellow-400"></i>
+                                        <i class="fas fa-weight-scale text-2xl md:text-3xl text-yellow-400"></i>
                                         <div class="text-xs text-gray-400">●●●</div>
                                     </div>
                                 </div>
                                 
                                 <div class="mb-4">
-                                    <h4 class="text-xl font-bold text-white">Medidas Mensuales</h4>
+                                    <h4 class="text-lg md:text-xl font-bold text-white">Medidas Mensuales</h4>
                                     <p class="text-gray-400 text-sm">Registrar peso y medidas</p>
                                 </div>
                                 
                                 <div class="flex items-center justify-between">
                                     <div class="text-sm text-gray-400">Seleccionar miembro</div>
-                                    <i class="fas fa-ruler text-yellow-400 text-xl"></i>
+                                    <i class="fas fa-ruler text-yellow-400 text-lg md:text-xl"></i>
                                 </div>
                             </div>
                         </div>
 
                         <!-- Stats Overview -->
-                        <div class="card p-6">
-                            <div class="flex items-center justify-between mb-6">
-                                <h3 class="text-xl font-semibold text-white">Resumen</h3>
+                        <div class="card p-4 md:p-6">
+                            <div class="flex flex-col md:flex-row md:items-center justify-between mb-4 md:mb-6">
+                                <h3 class="text-lg md:text-xl font-semibold text-white mb-2 md:mb-0">Resumen</h3>
                                 <div class="flex space-x-4">
                                     <button class="text-gray-400 hover:text-white px-3 py-1">Estadísticas</button>
                                 </div>
                             </div>
                             
-                            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
                                 <div class="text-center">
-                                    <div class="text-2xl font-bold text-white mb-2" id="totalMembersDisplay">0</div>
+                                    <div class="text-xl md:text-2xl font-bold text-white mb-2" id="totalMembersDisplay">0</div>
                                     <div class="text-gray-400 text-sm">Total Miembros</div>
                                 </div>
                                 <div class="text-center">
-                                    <div class="text-2xl font-bold text-green-400 mb-2" id="monthlyAttendance">0</div>
+                                    <div class="text-xl md:text-2xl font-bold text-green-400 mb-2" id="monthlyAttendance">0</div>
                                     <div class="text-gray-400 text-sm">Asistencia Mensual</div>
                                 </div>
                                 <div class="text-center">
-                                    <div class="text-2xl font-bold text-yellow-400 mb-2" id="measurementsDone">0</div>
+                                    <div class="text-xl md:text-2xl font-bold text-yellow-400 mb-2" id="measurementsDone">0</div>
                                     <div class="text-gray-400 text-sm">Medidas Tomadas</div>
                                 </div>
                             </div>
@@ -380,16 +523,16 @@
                     </div>
 
                     <!-- Right Sidebar - User Registration -->
-                    <div class="w-80 p-6 border-l border-gray-700">
-                        <div class="flex items-center justify-between mb-6">
-                            <h3 class="text-lg font-semibold text-white">Registro de Miembros</h3>
-                            <button class="text-gray-400">
+                    <div class="w-full lg:w-80 p-4 md:p-6 home-sidebar border-l border-gray-700">
+                        <div class="flex items-center justify-between mb-4 md:mb-6">
+                            <h3 class="text-base md:text-lg font-semibold text-white">Registro de Miembros</h3>
+                            <button class="text-gray-400 lg:block hidden">
                                 <i class="fas fa-ellipsis-h"></i>
                             </button>
                         </div>
                         
                         <!-- New User Registration Button -->
-                        <div class="card p-4 mb-6">
+                        <div class="card p-4 mb-4 md:mb-6">
                             <div class="flex items-center space-x-3 mb-4">
                                 <div class="w-8 h-8 bg-indigo-500 bg-opacity-20 rounded-lg flex items-center justify-center">
                                     <i class="fas fa-user-plus text-indigo-400"></i>
@@ -407,7 +550,7 @@
                         <div>
                             <h4 class="text-white font-semibold mb-4">Detalles</h4>
                             
-                            <div class="space-y-4">
+                            <div class="space-y-3 md:space-y-4">
                                 <div class="flex items-center justify-between">
                                     <span class="text-gray-400 text-sm">Total Miembros</span>
                                     <span class="text-white font-medium" id="sidebarTotalMembers">0</span>
@@ -422,7 +565,7 @@
                                 </div>
                             </div>
                             
-                            <hr class="border-gray-700 my-6">
+                            <hr class="border-gray-700 my-4 md:my-6">
                             
                             <!-- Export Button -->
                             <div class="space-y-3">
@@ -440,7 +583,7 @@
                                 </div>
                             </div>
                             
-                            <div class="mt-6">
+                            <div class="mt-4 md:mt-6">
                                 <button id="exportBtn" class="btn-secondary w-full">
                                     <i class="fas fa-download mr-2"></i>
                                     Exportar Datos
@@ -452,25 +595,25 @@
             </div>
 
             <!-- Members Page -->
-            <div id="membersPage" class="page p-6">
+            <div id="membersPage" class="page p-4 md:p-6">
                 <!-- Header -->
-                <div class="flex items-center justify-between mb-8">
-                    <div>
-                        <h2 class="text-3xl font-bold text-white">Miembros</h2>
+                <div class="flex flex-col md:flex-row md:items-center justify-between mb-6 md:mb-8">
+                    <div class="mb-4 md:mb-0">
+                        <h2 class="text-2xl md:text-3xl font-bold text-white">Miembros</h2>
                         <p class="text-gray-400 mt-1">Gestionar todos los miembros del gimnasio y su información</p>
                     </div>
-                    <button id="addNewMember" class="btn-primary">
+                    <button id="addNewMember" class="btn-primary w-full md:w-auto">
                         <i class="fas fa-plus mr-2"></i>
                         Agregar Nuevo Miembro
                     </button>
                 </div>
 
                 <!-- Members Table -->
-                <div class="card p-6">
-                    <div class="flex items-center justify-between mb-6">
-                        <h3 class="text-xl font-semibold text-white">Todos los Miembros</h3>
+                <div class="card p-4 md:p-6">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between mb-4 md:mb-6">
+                        <h3 class="text-lg md:text-xl font-semibold text-white mb-4 md:mb-0">Todos los Miembros</h3>
                         <div class="flex items-center space-x-4">
-                            <input type="text" id="searchMembers" class="input-field" placeholder="Buscar miembros..." style="width: 300px;">
+                            <input type="text" id="searchMembers" class="input-field" placeholder="Buscar miembros..." style="width: 100%; max-width: 300px;">
                         </div>
                     </div>
 
@@ -480,10 +623,10 @@
                                 <tr>
                                     <th>Nombre</th>
                                     <th>Teléfono</th>
-                                    <th>Email</th>
+                                    <th class="hidden md:table-cell">Email</th>
                                     <th>Edad</th>
                                     <th>Sellos</th>
-                                    <th>Última Visita</th>
+                                    <th class="hidden lg:table-cell">Última Visita</th>
                                     <th>Acciones</th>
                                 </tr>
                             </thead>
@@ -500,18 +643,18 @@
     <!-- Registration Modal -->
     <div id="registrationModal" class="modal">
         <div class="modal-content">
-            <div class="flex items-center justify-between mb-6">
-                <h3 class="text-2xl font-semibold text-white">Registrar Nuevo Miembro</h3>
+            <div class="flex items-center justify-between mb-4 md:mb-6">
+                <h3 class="text-xl md:text-2xl font-semibold text-white">Registrar Nuevo Miembro</h3>
                 <button id="closeRegistrationModal" class="text-gray-400 hover:text-white">
-                    <i class="fas fa-times text-xl"></i>
+                    <i class="fas fa-times text-lg md:text-xl"></i>
                 </button>
             </div>
             
             <form id="registrationForm">
-                <div class="space-y-6">
+                <div class="space-y-4 md:space-y-6">
                     <!-- Personal Information -->
                     <div class="measurement-section">
-                        <h4 class="text-lg font-semibold text-white mb-4">Información Personal</h4>
+                        <h4 class="text-base md:text-lg font-semibold text-white mb-4">Información Personal</h4>
                         
                         <div class="form-row mb-4">
                             <div>
@@ -555,7 +698,7 @@
 
                     <!-- NFC Information -->
                     <div class="measurement-section">
-                        <h4 class="text-lg font-semibold text-white mb-4">Información NFC</h4>
+                        <h4 class="text-base md:text-lg font-semibold text-white mb-4">Información NFC</h4>
                         
                         <div>
                             <label for="nfcId" class="block text-sm font-medium text-gray-300 mb-2">ID NFC *</label>
@@ -570,7 +713,7 @@
 
                     <!-- Initial Weight -->
                     <div class="measurement-section">
-                        <h4 class="text-lg font-semibold text-white mb-4">Peso Inicial</h4>
+                        <h4 class="text-base md:text-lg font-semibold text-white mb-4">Peso Inicial</h4>
                         <div>
                             <label for="initialWeight" class="block text-sm font-medium text-gray-300 mb-2">Peso (kg) *</label>
                             <input type="number" id="initialWeight" step="0.1" class="input-field" placeholder="Ingrese peso en kg" required>
@@ -579,7 +722,7 @@
 
                     <!-- Initial Body Measurements -->
                     <div class="measurement-section">
-                        <h4 class="text-lg font-semibold text-white mb-4">Medidas Corporales Iniciales</h4>
+                        <h4 class="text-base md:text-lg font-semibold text-white mb-4">Medidas Corporales Iniciales</h4>
                         
                         <div class="form-row mb-4">
                             <div>
@@ -620,7 +763,7 @@
                     </div>
                 </div>
                 
-                <div class="flex space-x-4 mt-6">
+                <div class="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-4 mt-4 md:mt-6">
                     <button type="submit" class="btn-primary flex-1">
                         <i class="fas fa-save mr-2"></i>
                         Registrar Miembro
@@ -636,15 +779,15 @@
     <!-- Member Details Modal -->
     <div id="memberDetailsModal" class="modal">
         <div class="modal-content">
-            <div class="flex items-center justify-between mb-6">
-                <h3 class="text-2xl font-semibold text-white" id="memberDetailsTitle">Detalles del Miembro</h3>
+            <div class="flex items-center justify-between mb-4 md:mb-6">
+                <h3 class="text-xl md:text-2xl font-semibold text-white" id="memberDetailsTitle">Detalles del Miembro</h3>
                 <button id="closeMemberDetailsModal" class="text-gray-400 hover:text-white">
-                    <i class="fas fa-times text-xl"></i>
+                    <i class="fas fa-times text-lg md:text-xl"></i>
                 </button>
             </div>
             
             <!-- Tab Navigation -->
-            <div class="flex space-x-2 mb-6">
+            <div class="flex flex-wrap space-x-1 md:space-x-2 mb-4 md:mb-6 tab-navigation">
                 <button class="tab-button active" data-tab="info">Información Personal</button>
                 <button class="tab-button" data-tab="weightMeasurements">Peso y Medidas</button>
                 <button class="tab-button" data-tab="attendance">Asistencia</button>
@@ -653,9 +796,9 @@
             <!-- Tab Content -->
             <div id="infoTab" class="tab-content">
                 <div class="measurement-section">
-                    <div class="flex items-center justify-between mb-4">
-                        <h4 class="text-lg font-semibold text-white">Información Personal</h4>
-                        <button id="toggleEditMode" class="btn-secondary btn-small">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between mb-4">
+                        <h4 class="text-base md:text-lg font-semibold text-white mb-2 md:mb-0">Información Personal</h4>
+                        <button id="toggleEditMode" class="btn-secondary btn-small w-full md:w-auto">
                             <i class="fas fa-edit mr-2"></i>
                             Editar
                         </button>
@@ -745,7 +888,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="flex space-x-4">
+                            <div class="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-4">
                                 <button type="submit" class="btn-primary flex-1">
                                     <i class="fas fa-save mr-2"></i>
                                     Guardar Cambios
@@ -761,7 +904,7 @@
 
             <div id="weightMeasurementsTab" class="tab-content" style="display: none;">
                 <div class="measurement-section">
-                    <h4 class="text-lg font-semibold text-white mb-4">Historial de Peso y Medidas</h4>
+                    <h4 class="text-base md:text-lg font-semibold text-white mb-4">Historial de Peso y Medidas</h4>
                     <div id="weightMeasurementsHistory">
                         <!-- Dynamic content -->
                     </div>
@@ -770,7 +913,7 @@
 
             <div id="attendanceTab" class="tab-content" style="display: none;">
                 <div class="measurement-section">
-                    <h4 class="text-lg font-semibold text-white mb-4">Registros de Asistencia</h4>
+                    <h4 class="text-base md:text-lg font-semibold text-white mb-4">Registros de Asistencia</h4>
                     <div id="attendanceHistory">
                         <!-- Dynamic content -->
                     </div>
@@ -782,10 +925,10 @@
     <!-- Attendance Modal -->
     <div id="attendanceModal" class="modal">
         <div class="modal-content">
-            <div class="flex items-center justify-between mb-6">
-                <h3 class="text-2xl font-semibold text-white">Registrar Asistencia</h3>
+            <div class="flex items-center justify-between mb-4 md:mb-6">
+                <h3 class="text-xl md:text-2xl font-semibold text-white">Registrar Asistencia</h3>
                 <button id="closeAttendanceModal" class="text-gray-400 hover:text-white">
-                    <i class="fas fa-times text-xl"></i>
+                    <i class="fas fa-times text-lg md:text-xl"></i>
                 </button>
             </div>
             
@@ -817,15 +960,15 @@
     <!-- Measurements Modal -->
     <div id="measurementsModal" class="modal">
         <div class="modal-content">
-            <div class="flex items-center justify-between mb-6">
-                <h3 class="text-2xl font-semibold text-white">Medidas Mensuales</h3>
+            <div class="flex items-center justify-between mb-4 md:mb-6">
+                <h3 class="text-xl md:text-2xl font-semibold text-white">Medidas Mensuales</h3>
                 <button id="closeMeasurementsModal" class="text-gray-400 hover:text-white">
-                    <i class="fas fa-times text-xl"></i>
+                    <i class="fas fa-times text-lg md:text-xl"></i>
                 </button>
             </div>
             
             <form id="measurementsForm">
-                <div class="space-y-6">
+                <div class="space-y-4 md:space-y-6">
                     <!-- Member Selection -->
                     <div class="measurement-section">
                         <div class="mb-4">
@@ -838,7 +981,7 @@
 
                     <!-- Current Weight -->
                     <div class="measurement-section">
-                        <h4 class="text-lg font-semibold text-white mb-4">Peso Actual</h4>
+                        <h4 class="text-base md:text-lg font-semibold text-white mb-4">Peso Actual</h4>
                         <div>
                             <label for="currentWeight" class="block text-sm font-medium text-gray-300 mb-2">Peso (kg) *</label>
                             <input type="number" id="currentWeight" step="0.1" class="input-field" placeholder="Ingrese peso actual" required>
@@ -847,7 +990,7 @@
 
                     <!-- Current Body Measurements -->
                     <div class="measurement-section">
-                        <h4 class="text-lg font-semibold text-white mb-4">Medidas Corporales Actuales</h4>
+                        <h4 class="text-base md:text-lg font-semibold text-white mb-4">Medidas Corporales Actuales</h4>
                         
                         <div class="form-row mb-4">
                             <div>
@@ -888,7 +1031,7 @@
                     </div>
                 </div>
                 
-                <button type="submit" class="btn-primary w-full mt-6">
+                <button type="submit" class="btn-primary w-full mt-4 md:mt-6">
                     <i class="fas fa-save mr-2"></i>
                     Guardar Medidas
                 </button>
@@ -907,9 +1050,14 @@
         let ndef = null;
         let currentPage = 'home';
         let isEditMode = false;
+        let isMobileMenuOpen = false;
 
         // Elements
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('overlay');
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
         const totalMembers = document.getElementById('totalMembers');
+        const mobileTotal = document.getElementById('mobileTotal');
         const totalMembersDisplay = document.getElementById('totalMembersDisplay');
         const sidebarTotalMembers = document.getElementById('sidebarTotalMembers');
         const monthlyAttendance = document.getElementById('monthlyAttendance');
@@ -923,6 +1071,49 @@
         const attendanceModal = document.getElementById('attendanceModal');
         const measurementsModal = document.getElementById('measurementsModal');
         const snackbar = document.getElementById('snackbar');
+
+        // Mobile menu handling
+        function toggleMobileMenu() {
+            if (window.innerWidth <= 768) {
+                isMobileMenuOpen = !isMobileMenuOpen;
+                if (isMobileMenuOpen) {
+                    sidebar.classList.remove('mobile-hidden');
+                    overlay.classList.add('active');
+                } else {
+                    sidebar.classList.add('mobile-hidden');
+                    overlay.classList.remove('active');
+                }
+            }
+        }
+
+        // Close mobile menu
+        function closeMobileMenu() {
+            if (window.innerWidth <= 768) {
+                isMobileMenuOpen = false;
+                sidebar.classList.add('mobile-hidden');
+                overlay.classList.remove('active');
+            }
+        }
+
+        // Handle window resize
+        function handleResize() {
+            if (window.innerWidth > 768) {
+                sidebar.classList.remove('mobile-hidden');
+                overlay.classList.remove('active');
+                isMobileMenuOpen = false;
+            } else {
+                if (!isMobileMenuOpen) {
+                    sidebar.classList.add('mobile-hidden');
+                }
+            }
+        }
+
+        // Initialize mobile
+        function initMobile() {
+            if (window.innerWidth <= 768) {
+                sidebar.classList.add('mobile-hidden');
+            }
+        }
 
         // Show snackbar
         function showSnackbar(message, type = 'success') {
@@ -975,18 +1166,22 @@
                 }
             });
 
-            totalMembers.textContent = `${total} Miembros`;
-            totalMembersDisplay.textContent = total;
-            sidebarTotalMembers.textContent = total;
-            monthlyAttendance.textContent = monthlyAttendanceCount;
-            measurementsDone.textContent = measurementsDoneCount;
-            thisMonthCount.textContent = monthlyAttendanceCount;
-            readyCount.textContent = readyForMeasurements;
+            const membersText = `${total} Miembros`;
+            if (totalMembers) totalMembers.textContent = membersText;
+            if (mobileTotal) mobileTotal.textContent = membersText;
+            if (totalMembersDisplay) totalMembersDisplay.textContent = total;
+            if (sidebarTotalMembers) sidebarTotalMembers.textContent = total;
+            if (monthlyAttendance) monthlyAttendance.textContent = monthlyAttendanceCount;
+            if (measurementsDone) measurementsDone.textContent = measurementsDoneCount;
+            if (thisMonthCount) thisMonthCount.textContent = monthlyAttendanceCount;
+            if (readyCount) readyCount.textContent = readyForMeasurements;
         }
 
         // Update member select dropdown
         function updateMemberSelect() {
             const select = document.getElementById('selectMember');
+            if (!select) return;
+            
             select.innerHTML = '<option value="">Elegir un miembro...</option>';
             
             members.forEach(member => {
@@ -1004,7 +1199,8 @@
             
             tbody.innerHTML = '';
 
-            const searchTerm = document.getElementById('searchMembers')?.value.toLowerCase() || '';
+            const searchInput = document.getElementById('searchMembers');
+            const searchTerm = searchInput ? searchInput.value.toLowerCase() : '';
             const filteredMembers = members.filter(member =>
                 member.name.toLowerCase().includes(searchTerm) ||
                 member.email.toLowerCase().includes(searchTerm) ||
@@ -1019,24 +1215,24 @@
                 const row = document.createElement('tr');
                 row.innerHTML = `
                     <td>
-                        <div class="flex items-center space-x-3">
-                            <div class="w-8 h-8 bg-indigo-500 rounded-full flex items-center justify-center">
-                                <span class="text-white text-sm font-medium">${member.name.charAt(0).toUpperCase()}</span>
+                        <div class="flex items-center space-x-2 md:space-x-3">
+                            <div class="w-6 h-6 md:w-8 md:h-8 bg-indigo-500 rounded-full flex items-center justify-center">
+                                <span class="text-white text-xs md:text-sm font-medium">${member.name.charAt(0).toUpperCase()}</span>
                             </div>
-                            <span class="text-white font-medium">${member.name}</span>
+                            <span class="text-white font-medium text-sm md:text-base">${member.name}</span>
                         </div>
                     </td>
-                    <td class="text-gray-300">${member.phone}</td>
-                    <td class="text-gray-300">${member.email}</td>
-                    <td class="text-gray-300">${member.age}</td>
+                    <td class="text-gray-300 text-sm">${member.phone}</td>
+                    <td class="text-gray-300 text-sm hidden md:table-cell">${member.email}</td>
+                    <td class="text-gray-300 text-sm">${member.age}</td>
                     <td>
                         <span class="px-2 py-1 text-xs rounded-full ${member.stamps >= 4 ? 'bg-green-600' : 'bg-gray-600'} text-white">
                             ${member.stamps || 0}/4
                         </span>
                     </td>
-                    <td class="text-gray-300">${lastVisit}</td>
+                    <td class="text-gray-300 text-sm hidden lg:table-cell">${lastVisit}</td>
                     <td>
-                        <button class="btn-secondary btn-small mr-2" onclick="viewMember('${member.nfcId}')">
+                        <button class="btn-secondary btn-small" onclick="viewMember('${member.nfcId}')">
                             <i class="fas fa-eye mr-1"></i>Ver
                         </button>
                     </td>
@@ -1057,14 +1253,14 @@
                 viewMode.style.display = 'block';
                 editMode.style.display = 'none';
                 toggleBtn.innerHTML = '<i class="fas fa-edit mr-2"></i>Editar';
-                toggleBtn.className = 'btn-secondary btn-small';
+                toggleBtn.className = 'btn-secondary btn-small w-full md:w-auto';
             } else {
                 // Switch to edit mode
                 isEditMode = true;
                 viewMode.style.display = 'none';
                 editMode.style.display = 'block';
                 toggleBtn.innerHTML = '<i class="fas fa-eye mr-2"></i>Ver';
-                toggleBtn.className = 'btn-primary btn-small';
+                toggleBtn.className = 'btn-primary btn-small w-full md:w-auto';
             }
         }
 
@@ -1078,7 +1274,7 @@
             document.getElementById('viewMode').style.display = 'block';
             document.getElementById('editMode').style.display = 'none';
             document.getElementById('toggleEditMode').innerHTML = '<i class="fas fa-edit mr-2"></i>Editar';
-            document.getElementById('toggleEditMode').className = 'btn-secondary btn-small';
+            document.getElementById('toggleEditMode').className = 'btn-secondary btn-small w-full md:w-auto';
 
             // Populate member details
             document.getElementById('memberDetailsTitle').textContent = `${member.name} - Detalles`;
@@ -1088,135 +1284,156 @@
             // Reset to first tab
             document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
             document.querySelectorAll('.tab-content').forEach(c => c.style.display = 'none');
-            document.querySelector('.tab-button[data-tab="info"]').classList.add('active');
-            document.getElementById('infoTab').style.display = 'block';
+            const firstTab = document.querySelector('.tab-button[data-tab="info"]');
+            if (firstTab) {
+                firstTab.classList.add('active');
+                document.getElementById('infoTab').style.display = 'block';
+            }
         };
 
         // Populate member details in tabs
         function populateMemberDetails(member) {
             // Populate view mode
-            document.getElementById('displayMemberName').textContent = member.name || '-';
-            document.getElementById('displayMemberPhone').textContent = member.phone || '-';
-            document.getElementById('displayMemberEmail').textContent = member.email || '-';
-            document.getElementById('displayMemberBirthday').textContent = member.birthday ? new Date(member.birthday).toLocaleDateString() : '-';
-            document.getElementById('displayMemberAge').textContent = member.age || '-';
-            document.getElementById('displayNfcId').textContent = member.nfcId || '-';
-            document.getElementById('displayMemberProgram').textContent = member.program || '-';
+            const elements = {
+                'displayMemberName': member.name || '-',
+                'displayMemberPhone': member.phone || '-',
+                'displayMemberEmail': member.email || '-',
+                'displayMemberBirthday': member.birthday ? new Date(member.birthday).toLocaleDateString() : '-',
+                'displayMemberAge': member.age || '-',
+                'displayNfcId': member.nfcId || '-',
+                'displayMemberProgram': member.program || '-'
+            };
+
+            Object.entries(elements).forEach(([id, value]) => {
+                const el = document.getElementById(id);
+                if (el) el.textContent = value;
+            });
 
             // Populate edit mode
-            document.getElementById('editMemberId').value = member.nfcId;
-            document.getElementById('editMemberName').value = member.name;
-            document.getElementById('editMemberPhone').value = member.phone;
-            document.getElementById('editMemberEmail').value = member.email;
-            document.getElementById('editMemberBirthday').value = member.birthday;
-            document.getElementById('editNfcId').value = member.nfcId;
-            document.getElementById('editMemberProgram').value = member.program || '';
+            const editElements = {
+                'editMemberId': member.nfcId,
+                'editMemberName': member.name,
+                'editMemberPhone': member.phone,
+                'editMemberEmail': member.email,
+                'editMemberBirthday': member.birthday,
+                'editNfcId': member.nfcId,
+                'editMemberProgram': member.program || ''
+            };
+
+            Object.entries(editElements).forEach(([id, value]) => {
+                const el = document.getElementById(id);
+                if (el) el.value = value;
+            });
 
             // Combined Weight & Measurements History
             const weightMeasurementsHistory = document.getElementById('weightMeasurementsHistory');
-            weightMeasurementsHistory.innerHTML = '';
-            
-            if (member.measurements && member.measurements.length > 0) {
-                member.measurements.forEach((measurement, index) => {
-                    const div = document.createElement('div');
-                    div.className = 'history-item';
-                    
-                    // Calculate changes from previous measurement
-                    let changesHTML = '';
-                    if (index > 0) {
-                        const prev = member.measurements[index - 1];
-                        const weightChange = parseFloat(measurement.weight) - parseFloat(prev.weight);
-                        const abdomenChange = parseFloat(measurement.abdomen) - parseFloat(prev.abdomen);
-                        const cinturaChange = parseFloat(measurement.cintura) - parseFloat(prev.cintura);
-                        const caderaChange = parseFloat(measurement.cadera) - parseFloat(prev.cadera);
+            if (weightMeasurementsHistory) {
+                weightMeasurementsHistory.innerHTML = '';
+                
+                if (member.measurements && member.measurements.length > 0) {
+                    member.measurements.forEach((measurement, index) => {
+                        const div = document.createElement('div');
+                        div.className = 'history-item';
                         
-                        changesHTML = `
-                            <div class="measurement-comparison">
-                                <h6 class="text-gray-300 font-medium mb-2">Cambios desde la medida anterior:</h6>
-                                <div class="grid grid-cols-2 gap-2 text-sm">
-                                    <div>Peso: <span class="${weightChange >= 0 ? 'text-red-400' : 'text-green-400'}">${weightChange > 0 ? '+' : ''}${weightChange.toFixed(1)} kg</span></div>
-                                    <div>Abdomen: <span class="${abdomenChange >= 0 ? 'text-red-400' : 'text-green-400'}">${abdomenChange > 0 ? '+' : ''}${abdomenChange.toFixed(1)} cm</span></div>
-                                    <div>Cintura: <span class="${cinturaChange >= 0 ? 'text-red-400' : 'text-green-400'}">${cinturaChange > 0 ? '+' : ''}${cinturaChange.toFixed(1)} cm</span></div>
-                                    <div>Cadera: <span class="${caderaChange >= 0 ? 'text-red-400' : 'text-green-400'}">${caderaChange > 0 ? '+' : ''}${caderaChange.toFixed(1)} cm</span></div>
+                        // Calculate changes from previous measurement
+                        let changesHTML = '';
+                        if (index > 0) {
+                            const prev = member.measurements[index - 1];
+                            const weightChange = parseFloat(measurement.weight) - parseFloat(prev.weight);
+                            const abdomenChange = parseFloat(measurement.abdomen) - parseFloat(prev.abdomen);
+                            const cinturaChange = parseFloat(measurement.cintura) - parseFloat(prev.cintura);
+                            const caderaChange = parseFloat(measurement.cadera) - parseFloat(prev.cadera);
+                            
+                            changesHTML = `
+                                <div class="measurement-comparison">
+                                    <h6 class="text-gray-300 font-medium mb-2">Cambios desde la medida anterior:</h6>
+                                    <div class="grid grid-cols-2 gap-2 text-sm">
+                                        <div>Peso: <span class="${weightChange >= 0 ? 'text-red-400' : 'text-green-400'}">${weightChange > 0 ? '+' : ''}${weightChange.toFixed(1)} kg</span></div>
+                                        <div>Abdomen: <span class="${abdomenChange >= 0 ? 'text-red-400' : 'text-green-400'}">${abdomenChange > 0 ? '+' : ''}${abdomenChange.toFixed(1)} cm</span></div>
+                                        <div>Cintura: <span class="${cinturaChange >= 0 ? 'text-red-400' : 'text-green-400'}">${cinturaChange > 0 ? '+' : ''}${cinturaChange.toFixed(1)} cm</span></div>
+                                        <div>Cadera: <span class="${caderaChange >= 0 ? 'text-red-400' : 'text-green-400'}">${caderaChange > 0 ? '+' : ''}${caderaChange.toFixed(1)} cm</span></div>
+                                    </div>
                                 </div>
+                            `;
+                        }
+                        
+                        div.innerHTML = `
+                            <div class="mb-4">
+                                <div class="flex justify-between items-center mb-3">
+                                    <div>
+                                        <h5 class="text-white font-medium">${measurement.type === 'initial' ? 'Inicial' : 'Mensual'} Registro #${index + 1}</h5>
+                                        <p class="text-gray-400 text-sm">${new Date(measurement.date).toLocaleDateString()}</p>
+                                    </div>
+                                    <div class="text-right">
+                                        <p class="text-white text-xl font-bold">${measurement.weight} kg</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-3">
+                                    <div class="text-sm">
+                                        <span class="text-gray-400">Abdomen/Pecho:</span>
+                                        <span class="text-white font-medium">${measurement.abdomen} cm</span>
+                                    </div>
+                                    <div class="text-sm">
+                                        <span class="text-gray-400">Cintura/Ombligo:</span>
+                                        <span class="text-white font-medium">${measurement.cintura} cm</span>
+                                    </div>
+                                    <div class="text-sm">
+                                        <span class="text-gray-400">Cadera/Glúteos:</span>
+                                        <span class="text-white font-medium">${measurement.cadera} cm</span>
+                                    </div>
+                                    <div class="text-sm">
+                                        <span class="text-gray-400">Pierna Cuádriceps:</span>
+                                        <span class="text-white font-medium">${measurement.pierna} cm</span>
+                                    </div>
+                                    <div class="text-sm">
+                                        <span class="text-gray-400">Brazo Flexionado:</span>
+                                        <span class="text-white font-medium">${measurement.brazo} cm</span>
+                                    </div>
+                                    <div class="text-sm">
+                                        <span class="text-gray-400">Talla Pantalón:</span>
+                                        <span class="text-white font-medium">${measurement.tallaPantalon}</span>
+                                    </div>
+                                    <div class="text-sm">
+                                        <span class="text-gray-400">Talla Blusa:</span>
+                                        <span class="text-white font-medium">${measurement.tallaBlusa}</span>
+                                    </div>
+                                </div>
+                                
+                                ${changesHTML}
                             </div>
                         `;
-                    }
-                    
-                    div.innerHTML = `
-                        <div class="mb-4">
-                            <div class="flex justify-between items-center mb-3">
-                                <div>
-                                    <h5 class="text-white font-medium">${measurement.type === 'initial' ? 'Inicial' : 'Mensual'} Registro #${index + 1}</h5>
-                                    <p class="text-gray-400 text-sm">${new Date(measurement.date).toLocaleDateString()}</p>
-                                </div>
-                                <div class="text-right">
-                                    <p class="text-white text-xl font-bold">${measurement.weight} kg</p>
-                                </div>
-                            </div>
-                            
-                            <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mb-3">
-                                <div class="text-sm">
-                                    <span class="text-gray-400">Abdomen/Pecho:</span>
-                                    <span class="text-white font-medium">${measurement.abdomen} cm</span>
-                                </div>
-                                <div class="text-sm">
-                                    <span class="text-gray-400">Cintura/Ombligo:</span>
-                                    <span class="text-white font-medium">${measurement.cintura} cm</span>
-                                </div>
-                                <div class="text-sm">
-                                    <span class="text-gray-400">Cadera/Glúteos:</span>
-                                    <span class="text-white font-medium">${measurement.cadera} cm</span>
-                                </div>
-                                <div class="text-sm">
-                                    <span class="text-gray-400">Pierna Cuádriceps:</span>
-                                    <span class="text-white font-medium">${measurement.pierna} cm</span>
-                                </div>
-                                <div class="text-sm">
-                                    <span class="text-gray-400">Brazo Flexionado:</span>
-                                    <span class="text-white font-medium">${measurement.brazo} cm</span>
-                                </div>
-                                <div class="text-sm">
-                                    <span class="text-gray-400">Talla Pantalón:</span>
-                                    <span class="text-white font-medium">${measurement.tallaPantalon}</span>
-                                </div>
-                                <div class="text-sm">
-                                    <span class="text-gray-400">Talla Blusa:</span>
-                                    <span class="text-white font-medium">${measurement.tallaBlusa}</span>
-                                </div>
-                            </div>
-                            
-                            ${changesHTML}
-                        </div>
-                    `;
-                    weightMeasurementsHistory.appendChild(div);
-                });
-            } else {
-                weightMeasurementsHistory.innerHTML = '<p class="text-gray-400">No se encontraron registros de peso y medidas.</p>';
+                        weightMeasurementsHistory.appendChild(div);
+                    });
+                } else {
+                    weightMeasurementsHistory.innerHTML = '<p class="text-gray-400">No se encontraron registros de peso y medidas.</p>';
+                }
             }
 
             // Attendance History
             const attendanceHistory = document.getElementById('attendanceHistory');
-            attendanceHistory.innerHTML = '';
-            if (member.attendance && member.attendance.length > 0) {
-                member.attendance.slice().reverse().forEach((attendance, index) => {
-                    const div = document.createElement('div');
-                    div.className = 'history-item';
-                    div.innerHTML = `
-                        <div class="flex justify-between items-center">
-                            <div>
-                                <h5 class="text-white font-medium">Visita #${member.attendance.length - index}</h5>
-                                <p class="text-gray-400 text-sm">${new Date(attendance.date).toLocaleString()}</p>
+            if (attendanceHistory) {
+                attendanceHistory.innerHTML = '';
+                if (member.attendance && member.attendance.length > 0) {
+                    member.attendance.slice().reverse().forEach((attendance, index) => {
+                        const div = document.createElement('div');
+                        div.className = 'history-item';
+                        div.innerHTML = `
+                            <div class="flex justify-between items-center">
+                                <div>
+                                    <h5 class="text-white font-medium">Visita #${member.attendance.length - index}</h5>
+                                    <p class="text-gray-400 text-sm">${new Date(attendance.date).toLocaleString()}</p>
+                                </div>
+                                <div class="text-green-400">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
                             </div>
-                            <div class="text-green-400">
-                                <i class="fas fa-check-circle"></i>
-                            </div>
-                        </div>
-                    `;
-                    attendanceHistory.appendChild(div);
-                });
-            } else {
-                attendanceHistory.innerHTML = '<p class="text-gray-400">No se encontraron registros de asistencia.</p>';
+                        `;
+                        attendanceHistory.appendChild(div);
+                    });
+                } else {
+                    attendanceHistory.innerHTML = '<p class="text-gray-400">No se encontraron registros de asistencia.</p>';
+                }
             }
         }
 
@@ -1253,348 +1470,428 @@
             return age;
         }
 
-        // Navigation handling
-        document.querySelectorAll('.sidebar-item').forEach(item => {
-            item.addEventListener('click', () => {
-                const page = item.getAttribute('data-page');
-                if (page) {
-                    // Update active sidebar item
-                    document.querySelectorAll('.sidebar-item').forEach(i => i.classList.remove('active'));
-                    item.classList.add('active');
-                    
-                    // Show/hide pages
-                    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-                    document.getElementById(page + 'Page').classList.add('active');
-                    
-                    currentPage = page;
-                    
-                    if (page === 'members') {
-                        renderMembersTable();
-                    }
-                }
-            });
-        });
+        // Initialize app
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize mobile
+            initMobile();
 
-        // Search functionality
-        document.addEventListener('DOMContentLoaded', () => {
+            // Event listeners for mobile
+            if (mobileMenuBtn) {
+                mobileMenuBtn.addEventListener('click', toggleMobileMenu);
+            }
+            if (overlay) {
+                overlay.addEventListener('click', closeMobileMenu);
+            }
+            window.addEventListener('resize', handleResize);
+
+            // Navigation handling
+            document.querySelectorAll('.sidebar-item').forEach(item => {
+                item.addEventListener('click', () => {
+                    const page = item.getAttribute('data-page');
+                    if (page) {
+                        // Update active sidebar item
+                        document.querySelectorAll('.sidebar-item').forEach(i => i.classList.remove('active'));
+                        item.classList.add('active');
+                        
+                        // Show/hide pages
+                        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+                        const targetPage = document.getElementById(page + 'Page');
+                        if (targetPage) {
+                            targetPage.classList.add('active');
+                        }
+                        
+                        currentPage = page;
+                        
+                        if (page === 'members') {
+                            renderMembersTable();
+                        }
+
+                        // Close mobile menu after navigation
+                        closeMobileMenu();
+                    }
+                });
+            });
+
+            // Search functionality
             const searchInput = document.getElementById('searchMembers');
             if (searchInput) {
                 searchInput.addEventListener('input', renderMembersTable);
             }
-        });
 
-        // Tab functionality
-        document.querySelectorAll('.tab-button').forEach(button => {
-            button.addEventListener('click', () => {
-                const tab = button.getAttribute('data-tab');
-                
-                // Update active tab button
-                document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
-                button.classList.add('active');
-                
-                // Show/hide tab content
-                document.querySelectorAll('.tab-content').forEach(content => {
-                    content.style.display = 'none';
-                });
-                document.getElementById(tab + 'Tab').style.display = 'block';
-            });
-        });
-
-        // Edit mode toggle
-        document.getElementById('toggleEditMode').addEventListener('click', toggleEditMode);
-
-        // Cancel edit
-        document.getElementById('cancelEdit').addEventListener('click', () => {
-            toggleEditMode();
-        });
-
-        // Event Listeners
-        document.getElementById('openRegistrationModal').addEventListener('click', () => {
-            registrationModal.style.display = 'flex';
-        });
-
-        document.getElementById('addNewMember').addEventListener('click', () => {
-            registrationModal.style.display = 'flex';
-        });
-
-        document.getElementById('attendanceCard').addEventListener('click', () => {
-            attendanceModal.style.display = 'flex';
-        });
-
-        document.getElementById('measurementsCard').addEventListener('click', () => {
-            updateMemberSelect();
-            measurementsModal.style.display = 'flex';
-        });
-
-        // Close modals
-        document.getElementById('closeRegistrationModal').addEventListener('click', () => {
-            registrationModal.style.display = 'none';
-        });
-
-        document.getElementById('closeMemberDetailsModal').addEventListener('click', () => {
-            memberDetailsModal.style.display = 'none';
-            isEditMode = false;
-        });
-
-        document.getElementById('closeAttendanceModal').addEventListener('click', () => {
-            attendanceModal.style.display = 'none';
-        });
-
-        document.getElementById('closeMeasurementsModal').addEventListener('click', () => {
-            measurementsModal.style.display = 'none';
-        });
-
-        document.getElementById('cancelRegistration').addEventListener('click', () => {
-            registrationModal.style.display = 'none';
-        });
-
-        // Member registration form
-        document.getElementById('registrationForm').addEventListener('submit', (e) => {
-            e.preventDefault();
-            
-            const name = document.getElementById('memberName').value;
-            const phone = document.getElementById('memberPhone').value;
-            const email = document.getElementById('memberEmail').value;
-            const birthday = document.getElementById('memberBirthday').value;
-            const program = document.getElementById('memberProgram').value;
-            const nfcId = document.getElementById('nfcId').value;
-            const initialWeight = document.getElementById('initialWeight').value;
-
-            // Get individual measurements
-            const measurements = {
-                abdomen: document.getElementById('initialAbdomen').value,
-                cintura: document.getElementById('initialCintura').value,
-                cadera: document.getElementById('initialCadera').value,
-                pierna: document.getElementById('initialPierna').value,
-                brazo: document.getElementById('initialBrazo').value,
-                tallaPantalon: document.getElementById('initialTallaPantalon').value,
-                tallaBlusa: document.getElementById('initialTallaBlusa').value
-            };
-
-            // Check if NFC ID already exists
-            const existingMember = members.find(m => m.nfcId === nfcId);
-            if (existingMember) {
-                showSnackbar('¡ID NFC ya registrado!', 'error');
-                return;
-            }
-
-            // Check if email already exists
-            const existingEmail = members.find(m => m.email === email);
-            if (existingEmail) {
-                showSnackbar('¡Correo electrónico ya registrado!', 'error');
-                return;
-            }
-
-            const newMember = {
-                name,
-                phone,
-                email,
-                birthday,
-                age: calculateAge(birthday),
-                program,
-                nfcId,
-                stamps: 0,
-                attendance: [],
-                measurements: [{
-                    date: new Date().toISOString(),
-                    weight: initialWeight,
-                    abdomen: measurements.abdomen,
-                    cintura: measurements.cintura,
-                    cadera: measurements.cadera,
-                    pierna: measurements.pierna,
-                    brazo: measurements.brazo,
-                    tallaPantalon: measurements.tallaPantalon,
-                    tallaBlusa: measurements.tallaBlusa,
-                    type: 'initial'
-                }],
-                registrationDate: new Date().toISOString()
-            };
-
-            members.push(newMember);
-            saveMembers();
-            showSnackbar(`¡${name} registrado exitosamente!`);
-            registrationModal.style.display = 'none';
-            document.getElementById('registrationForm').reset();
-        });
-
-        // Edit member form
-        document.getElementById('editMemberForm').addEventListener('submit', (e) => {
-            e.preventDefault();
-            
-            const nfcId = document.getElementById('editMemberId').value;
-            const member = members.find(m => m.nfcId === nfcId);
-            
-            if (member) {
-                member.name = document.getElementById('editMemberName').value;
-                member.phone = document.getElementById('editMemberPhone').value;
-                member.email = document.getElementById('editMemberEmail').value;
-                member.birthday = document.getElementById('editMemberBirthday').value;
-                member.age = calculateAge(member.birthday);
-                member.program = document.getElementById('editMemberProgram').value;
-                member.nfcId = document.getElementById('editNfcId').value;
-                
-                saveMembers();
-                showSnackbar(`¡Información de ${member.name} actualizada exitosamente!`);
-                
-                // Update view mode with new data
-                populateMemberDetails(member);
-                toggleEditMode(); // Switch back to view mode
-            }
-        });
-
-        // Scan NFC for new user registration
-        document.getElementById('scanNfcBtn').addEventListener('click', () => {
-            startNFCScan((tagId) => {
-                document.getElementById('nfcId').value = tagId;
-                showSnackbar('¡ID NFC capturado!');
-            });
-        });
-
-        // Attendance scanning
-        document.getElementById('scanAttendanceBtn').addEventListener('click', () => {
-            startNFCScan((tagId) => {
-                const member = members.find(m => m.nfcId === tagId);
-                if (!member) {
-                    showSnackbar('¡Miembro no encontrado!', 'error');
-                    return;
-                }
-
-                // Add attendance record
-                if (!member.attendance) member.attendance = [];
-                member.attendance.push({
-                    date: new Date().toISOString()
-                });
-
-                // Add stamp
-                member.stamps = (member.stamps || 0) + 1;
-
-                saveMembers();
-                showSnackbar(`¡Asistencia registrada para ${member.name}! (${member.stamps}/4 sellos)`);
-                attendanceModal.style.display = 'none';
-                document.getElementById('attendanceStatus').textContent = `${member.name} - ${member.stamps}/4 sellos`;
-            });
-        });
-
-        // Manual attendance registration
-        document.getElementById('submitManualAttendance').addEventListener('click', () => {
-            const memberId = document.getElementById('manualMemberId').value;
-            if (!memberId) {
-                showSnackbar('¡Por favor ingrese ID del miembro!', 'error');
-                return;
-            }
-
-            const member = members.find(m => 
-                m.nfcId === memberId || 
-                m.name.toLowerCase().includes(memberId.toLowerCase()) ||
-                m.email === memberId ||
-                m.phone === memberId
-            );
-            
-            if (!member) {
-                showSnackbar('¡Miembro no encontrado!', 'error');
-                return;
-            }
-
-            // Add attendance record
-            if (!member.attendance) member.attendance = [];
-            member.attendance.push({
-                date: new Date().toISOString()
-            });
-
-            // Add stamp
-            member.stamps = (member.stamps || 0) + 1;
-
-            saveMembers();
-            showSnackbar(`¡Asistencia registrada para ${member.name}! (${member.stamps}/4 sellos)`);
-            attendanceModal.style.display = 'none';
-            document.getElementById('manualMemberId').value = '';
-        });
-
-        // Measurements form
-        document.getElementById('measurementsForm').addEventListener('submit', (e) => {
-            e.preventDefault();
-            const memberId = document.getElementById('selectMember').value;
-            const weight = document.getElementById('currentWeight').value;
-
-            // Get individual measurements
-            const measurements = {
-                abdomen: document.getElementById('currentAbdomen').value,
-                cintura: document.getElementById('currentCintura').value,
-                cadera: document.getElementById('currentCadera').value,
-                pierna: document.getElementById('currentPierna').value,
-                brazo: document.getElementById('currentBrazo').value,
-                tallaPantalon: document.getElementById('currentTallaPantalon').value,
-                tallaBlusa: document.getElementById('currentTallaBlusa').value
-            };
-
-            const member = members.find(m => m.nfcId === memberId);
-            if (!member) {
-                showSnackbar('¡Por favor seleccione un miembro!', 'error');
-                return;
-            }
-
-            // Add measurement record
-            if (!member.measurements) member.measurements = [];
-            member.measurements.push({
-                date: new Date().toISOString(),
-                weight: weight,
-                abdomen: measurements.abdomen,
-                cintura: measurements.cintura,
-                cadera: measurements.cadera,
-                pierna: measurements.pierna,
-                brazo: measurements.brazo,
-                tallaPantalon: measurements.tallaPantalon,
-                tallaBlusa: measurements.tallaBlusa,
-                type: 'monthly'
-            });
-
-            // Reset stamps after measurements
-            member.stamps = 0;
-
-            saveMembers();
-            showSnackbar(`¡Medidas registradas para ${member.name}!`);
-            measurementsModal.style.display = 'none';
-            document.getElementById('measurementsForm').reset();
-        });
-
-        // Export functionality
-        document.getElementById('exportBtn').addEventListener('click', () => {
-            const csv = 'Nombre,Teléfono,Email,Fecha Nacimiento,Edad,Tipo Programa,ID NFC,Sellos Actuales,Total Asistencia,Fecha Registro,Peso Actual,Peso Inicial,Cambio Peso,Abdomen Actual,Cintura Actual,Cadera Actual,Pierna Actual,Brazo Actual,Talla Pantalón Actual,Talla Blusa Actual\n' +
-                members.map(m => {
-                    const latest = m.measurements && m.measurements.length > 0 ? m.measurements[m.measurements.length - 1] : {};
-                    const initial = m.measurements && m.measurements.length > 0 ? m.measurements[0] : {};
-                    const attendanceCount = m.attendance ? m.attendance.length : 0;
-                    const weightChange = initial.weight && latest.weight ? (parseFloat(latest.weight) - parseFloat(initial.weight)).toFixed(1) : 'N/A';
+            // Tab functionality
+            document.querySelectorAll('.tab-button').forEach(button => {
+                button.addEventListener('click', () => {
+                    const tab = button.getAttribute('data-tab');
                     
-                    return `"${m.name}","${m.phone}","${m.email}","${m.birthday}","${m.age}","${m.program || ''}","${m.nfcId}","${m.stamps || 0}","${attendanceCount}","${m.registrationDate}","${latest.weight || ''}","${initial.weight || ''}","${weightChange}","${latest.abdomen || ''}","${latest.cintura || ''}","${latest.cadera || ''}","${latest.pierna || ''}","${latest.brazo || ''}","${latest.tallaPantalon || ''}","${latest.tallaBlusa || ''}"`;
-                }).join('\n');
-            
-            const blob = new Blob([csv], { type: 'text/csv' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'miembros_gimnasio_completo_' + new Date().toISOString().split('T')[0] + '.csv';
-            a.click();
-            URL.revokeObjectURL(url);
-            showSnackbar('¡Datos completos de miembros exportados exitosamente!');
-        });
-
-        // Close modals when clicking outside
-        [registrationModal, memberDetailsModal, attendanceModal, measurementsModal].forEach(modal => {
-            modal.addEventListener('click', (e) => {
-                if (e.target === modal) {
-                    modal.style.display = 'none';
-                    if (modal === memberDetailsModal) {
-                        isEditMode = false;
+                    // Update active tab button
+                    document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
+                    button.classList.add('active');
+                    
+                    // Show/hide tab content
+                    document.querySelectorAll('.tab-content').forEach(content => {
+                        content.style.display = 'none';
+                    });
+                    const targetTab = document.getElementById(tab + 'Tab');
+                    if (targetTab) {
+                        targetTab.style.display = 'block';
                     }
+                });
+            });
+
+            // Edit mode toggle
+            const toggleEditBtn = document.getElementById('toggleEditMode');
+            if (toggleEditBtn) {
+                toggleEditBtn.addEventListener('click', toggleEditMode);
+            }
+
+            // Cancel edit
+            const cancelEditBtn = document.getElementById('cancelEdit');
+            if (cancelEditBtn) {
+                cancelEditBtn.addEventListener('click', () => {
+                    toggleEditMode();
+                });
+            }
+
+            // Event Listeners for main action buttons
+            const openRegistrationBtn = document.getElementById('openRegistrationModal');
+            if (openRegistrationBtn) {
+                openRegistrationBtn.addEventListener('click', () => {
+                    registrationModal.style.display = 'flex';
+                });
+            }
+
+            const addNewMemberBtn = document.getElementById('addNewMember');
+            if (addNewMemberBtn) {
+                addNewMemberBtn.addEventListener('click', () => {
+                    registrationModal.style.display = 'flex';
+                });
+            }
+
+            const attendanceCard = document.getElementById('attendanceCard');
+            if (attendanceCard) {
+                attendanceCard.addEventListener('click', () => {
+                    attendanceModal.style.display = 'flex';
+                });
+            }
+
+            const measurementsCard = document.getElementById('measurementsCard');
+            if (measurementsCard) {
+                measurementsCard.addEventListener('click', () => {
+                    updateMemberSelect();
+                    measurementsModal.style.display = 'flex';
+                });
+            }
+
+            // Close modal buttons
+            const closeButtons = [
+                { btn: 'closeRegistrationModal', modal: registrationModal },
+                { btn: 'closeMemberDetailsModal', modal: memberDetailsModal },
+                { btn: 'closeAttendanceModal', modal: attendanceModal },
+                { btn: 'closeMeasurementsModal', modal: measurementsModal }
+            ];
+
+            closeButtons.forEach(({ btn, modal }) => {
+                const button = document.getElementById(btn);
+                if (button && modal) {
+                    button.addEventListener('click', () => {
+                        modal.style.display = 'none';
+                        if (modal === memberDetailsModal) {
+                            isEditMode = false;
+                        }
+                    });
                 }
             });
-        });
 
-        // Initialize
-        updateStats();
-        updateMemberSelect();
-        renderMembersTable();
+            // Cancel registration
+            const cancelRegistrationBtn = document.getElementById('cancelRegistration');
+            if (cancelRegistrationBtn) {
+                cancelRegistrationBtn.addEventListener('click', () => {
+                    registrationModal.style.display = 'none';
+                });
+            }
+
+            // Member registration form
+            const registrationForm = document.getElementById('registrationForm');
+            if (registrationForm) {
+                registrationForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    
+                    const name = document.getElementById('memberName').value;
+                    const phone = document.getElementById('memberPhone').value;
+                    const email = document.getElementById('memberEmail').value;
+                    const birthday = document.getElementById('memberBirthday').value;
+                    const program = document.getElementById('memberProgram').value;
+                    const nfcId = document.getElementById('nfcId').value;
+                    const initialWeight = document.getElementById('initialWeight').value;
+
+                    // Get individual measurements
+                    const measurements = {
+                        abdomen: document.getElementById('initialAbdomen').value,
+                        cintura: document.getElementById('initialCintura').value,
+                        cadera: document.getElementById('initialCadera').value,
+                        pierna: document.getElementById('initialPierna').value,
+                        brazo: document.getElementById('initialBrazo').value,
+                        tallaPantalon: document.getElementById('initialTallaPantalon').value,
+                        tallaBlusa: document.getElementById('initialTallaBlusa').value
+                    };
+
+                    // Check if NFC ID already exists
+                    const existingMember = members.find(m => m.nfcId === nfcId);
+                    if (existingMember) {
+                        showSnackbar('¡ID NFC ya registrado!', 'error');
+                        return;
+                    }
+
+                    // Check if email already exists
+                    const existingEmail = members.find(m => m.email === email);
+                    if (existingEmail) {
+                        showSnackbar('¡Correo electrónico ya registrado!', 'error');
+                        return;
+                    }
+
+                    const newMember = {
+                        name,
+                        phone,
+                        email,
+                        birthday,
+                        age: calculateAge(birthday),
+                        program,
+                        nfcId,
+                        stamps: 0,
+                        attendance: [],
+                        measurements: [{
+                            date: new Date().toISOString(),
+                            weight: initialWeight,
+                            abdomen: measurements.abdomen,
+                            cintura: measurements.cintura,
+                            cadera: measurements.cadera,
+                            pierna: measurements.pierna,
+                            brazo: measurements.brazo,
+                            tallaPantalon: measurements.tallaPantalon,
+                            tallaBlusa: measurements.tallaBlusa,
+                            type: 'initial'
+                        }],
+                        registrationDate: new Date().toISOString()
+                    };
+
+                    members.push(newMember);
+                    saveMembers();
+                    showSnackbar(`¡${name} registrado exitosamente!`);
+                    registrationModal.style.display = 'none';
+                    registrationForm.reset();
+                });
+            }
+
+            // Edit member form
+            const editMemberForm = document.getElementById('editMemberForm');
+            if (editMemberForm) {
+                editMemberForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    
+                    const nfcId = document.getElementById('editMemberId').value;
+                    const member = members.find(m => m.nfcId === nfcId);
+                    
+                    if (member) {
+                        member.name = document.getElementById('editMemberName').value;
+                        member.phone = document.getElementById('editMemberPhone').value;
+                        member.email = document.getElementById('editMemberEmail').value;
+                        member.birthday = document.getElementById('editMemberBirthday').value;
+                        member.age = calculateAge(member.birthday);
+                        member.program = document.getElementById('editMemberProgram').value;
+                        member.nfcId = document.getElementById('editNfcId').value;
+                        
+                        saveMembers();
+                        showSnackbar(`¡Información de ${member.name} actualizada exitosamente!`);
+                        
+                        // Update view mode with new data
+                        populateMemberDetails(member);
+                        toggleEditMode(); // Switch back to view mode
+                    }
+                });
+            }
+
+            // Scan NFC for new user registration
+            const scanNfcBtn = document.getElementById('scanNfcBtn');
+            if (scanNfcBtn) {
+                scanNfcBtn.addEventListener('click', () => {
+                    startNFCScan((tagId) => {
+                        const nfcInput = document.getElementById('nfcId');
+                        if (nfcInput) {
+                            nfcInput.value = tagId;
+                            showSnackbar('¡ID NFC capturado!');
+                        }
+                    });
+                });
+            }
+
+            // Attendance scanning
+            const scanAttendanceBtn = document.getElementById('scanAttendanceBtn');
+            if (scanAttendanceBtn) {
+                scanAttendanceBtn.addEventListener('click', () => {
+                    startNFCScan((tagId) => {
+                        const member = members.find(m => m.nfcId === tagId);
+                        if (!member) {
+                            showSnackbar('¡Miembro no encontrado!', 'error');
+                            return;
+                        }
+
+                        // Add attendance record
+                        if (!member.attendance) member.attendance = [];
+                        member.attendance.push({
+                            date: new Date().toISOString()
+                        });
+
+                        // Add stamp
+                        member.stamps = (member.stamps || 0) + 1;
+
+                        saveMembers();
+                        showSnackbar(`¡Asistencia registrada para ${member.name}! (${member.stamps}/4 sellos)`);
+                        attendanceModal.style.display = 'none';
+                        const statusEl = document.getElementById('attendanceStatus');
+                        if (statusEl) {
+                            statusEl.textContent = `${member.name} - ${member.stamps}/4 sellos`;
+                        }
+                    });
+                });
+            }
+
+            // Manual attendance registration
+            const submitManualAttendanceBtn = document.getElementById('submitManualAttendance');
+            if (submitManualAttendanceBtn) {
+                submitManualAttendanceBtn.addEventListener('click', () => {
+                    const memberIdInput = document.getElementById('manualMemberId');
+                    const memberId = memberIdInput ? memberIdInput.value : '';
+                    
+                    if (!memberId) {
+                        showSnackbar('¡Por favor ingrese ID del miembro!', 'error');
+                        return;
+                    }
+
+                    const member = members.find(m => 
+                        m.nfcId === memberId || 
+                        m.name.toLowerCase().includes(memberId.toLowerCase()) ||
+                        m.email === memberId ||
+                        m.phone === memberId
+                    );
+                    
+                    if (!member) {
+                        showSnackbar('¡Miembro no encontrado!', 'error');
+                        return;
+                    }
+
+                    // Add attendance record
+                    if (!member.attendance) member.attendance = [];
+                    member.attendance.push({
+                        date: new Date().toISOString()
+                    });
+
+                    // Add stamp
+                    member.stamps = (member.stamps || 0) + 1;
+
+                    saveMembers();
+                    showSnackbar(`¡Asistencia registrada para ${member.name}! (${member.stamps}/4 sellos)`);
+                    attendanceModal.style.display = 'none';
+                    if (memberIdInput) memberIdInput.value = '';
+                });
+            }
+
+            // Measurements form
+            const measurementsForm = document.getElementById('measurementsForm');
+            if (measurementsForm) {
+                measurementsForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    
+                    const selectMemberEl = document.getElementById('selectMember');
+                    const memberId = selectMemberEl ? selectMemberEl.value : '';
+                    const weightInput = document.getElementById('currentWeight');
+                    const weight = weightInput ? weightInput.value : '';
+
+                    // Get individual measurements
+                    const measurements = {
+                        abdomen: document.getElementById('currentAbdomen')?.value || '',
+                        cintura: document.getElementById('currentCintura')?.value || '',
+                        cadera: document.getElementById('currentCadera')?.value || '',
+                        pierna: document.getElementById('currentPierna')?.value || '',
+                        brazo: document.getElementById('currentBrazo')?.value || '',
+                        tallaPantalon: document.getElementById('currentTallaPantalon')?.value || '',
+                        tallaBlusa: document.getElementById('currentTallaBlusa')?.value || ''
+                    };
+
+                    const member = members.find(m => m.nfcId === memberId);
+                    if (!member) {
+                        showSnackbar('¡Por favor seleccione un miembro!', 'error');
+                        return;
+                    }
+
+                    // Add measurement record
+                    if (!member.measurements) member.measurements = [];
+                    member.measurements.push({
+                        date: new Date().toISOString(),
+                        weight: weight,
+                        abdomen: measurements.abdomen,
+                        cintura: measurements.cintura,
+                        cadera: measurements.cadera,
+                        pierna: measurements.pierna,
+                        brazo: measurements.brazo,
+                        tallaPantalon: measurements.tallaPantalon,
+                        tallaBlusa: measurements.tallaBlusa,
+                        type: 'monthly'
+                    });
+
+                    // Reset stamps after measurements
+                    member.stamps = 0;
+
+                    saveMembers();
+                    showSnackbar(`¡Medidas registradas para ${member.name}!`);
+                    measurementsModal.style.display = 'none';
+                    measurementsForm.reset();
+                });
+            }
+
+            // Export functionality
+            const exportBtn = document.getElementById('exportBtn');
+            if (exportBtn) {
+                exportBtn.addEventListener('click', () => {
+                    const csv = 'Nombre,Teléfono,Email,Fecha Nacimiento,Edad,Tipo Programa,ID NFC,Sellos Actuales,Total Asistencia,Fecha Registro,Peso Actual,Peso Inicial,Cambio Peso,Abdomen Actual,Cintura Actual,Cadera Actual,Pierna Actual,Brazo Actual,Talla Pantalón Actual,Talla Blusa Actual\n' +
+                        members.map(m => {
+                            const latest = m.measurements && m.measurements.length > 0 ? m.measurements[m.measurements.length - 1] : {};
+                            const initial = m.measurements && m.measurements.length > 0 ? m.measurements[0] : {};
+                            const attendanceCount = m.attendance ? m.attendance.length : 0;
+                            const weightChange = initial.weight && latest.weight ? (parseFloat(latest.weight) - parseFloat(initial.weight)).toFixed(1) : 'N/A';
+                            
+                            return `"${m.name}","${m.phone}","${m.email}","${m.birthday}","${m.age}","${m.program || ''}","${m.nfcId}","${m.stamps || 0}","${attendanceCount}","${m.registrationDate}","${latest.weight || ''}","${initial.weight || ''}","${weightChange}","${latest.abdomen || ''}","${latest.cintura || ''}","${latest.cadera || ''}","${latest.pierna || ''}","${latest.brazo || ''}","${latest.tallaPantalon || ''}","${latest.tallaBlusa || ''}"`;
+                        }).join('\n');
+                    
+                    const blob = new Blob([csv], { type: 'text/csv' });
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = 'miembros_gimnasio_completo_' + new Date().toISOString().split('T')[0] + '.csv';
+                    a.click();
+                    URL.revokeObjectURL(url);
+                    showSnackbar('¡Datos completos de miembros exportados exitosamente!');
+                });
+            }
+
+            // Close modals when clicking outside
+            [registrationModal, memberDetailsModal, attendanceModal, measurementsModal].forEach(modal => {
+                if (modal) {
+                    modal.addEventListener('click', (e) => {
+                        if (e.target === modal) {
+                            modal.style.display = 'none';
+                            if (modal === memberDetailsModal) {
+                                isEditMode = false;
+                            }
+                        }
+                    });
+                }
+            });
+
+            // Initialize data
+            updateStats();
+            updateMemberSelect();
+            renderMembersTable();
+        });
     </script>
 </body>
 </html>
