@@ -1,0 +1,1601 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GymFlow - Sistema de Tarjetas NFC</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0f0f23;
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+        }
+        .sidebar {
+            background: #1a1a2e;
+            border-right: 1px solid #16213e;
+        }
+        .card {
+            background: #1a1a2e;
+            border-radius: 16px;
+            border: 1px solid #16213e;
+            transition: all 0.3s ease;
+        }
+        .action-card {
+            background: #1a1a2e;
+            border-radius: 16px;
+            border: 1px solid #16213e;
+            padding: 24px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        .action-card:hover {
+            border-color: #6366f1;
+            transform: translateY(-2px);
+        }
+        .action-card.attendance {
+            border-color: #10b981;
+        }
+        .action-card.measurements {
+            border-color: #f59e0b;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            border: none;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #5b5bf6 0%, #7c3aed 100%);
+            transform: translateY(-1px);
+        }
+        .btn-secondary {
+            background: #374151;
+            border: 1px solid #4b5563;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+        .btn-small {
+            padding: 8px 16px;
+            font-size: 12px;
+        }
+        .input-field {
+            background: #374151;
+            border: 1px solid #4b5563;
+            color: white;
+            padding: 12px 16px;
+            border-radius: 12px;
+            width: 100%;
+            transition: all 0.3s ease;
+        }
+        .input-field:focus {
+            outline: none;
+            border-color: #6366f1;
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+        .input-field:disabled {
+            background: #2d3748;
+            border-color: #2d3748;
+            color: #a0aec0;
+            cursor: not-allowed;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(8px);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .modal-content {
+            background: #1a1a2e;
+            border: 1px solid #16213e;
+            padding: 32px;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 900px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        .sidebar-item {
+            display: flex;
+            align-items: center;
+            padding: 16px 24px;
+            color: #9ca3af;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-radius: 12px;
+            margin: 4px 12px;
+            cursor: pointer;
+        }
+        .sidebar-item:hover, .sidebar-item.active {
+            background: #6366f1;
+            color: white;
+        }
+        .sidebar-item i {
+            width: 20px;
+            margin-right: 16px;
+        }
+        .snackbar {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            padding: 16px 24px;
+            border-radius: 12px;
+            color: white;
+            font-weight: 600;
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+            z-index: 1001;
+        }
+        .snackbar.show { transform: translateX(0); }
+        .snackbar.success { background: linear-gradient(135deg, #10b981 0%, #059669 100%); }
+        .snackbar.warning { background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); }
+        .snackbar.error { background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); }
+        select {
+            background: #374151;
+            border: 1px solid #4b5563;
+            color: white;
+            padding: 12px 16px;
+            border-radius: 12px;
+            width: 100%;
+        }
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+        .form-row-3 {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 16px;
+        }
+        @media (max-width: 768px) {
+            .form-row, .form-row-3 {
+                grid-template-columns: 1fr;
+            }
+        }
+        .measurement-section {
+            background: #16213e;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table th, table td {
+            padding: 16px;
+            text-align: left;
+            border-bottom: 1px solid #374151;
+        }
+        table th {
+            background: #374151;
+            color: #9ca3af;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 12px;
+            letter-spacing: 1px;
+        }
+        table tr:hover {
+            background: rgba(99, 102, 241, 0.05);
+        }
+        .page {
+            display: none;
+        }
+        .page.active {
+            display: block;
+        }
+        .tab-button {
+            padding: 8px 16px;
+            background: #374151;
+            border: 1px solid #4b5563;
+            color: #9ca3af;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-right: 8px;
+        }
+        .tab-button.active {
+            background: #6366f1;
+            color: white;
+            border-color: #6366f1;
+        }
+        .history-item {
+            background: #374151;
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 12px;
+            border-left: 4px solid #6366f1;
+        }
+        .measurement-comparison {
+            background: #16213e;
+            border-radius: 8px;
+            padding: 12px;
+            margin-top: 12px;
+        }
+        .info-display {
+            background: #2d3748;
+            border: 1px solid #4a5568;
+            color: #e2e8f0;
+            padding: 12px 16px;
+            border-radius: 12px;
+            width: 100%;
+        }
+        .edit-mode {
+            display: none;
+        }
+        .view-mode {
+            display: block;
+        }
+        .edit-mode.active {
+            display: block;
+        }
+        .view-mode.active {
+            display: block;
+        }
+        .edit-mode.active ~ .view-mode {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="flex min-h-screen">
+        <!-- Sidebar -->
+        <div class="sidebar w-64 min-h-screen relative">
+            <div class="p-6">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-dumbbell text-white text-lg"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-xl font-bold text-white">GymFlow</h1>
+                        <p class="text-xs text-gray-400">Sistema de Tarjetas</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="px-6 mb-4">
+                <div class="text-xs text-gray-400 mb-2">Menú</div>
+            </div>
+            
+            <nav>
+                <div class="sidebar-item active" data-page="home">
+                    <i class="fas fa-home"></i>
+                    Inicio
+                </div>
+                <div class="sidebar-item" data-page="members">
+                    <i class="fas fa-users"></i>
+                    Miembros
+                </div>
+            </nav>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex-1">
+            <!-- Home Page -->
+            <div id="homePage" class="page active">
+                <div class="flex">
+                    <!-- Main Dashboard -->
+                    <div class="flex-1 p-6">
+                        <!-- Header -->
+                        <div class="flex items-center justify-between mb-8">
+                            <div>
+                                <h2 class="text-3xl font-bold text-white">Panel de Control</h2>
+                                <div class="flex items-center space-x-4 mt-2">
+                                    <span class="text-lg font-bold text-white" id="totalMembers">0 Miembros</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Main Actions Section -->
+                        <div class="mb-6">
+                            <h3 class="text-xl font-semibold text-white">Acciones Principales</h3>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                            <!-- Register Attendance Card -->
+                            <div class="action-card attendance" id="attendanceCard">
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="flex items-center space-x-2">
+                                        <i class="fas fa-calendar-check text-3xl text-green-400"></i>
+                                        <div class="text-xs text-gray-400">●●●</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-4">
+                                    <h4 class="text-xl font-bold text-white">Registrar Asistencia</h4>
+                                    <p class="text-gray-400 text-sm">Escanear NFC o Ingresar ID manualmente</p>
+                                </div>
+                                
+                                <div class="flex items-center justify-between">
+                                    <div class="text-sm text-gray-400">Listo para escanear</div>
+                                    <i class="fas fa-wifi text-green-400 text-xl"></i>
+                                </div>
+                            </div>
+
+                            <!-- Monthly Measurements Card -->
+                            <div class="action-card measurements" id="measurementsCard">
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="flex items-center space-x-2">
+                                        <i class="fas fa-weight-scale text-3xl text-yellow-400"></i>
+                                        <div class="text-xs text-gray-400">●●●</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-4">
+                                    <h4 class="text-xl font-bold text-white">Medidas Mensuales</h4>
+                                    <p class="text-gray-400 text-sm">Registrar peso y medidas</p>
+                                </div>
+                                
+                                <div class="flex items-center justify-between">
+                                    <div class="text-sm text-gray-400">Seleccionar miembro</div>
+                                    <i class="fas fa-ruler text-yellow-400 text-xl"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Stats Overview -->
+                        <div class="card p-6">
+                            <div class="flex items-center justify-between mb-6">
+                                <h3 class="text-xl font-semibold text-white">Resumen</h3>
+                                <div class="flex space-x-4">
+                                    <button class="text-gray-400 hover:text-white px-3 py-1">Estadísticas</button>
+                                </div>
+                            </div>
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                <div class="text-center">
+                                    <div class="text-2xl font-bold text-white mb-2" id="totalMembersDisplay">0</div>
+                                    <div class="text-gray-400 text-sm">Total Miembros</div>
+                                </div>
+                                <div class="text-center">
+                                    <div class="text-2xl font-bold text-green-400 mb-2" id="monthlyAttendance">0</div>
+                                    <div class="text-gray-400 text-sm">Asistencia Mensual</div>
+                                </div>
+                                <div class="text-center">
+                                    <div class="text-2xl font-bold text-yellow-400 mb-2" id="measurementsDone">0</div>
+                                    <div class="text-gray-400 text-sm">Medidas Tomadas</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Sidebar - User Registration -->
+                    <div class="w-80 p-6 border-l border-gray-700">
+                        <div class="flex items-center justify-between mb-6">
+                            <h3 class="text-lg font-semibold text-white">Registro de Miembros</h3>
+                            <button class="text-gray-400">
+                                <i class="fas fa-ellipsis-h"></i>
+                            </button>
+                        </div>
+                        
+                        <!-- New User Registration Button -->
+                        <div class="card p-4 mb-6">
+                            <div class="flex items-center space-x-3 mb-4">
+                                <div class="w-8 h-8 bg-indigo-500 bg-opacity-20 rounded-lg flex items-center justify-center">
+                                    <i class="fas fa-user-plus text-indigo-400"></i>
+                                </div>
+                                <span class="text-white font-medium">Nuevo Miembro</span>
+                            </div>
+                            
+                            <button id="openRegistrationModal" class="btn-primary w-full">
+                                <i class="fas fa-plus mr-2"></i>
+                                Registrar Nuevo Miembro
+                            </button>
+                        </div>
+
+                        <!-- Details Section -->
+                        <div>
+                            <h4 class="text-white font-semibold mb-4">Detalles</h4>
+                            
+                            <div class="space-y-4">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-gray-400 text-sm">Total Miembros</span>
+                                    <span class="text-white font-medium" id="sidebarTotalMembers">0</span>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <span class="text-gray-400 text-sm">Este Mes</span>
+                                    <span class="text-white font-medium" id="thisMonthCount">0</span>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <span class="text-gray-400 text-sm">Listos para Medidas</span>
+                                    <span class="text-white font-medium" id="readyCount">0</span>
+                                </div>
+                            </div>
+                            
+                            <hr class="border-gray-700 my-6">
+                            
+                            <!-- Export Button -->
+                            <div class="space-y-3">
+                                <div class="flex items-center space-x-2 text-sm text-gray-400">
+                                    <i class="fas fa-check text-green-400"></i>
+                                    <span>Exportar datos de miembros</span>
+                                </div>
+                                <div class="flex items-center space-x-2 text-sm text-gray-400">
+                                    <i class="fas fa-check text-green-400"></i>
+                                    <span>Seguimiento de asistencia</span>
+                                </div>
+                                <div class="flex items-center space-x-2 text-sm text-gray-400">
+                                    <i class="fas fa-check text-green-400"></i>
+                                    <span>Medidas mensuales</span>
+                                </div>
+                            </div>
+                            
+                            <div class="mt-6">
+                                <button id="exportBtn" class="btn-secondary w-full">
+                                    <i class="fas fa-download mr-2"></i>
+                                    Exportar Datos
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Members Page -->
+            <div id="membersPage" class="page p-6">
+                <!-- Header -->
+                <div class="flex items-center justify-between mb-8">
+                    <div>
+                        <h2 class="text-3xl font-bold text-white">Miembros</h2>
+                        <p class="text-gray-400 mt-1">Gestionar todos los miembros del gimnasio y su información</p>
+                    </div>
+                    <button id="addNewMember" class="btn-primary">
+                        <i class="fas fa-plus mr-2"></i>
+                        Agregar Nuevo Miembro
+                    </button>
+                </div>
+
+                <!-- Members Table -->
+                <div class="card p-6">
+                    <div class="flex items-center justify-between mb-6">
+                        <h3 class="text-xl font-semibold text-white">Todos los Miembros</h3>
+                        <div class="flex items-center space-x-4">
+                            <input type="text" id="searchMembers" class="input-field" placeholder="Buscar miembros..." style="width: 300px;">
+                        </div>
+                    </div>
+
+                    <div class="overflow-x-auto">
+                        <table id="membersTable">
+                            <thead>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Teléfono</th>
+                                    <th>Email</th>
+                                    <th>Edad</th>
+                                    <th>Sellos</th>
+                                    <th>Última Visita</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="membersTableBody">
+                                <!-- Dynamic content -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Registration Modal -->
+    <div id="registrationModal" class="modal">
+        <div class="modal-content">
+            <div class="flex items-center justify-between mb-6">
+                <h3 class="text-2xl font-semibold text-white">Registrar Nuevo Miembro</h3>
+                <button id="closeRegistrationModal" class="text-gray-400 hover:text-white">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            
+            <form id="registrationForm">
+                <div class="space-y-6">
+                    <!-- Personal Information -->
+                    <div class="measurement-section">
+                        <h4 class="text-lg font-semibold text-white mb-4">Información Personal</h4>
+                        
+                        <div class="form-row mb-4">
+                            <div>
+                                <label for="memberName" class="block text-sm font-medium text-gray-300 mb-2">Nombre Completo *</label>
+                                <input type="text" id="memberName" class="input-field" placeholder="Ingrese nombre completo" required>
+                            </div>
+                            <div>
+                                <label for="memberPhone" class="block text-sm font-medium text-gray-300 mb-2">Número de Teléfono *</label>
+                                <input type="tel" id="memberPhone" class="input-field" placeholder="Ingrese número de teléfono" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row mb-4">
+                            <div>
+                                <label for="memberEmail" class="block text-sm font-medium text-gray-300 mb-2">Correo Electrónico *</label>
+                                <input type="email" id="memberEmail" class="input-field" placeholder="Ingrese correo electrónico" required>
+                            </div>
+                            <div>
+                                <label for="memberBirthday" class="block text-sm font-medium text-gray-300 mb-2">Fecha de Nacimiento *</label>
+                                <input type="date" id="memberBirthday" class="input-field" required>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label for="memberProgram" class="block text-sm font-medium text-gray-300 mb-2">Tipo de Programa *</label>
+                            <select id="memberProgram" class="input-field" required>
+                                <option value="">Seleccione un programa...</option>
+                                <option value="Pérdida de Peso">Pérdida de Peso</option>
+                                <option value="Ganancia Muscular">Ganancia Muscular</option>
+                                <option value="Acondicionamiento General">Acondicionamiento General</option>
+                                <option value="Rehabilitación">Rehabilitación</option>
+                                <option value="Entrenamiento Funcional">Entrenamiento Funcional</option>
+                                <option value="CrossFit">CrossFit</option>
+                                <option value="Yoga">Yoga</option>
+                                <option value="Pilates">Pilates</option>
+                                <option value="Cardio">Cardio</option>
+                                <option value="Personalizado">Personalizado</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- NFC Information -->
+                    <div class="measurement-section">
+                        <h4 class="text-lg font-semibold text-white mb-4">Información NFC</h4>
+                        
+                        <div>
+                            <label for="nfcId" class="block text-sm font-medium text-gray-300 mb-2">ID NFC *</label>
+                            <div class="flex space-x-2">
+                                <input type="text" id="nfcId" class="input-field" placeholder="Escanear o ingresar ID NFC" required>
+                                <button type="button" id="scanNfcBtn" class="btn-secondary">
+                                    <i class="fas fa-wifi"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Initial Weight -->
+                    <div class="measurement-section">
+                        <h4 class="text-lg font-semibold text-white mb-4">Peso Inicial</h4>
+                        <div>
+                            <label for="initialWeight" class="block text-sm font-medium text-gray-300 mb-2">Peso (kg) *</label>
+                            <input type="number" id="initialWeight" step="0.1" class="input-field" placeholder="Ingrese peso en kg" required>
+                        </div>
+                    </div>
+
+                    <!-- Initial Body Measurements -->
+                    <div class="measurement-section">
+                        <h4 class="text-lg font-semibold text-white mb-4">Medidas Corporales Iniciales</h4>
+                        
+                        <div class="form-row mb-4">
+                            <div>
+                                <label for="initialAbdomen" class="block text-sm font-medium text-gray-300 mb-2">Abdomen/Pecho (cm) *</label>
+                                <input type="number" id="initialAbdomen" step="0.1" class="input-field" placeholder="Ingrese medida" required>
+                            </div>
+                            <div>
+                                <label for="initialCintura" class="block text-sm font-medium text-gray-300 mb-2">Cintura/Ombligo (cm) *</label>
+                                <input type="number" id="initialCintura" step="0.1" class="input-field" placeholder="Ingrese medida" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row mb-4">
+                            <div>
+                                <label for="initialCadera" class="block text-sm font-medium text-gray-300 mb-2">Cadera/Glúteos (cm) *</label>
+                                <input type="number" id="initialCadera" step="0.1" class="input-field" placeholder="Ingrese medida" required>
+                            </div>
+                            <div>
+                                <label for="initialPierna" class="block text-sm font-medium text-gray-300 mb-2">Pierna Cuádriceps (cm) *</label>
+                                <input type="number" id="initialPierna" step="0.1" class="input-field" placeholder="Ingrese medida" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row-3">
+                            <div>
+                                <label for="initialBrazo" class="block text-sm font-medium text-gray-300 mb-2">Brazo Flexionado Derecho (cm) *</label>
+                                <input type="number" id="initialBrazo" step="0.1" class="input-field" placeholder="Ingrese medida" required>
+                            </div>
+                            <div>
+                                <label for="initialTallaPantalon" class="block text-sm font-medium text-gray-300 mb-2">Talla Pantalón *</label>
+                                <input type="text" id="initialTallaPantalon" class="input-field" placeholder="ej., 32, M, L" required>
+                            </div>
+                            <div>
+                                <label for="initialTallaBlusa" class="block text-sm font-medium text-gray-300 mb-2">Talla Blusa *</label>
+                                <input type="text" id="initialTallaBlusa" class="input-field" placeholder="ej., S, M, L, XL" required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="flex space-x-4 mt-6">
+                    <button type="submit" class="btn-primary flex-1">
+                        <i class="fas fa-save mr-2"></i>
+                        Registrar Miembro
+                    </button>
+                    <button type="button" id="cancelRegistration" class="btn-secondary flex-1">
+                        Cancelar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Member Details Modal -->
+    <div id="memberDetailsModal" class="modal">
+        <div class="modal-content">
+            <div class="flex items-center justify-between mb-6">
+                <h3 class="text-2xl font-semibold text-white" id="memberDetailsTitle">Detalles del Miembro</h3>
+                <button id="closeMemberDetailsModal" class="text-gray-400 hover:text-white">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            
+            <!-- Tab Navigation -->
+            <div class="flex space-x-2 mb-6">
+                <button class="tab-button active" data-tab="info">Información Personal</button>
+                <button class="tab-button" data-tab="weightMeasurements">Peso y Medidas</button>
+                <button class="tab-button" data-tab="attendance">Asistencia</button>
+            </div>
+
+            <!-- Tab Content -->
+            <div id="infoTab" class="tab-content">
+                <div class="measurement-section">
+                    <div class="flex items-center justify-between mb-4">
+                        <h4 class="text-lg font-semibold text-white">Información Personal</h4>
+                        <button id="toggleEditMode" class="btn-secondary btn-small">
+                            <i class="fas fa-edit mr-2"></i>
+                            Editar
+                        </button>
+                    </div>
+                    
+                    <!-- View Mode -->
+                    <div id="viewMode" class="view-mode">
+                        <div class="form-row mb-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-300 mb-2">Nombre Completo</label>
+                                <div class="info-display" id="displayMemberName">-</div>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-300 mb-2">Número de Teléfono</label>
+                                <div class="info-display" id="displayMemberPhone">-</div>
+                            </div>
+                        </div>
+                        <div class="form-row mb-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-300 mb-2">Correo Electrónico</label>
+                                <div class="info-display" id="displayMemberEmail">-</div>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-300 mb-2">Fecha de Nacimiento</label>
+                                <div class="info-display" id="displayMemberBirthday">-</div>
+                            </div>
+                        </div>
+                        <div class="form-row mb-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-300 mb-2">Edad</label>
+                                <div class="info-display" id="displayMemberAge">-</div>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-300 mb-2">ID NFC</label>
+                                <div class="info-display" id="displayNfcId">-</div>
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium text-gray-300 mb-2">Tipo de Programa</label>
+                            <div class="info-display" id="displayMemberProgram">-</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Edit Mode -->
+                    <div id="editMode" class="edit-mode">
+                        <form id="editMemberForm">
+                            <input type="hidden" id="editMemberId">
+                            <div class="form-row mb-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-300 mb-2">Nombre Completo</label>
+                                    <input type="text" id="editMemberName" class="input-field">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-300 mb-2">Número de Teléfono</label>
+                                    <input type="tel" id="editMemberPhone" class="input-field">
+                                </div>
+                            </div>
+                            <div class="form-row mb-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-300 mb-2">Correo Electrónico</label>
+                                    <input type="email" id="editMemberEmail" class="input-field">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-300 mb-2">Fecha de Nacimiento</label>
+                                    <input type="date" id="editMemberBirthday" class="input-field">
+                                </div>
+                            </div>
+                            <div class="form-row mb-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-300 mb-2">ID NFC</label>
+                                    <input type="text" id="editNfcId" class="input-field">
+                                </div>
+                                <div>
+                                    <label for="editMemberProgram" class="block text-sm font-medium text-gray-300 mb-2">Tipo de Programa</label>
+                                    <select id="editMemberProgram" class="input-field">
+                                        <option value="">Seleccione un programa...</option>
+                                        <option value="Pérdida de Peso">Pérdida de Peso</option>
+                                        <option value="Ganancia Muscular">Ganancia Muscular</option>
+                                        <option value="Acondicionamiento General">Acondicionamiento General</option>
+                                        <option value="Rehabilitación">Rehabilitación</option>
+                                        <option value="Entrenamiento Funcional">Entrenamiento Funcional</option>
+                                        <option value="CrossFit">CrossFit</option>
+                                        <option value="Yoga">Yoga</option>
+                                        <option value="Pilates">Pilates</option>
+                                        <option value="Cardio">Cardio</option>
+                                        <option value="Personalizado">Personalizado</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="flex space-x-4">
+                                <button type="submit" class="btn-primary flex-1">
+                                    <i class="fas fa-save mr-2"></i>
+                                    Guardar Cambios
+                                </button>
+                                <button type="button" id="cancelEdit" class="btn-secondary flex-1">
+                                    Cancelar
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div id="weightMeasurementsTab" class="tab-content" style="display: none;">
+                <div class="measurement-section">
+                    <h4 class="text-lg font-semibold text-white mb-4">Historial de Peso y Medidas</h4>
+                    <div id="weightMeasurementsHistory">
+                        <!-- Dynamic content -->
+                    </div>
+                </div>
+            </div>
+
+            <div id="attendanceTab" class="tab-content" style="display: none;">
+                <div class="measurement-section">
+                    <h4 class="text-lg font-semibold text-white mb-4">Registros de Asistencia</h4>
+                    <div id="attendanceHistory">
+                        <!-- Dynamic content -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Attendance Modal -->
+    <div id="attendanceModal" class="modal">
+        <div class="modal-content">
+            <div class="flex items-center justify-between mb-6">
+                <h3 class="text-2xl font-semibold text-white">Registrar Asistencia</h3>
+                <button id="closeAttendanceModal" class="text-gray-400 hover:text-white">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            
+            <div class="space-y-4">
+                <button id="scanAttendanceBtn" class="btn-primary w-full">
+                    <i class="fas fa-wifi mr-2"></i>
+                    Escanear Etiqueta NFC
+                </button>
+                
+                <div class="text-center text-gray-400">o</div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-300 mb-2">Ingresar ID de miembro manualmente:</label>
+                    <input type="text" id="manualMemberId" class="input-field" placeholder="Ingrese ID del miembro">
+                </div>
+                
+                <button id="submitManualAttendance" class="btn-secondary w-full">
+                    <i class="fas fa-check mr-2"></i>
+                    Registrar Asistencia
+                </button>
+            </div>
+            
+            <div class="mt-4 text-center">
+                <p class="text-sm text-gray-400" id="attendanceStatus">Listo para registrar asistencia</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Measurements Modal -->
+    <div id="measurementsModal" class="modal">
+        <div class="modal-content">
+            <div class="flex items-center justify-between mb-6">
+                <h3 class="text-2xl font-semibold text-white">Medidas Mensuales</h3>
+                <button id="closeMeasurementsModal" class="text-gray-400 hover:text-white">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            
+            <form id="measurementsForm">
+                <div class="space-y-6">
+                    <!-- Member Selection -->
+                    <div class="measurement-section">
+                        <div class="mb-4">
+                            <label for="selectMember" class="block text-sm font-medium text-gray-300 mb-2">Seleccionar Miembro *</label>
+                            <select id="selectMember" class="input-field" required>
+                                <option value="">Elegir un miembro...</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Current Weight -->
+                    <div class="measurement-section">
+                        <h4 class="text-lg font-semibold text-white mb-4">Peso Actual</h4>
+                        <div>
+                            <label for="currentWeight" class="block text-sm font-medium text-gray-300 mb-2">Peso (kg) *</label>
+                            <input type="number" id="currentWeight" step="0.1" class="input-field" placeholder="Ingrese peso actual" required>
+                        </div>
+                    </div>
+
+                    <!-- Current Body Measurements -->
+                    <div class="measurement-section">
+                        <h4 class="text-lg font-semibold text-white mb-4">Medidas Corporales Actuales</h4>
+                        
+                        <div class="form-row mb-4">
+                            <div>
+                                <label for="currentAbdomen" class="block text-sm font-medium text-gray-300 mb-2">Abdomen/Pecho (cm) *</label>
+                                <input type="number" id="currentAbdomen" step="0.1" class="input-field" placeholder="Ingrese medida" required>
+                            </div>
+                            <div>
+                                <label for="currentCintura" class="block text-sm font-medium text-gray-300 mb-2">Cintura/Ombligo (cm) *</label>
+                                <input type="number" id="currentCintura" step="0.1" class="input-field" placeholder="Ingrese medida" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row mb-4">
+                            <div>
+                                <label for="currentCadera" class="block text-sm font-medium text-gray-300 mb-2">Cadera/Glúteos (cm) *</label>
+                                <input type="number" id="currentCadera" step="0.1" class="input-field" placeholder="Ingrese medida" required>
+                            </div>
+                            <div>
+                                <label for="currentPierna" class="block text-sm font-medium text-gray-300 mb-2">Pierna Cuádriceps (cm) *</label>
+                                <input type="number" id="currentPierna" step="0.1" class="input-field" placeholder="Ingrese medida" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row-3">
+                            <div>
+                                <label for="currentBrazo" class="block text-sm font-medium text-gray-300 mb-2">Brazo Flexionado Derecho (cm) *</label>
+                                <input type="number" id="currentBrazo" step="0.1" class="input-field" placeholder="Ingrese medida" required>
+                            </div>
+                            <div>
+                                <label for="currentTallaPantalon" class="block text-sm font-medium text-gray-300 mb-2">Talla Pantalón *</label>
+                                <input type="text" id="currentTallaPantalon" class="input-field" placeholder="ej., 32, M, L" required>
+                            </div>
+                            <div>
+                                <label for="currentTallaBlusa" class="block text-sm font-medium text-gray-300 mb-2">Talla Blusa *</label>
+                                <input type="text" id="currentTallaBlusa" class="input-field" placeholder="ej., S, M, L, XL" required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn-primary w-full mt-6">
+                    <i class="fas fa-save mr-2"></i>
+                    Guardar Medidas
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Snackbar -->
+    <div id="snackbar" class="snackbar">
+        <span id="snackbarText"></span>
+    </div>
+
+    <script>
+        const STORAGE_KEY = 'gymMembers';
+        let members = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+        let ndef = null;
+        let currentPage = 'home';
+        let isEditMode = false;
+
+        // Elements
+        const totalMembers = document.getElementById('totalMembers');
+        const totalMembersDisplay = document.getElementById('totalMembersDisplay');
+        const sidebarTotalMembers = document.getElementById('sidebarTotalMembers');
+        const monthlyAttendance = document.getElementById('monthlyAttendance');
+        const measurementsDone = document.getElementById('measurementsDone');
+        const thisMonthCount = document.getElementById('thisMonthCount');
+        const readyCount = document.getElementById('readyCount');
+
+        // Modal elements
+        const registrationModal = document.getElementById('registrationModal');
+        const memberDetailsModal = document.getElementById('memberDetailsModal');
+        const attendanceModal = document.getElementById('attendanceModal');
+        const measurementsModal = document.getElementById('measurementsModal');
+        const snackbar = document.getElementById('snackbar');
+
+        // Show snackbar
+        function showSnackbar(message, type = 'success') {
+            document.getElementById('snackbarText').textContent = message;
+            snackbar.className = `snackbar ${type} show`;
+            setTimeout(() => snackbar.classList.remove('show'), 4000);
+        }
+
+        // Save members to localStorage
+        function saveMembers() {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(members));
+            updateStats();
+            updateMemberSelect();
+            renderMembersTable();
+        }
+
+        // Update stats display
+        function updateStats() {
+            const total = members.length;
+            let monthlyAttendanceCount = 0;
+            let measurementsDoneCount = 0;
+            let readyForMeasurements = 0;
+
+            const currentMonth = new Date().getMonth();
+            const currentYear = new Date().getFullYear();
+
+            members.forEach(member => {
+                // Count monthly attendance
+                if (member.attendance) {
+                    member.attendance.forEach(att => {
+                        const attDate = new Date(att.date);
+                        if (attDate.getMonth() === currentMonth && attDate.getFullYear() === currentYear) {
+                            monthlyAttendanceCount++;
+                        }
+                    });
+                }
+
+                // Count measurements done this month
+                if (member.measurements && member.measurements.length > 1) {
+                    const lastMeasurement = member.measurements[member.measurements.length - 1];
+                    const measDate = new Date(lastMeasurement.date);
+                    if (measDate.getMonth() === currentMonth && measDate.getFullYear() === currentYear) {
+                        measurementsDoneCount++;
+                    }
+                }
+
+                // Count ready for measurements (4 stamps)
+                if (member.stamps >= 4) {
+                    readyForMeasurements++;
+                }
+            });
+
+            totalMembers.textContent = `${total} Miembros`;
+            totalMembersDisplay.textContent = total;
+            sidebarTotalMembers.textContent = total;
+            monthlyAttendance.textContent = monthlyAttendanceCount;
+            measurementsDone.textContent = measurementsDoneCount;
+            thisMonthCount.textContent = monthlyAttendanceCount;
+            readyCount.textContent = readyForMeasurements;
+        }
+
+        // Update member select dropdown
+        function updateMemberSelect() {
+            const select = document.getElementById('selectMember');
+            select.innerHTML = '<option value="">Elegir un miembro...</option>';
+            
+            members.forEach(member => {
+                const option = document.createElement('option');
+                option.value = member.nfcId;
+                option.textContent = `${member.name} (${member.stamps || 0}/4 sellos)`;
+                select.appendChild(option);
+            });
+        }
+
+        // Render members table
+        function renderMembersTable() {
+            const tbody = document.getElementById('membersTableBody');
+            if (!tbody) return;
+            
+            tbody.innerHTML = '';
+
+            const searchTerm = document.getElementById('searchMembers')?.value.toLowerCase() || '';
+            const filteredMembers = members.filter(member =>
+                member.name.toLowerCase().includes(searchTerm) ||
+                member.email.toLowerCase().includes(searchTerm) ||
+                member.phone.includes(searchTerm)
+            );
+
+            filteredMembers.forEach(member => {
+                const lastVisit = member.attendance && member.attendance.length > 0 
+                    ? new Date(member.attendance[member.attendance.length - 1].date).toLocaleDateString()
+                    : 'Nunca';
+
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>
+                        <div class="flex items-center space-x-3">
+                            <div class="w-8 h-8 bg-indigo-500 rounded-full flex items-center justify-center">
+                                <span class="text-white text-sm font-medium">${member.name.charAt(0).toUpperCase()}</span>
+                            </div>
+                            <span class="text-white font-medium">${member.name}</span>
+                        </div>
+                    </td>
+                    <td class="text-gray-300">${member.phone}</td>
+                    <td class="text-gray-300">${member.email}</td>
+                    <td class="text-gray-300">${member.age}</td>
+                    <td>
+                        <span class="px-2 py-1 text-xs rounded-full ${member.stamps >= 4 ? 'bg-green-600' : 'bg-gray-600'} text-white">
+                            ${member.stamps || 0}/4
+                        </span>
+                    </td>
+                    <td class="text-gray-300">${lastVisit}</td>
+                    <td>
+                        <button class="btn-secondary btn-small mr-2" onclick="viewMember('${member.nfcId}')">
+                            <i class="fas fa-eye mr-1"></i>Ver
+                        </button>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        // Toggle edit mode
+        function toggleEditMode() {
+            const viewMode = document.getElementById('viewMode');
+            const editMode = document.getElementById('editMode');
+            const toggleBtn = document.getElementById('toggleEditMode');
+            
+            if (isEditMode) {
+                // Switch to view mode
+                isEditMode = false;
+                viewMode.style.display = 'block';
+                editMode.style.display = 'none';
+                toggleBtn.innerHTML = '<i class="fas fa-edit mr-2"></i>Editar';
+                toggleBtn.className = 'btn-secondary btn-small';
+            } else {
+                // Switch to edit mode
+                isEditMode = true;
+                viewMode.style.display = 'none';
+                editMode.style.display = 'block';
+                toggleBtn.innerHTML = '<i class="fas fa-eye mr-2"></i>Ver';
+                toggleBtn.className = 'btn-primary btn-small';
+            }
+        }
+
+        // View member details
+        window.viewMember = function(nfcId) {
+            const member = members.find(m => m.nfcId === nfcId);
+            if (!member) return;
+
+            // Reset to view mode
+            isEditMode = false;
+            document.getElementById('viewMode').style.display = 'block';
+            document.getElementById('editMode').style.display = 'none';
+            document.getElementById('toggleEditMode').innerHTML = '<i class="fas fa-edit mr-2"></i>Editar';
+            document.getElementById('toggleEditMode').className = 'btn-secondary btn-small';
+
+            // Populate member details
+            document.getElementById('memberDetailsTitle').textContent = `${member.name} - Detalles`;
+            populateMemberDetails(member);
+            memberDetailsModal.style.display = 'flex';
+            
+            // Reset to first tab
+            document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(c => c.style.display = 'none');
+            document.querySelector('.tab-button[data-tab="info"]').classList.add('active');
+            document.getElementById('infoTab').style.display = 'block';
+        };
+
+        // Populate member details in tabs
+        function populateMemberDetails(member) {
+            // Populate view mode
+            document.getElementById('displayMemberName').textContent = member.name || '-';
+            document.getElementById('displayMemberPhone').textContent = member.phone || '-';
+            document.getElementById('displayMemberEmail').textContent = member.email || '-';
+            document.getElementById('displayMemberBirthday').textContent = member.birthday ? new Date(member.birthday).toLocaleDateString() : '-';
+            document.getElementById('displayMemberAge').textContent = member.age || '-';
+            document.getElementById('displayNfcId').textContent = member.nfcId || '-';
+            document.getElementById('displayMemberProgram').textContent = member.program || '-';
+
+            // Populate edit mode
+            document.getElementById('editMemberId').value = member.nfcId;
+            document.getElementById('editMemberName').value = member.name;
+            document.getElementById('editMemberPhone').value = member.phone;
+            document.getElementById('editMemberEmail').value = member.email;
+            document.getElementById('editMemberBirthday').value = member.birthday;
+            document.getElementById('editNfcId').value = member.nfcId;
+            document.getElementById('editMemberProgram').value = member.program || '';
+
+            // Combined Weight & Measurements History
+            const weightMeasurementsHistory = document.getElementById('weightMeasurementsHistory');
+            weightMeasurementsHistory.innerHTML = '';
+            
+            if (member.measurements && member.measurements.length > 0) {
+                member.measurements.forEach((measurement, index) => {
+                    const div = document.createElement('div');
+                    div.className = 'history-item';
+                    
+                    // Calculate changes from previous measurement
+                    let changesHTML = '';
+                    if (index > 0) {
+                        const prev = member.measurements[index - 1];
+                        const weightChange = parseFloat(measurement.weight) - parseFloat(prev.weight);
+                        const abdomenChange = parseFloat(measurement.abdomen) - parseFloat(prev.abdomen);
+                        const cinturaChange = parseFloat(measurement.cintura) - parseFloat(prev.cintura);
+                        const caderaChange = parseFloat(measurement.cadera) - parseFloat(prev.cadera);
+                        
+                        changesHTML = `
+                            <div class="measurement-comparison">
+                                <h6 class="text-gray-300 font-medium mb-2">Cambios desde la medida anterior:</h6>
+                                <div class="grid grid-cols-2 gap-2 text-sm">
+                                    <div>Peso: <span class="${weightChange >= 0 ? 'text-red-400' : 'text-green-400'}">${weightChange > 0 ? '+' : ''}${weightChange.toFixed(1)} kg</span></div>
+                                    <div>Abdomen: <span class="${abdomenChange >= 0 ? 'text-red-400' : 'text-green-400'}">${abdomenChange > 0 ? '+' : ''}${abdomenChange.toFixed(1)} cm</span></div>
+                                    <div>Cintura: <span class="${cinturaChange >= 0 ? 'text-red-400' : 'text-green-400'}">${cinturaChange > 0 ? '+' : ''}${cinturaChange.toFixed(1)} cm</span></div>
+                                    <div>Cadera: <span class="${caderaChange >= 0 ? 'text-red-400' : 'text-green-400'}">${caderaChange > 0 ? '+' : ''}${caderaChange.toFixed(1)} cm</span></div>
+                                </div>
+                            </div>
+                        `;
+                    }
+                    
+                    div.innerHTML = `
+                        <div class="mb-4">
+                            <div class="flex justify-between items-center mb-3">
+                                <div>
+                                    <h5 class="text-white font-medium">${measurement.type === 'initial' ? 'Inicial' : 'Mensual'} Registro #${index + 1}</h5>
+                                    <p class="text-gray-400 text-sm">${new Date(measurement.date).toLocaleDateString()}</p>
+                                </div>
+                                <div class="text-right">
+                                    <p class="text-white text-xl font-bold">${measurement.weight} kg</p>
+                                </div>
+                            </div>
+                            
+                            <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mb-3">
+                                <div class="text-sm">
+                                    <span class="text-gray-400">Abdomen/Pecho:</span>
+                                    <span class="text-white font-medium">${measurement.abdomen} cm</span>
+                                </div>
+                                <div class="text-sm">
+                                    <span class="text-gray-400">Cintura/Ombligo:</span>
+                                    <span class="text-white font-medium">${measurement.cintura} cm</span>
+                                </div>
+                                <div class="text-sm">
+                                    <span class="text-gray-400">Cadera/Glúteos:</span>
+                                    <span class="text-white font-medium">${measurement.cadera} cm</span>
+                                </div>
+                                <div class="text-sm">
+                                    <span class="text-gray-400">Pierna Cuádriceps:</span>
+                                    <span class="text-white font-medium">${measurement.pierna} cm</span>
+                                </div>
+                                <div class="text-sm">
+                                    <span class="text-gray-400">Brazo Flexionado:</span>
+                                    <span class="text-white font-medium">${measurement.brazo} cm</span>
+                                </div>
+                                <div class="text-sm">
+                                    <span class="text-gray-400">Talla Pantalón:</span>
+                                    <span class="text-white font-medium">${measurement.tallaPantalon}</span>
+                                </div>
+                                <div class="text-sm">
+                                    <span class="text-gray-400">Talla Blusa:</span>
+                                    <span class="text-white font-medium">${measurement.tallaBlusa}</span>
+                                </div>
+                            </div>
+                            
+                            ${changesHTML}
+                        </div>
+                    `;
+                    weightMeasurementsHistory.appendChild(div);
+                });
+            } else {
+                weightMeasurementsHistory.innerHTML = '<p class="text-gray-400">No se encontraron registros de peso y medidas.</p>';
+            }
+
+            // Attendance History
+            const attendanceHistory = document.getElementById('attendanceHistory');
+            attendanceHistory.innerHTML = '';
+            if (member.attendance && member.attendance.length > 0) {
+                member.attendance.slice().reverse().forEach((attendance, index) => {
+                    const div = document.createElement('div');
+                    div.className = 'history-item';
+                    div.innerHTML = `
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <h5 class="text-white font-medium">Visita #${member.attendance.length - index}</h5>
+                                <p class="text-gray-400 text-sm">${new Date(attendance.date).toLocaleString()}</p>
+                            </div>
+                            <div class="text-green-400">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                        </div>
+                    `;
+                    attendanceHistory.appendChild(div);
+                });
+            } else {
+                attendanceHistory.innerHTML = '<p class="text-gray-400">No se encontraron registros de asistencia.</p>';
+            }
+        }
+
+        // Handle NFC scanning
+        async function startNFCScan(callback) {
+            if (!('NDEFReader' in window)) {
+                showSnackbar('NFC no compatible con este navegador/dispositivo.', 'error');
+                return;
+            }
+
+            try {
+                ndef = new NDEFReader();
+                await ndef.scan();
+                ndef.onreading = event => {
+                    callback(event.serialNumber);
+                };
+                showSnackbar('Mantenga la etiqueta NFC cerca del dispositivo...', 'warning');
+            } catch (error) {
+                showSnackbar('Error al escanear NFC: ' + error.message, 'error');
+            }
+        }
+
+        // Calculate age from birthday
+        function calculateAge(birthday) {
+            const birthDate = new Date(birthday);
+            const today = new Date();
+            let age = today.getFullYear() - birthDate.getFullYear();
+            const monthDiff = today.getMonth() - birthDate.getMonth();
+            
+            if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+                age--;
+            }
+            
+            return age;
+        }
+
+        // Navigation handling
+        document.querySelectorAll('.sidebar-item').forEach(item => {
+            item.addEventListener('click', () => {
+                const page = item.getAttribute('data-page');
+                if (page) {
+                    // Update active sidebar item
+                    document.querySelectorAll('.sidebar-item').forEach(i => i.classList.remove('active'));
+                    item.classList.add('active');
+                    
+                    // Show/hide pages
+                    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+                    document.getElementById(page + 'Page').classList.add('active');
+                    
+                    currentPage = page;
+                    
+                    if (page === 'members') {
+                        renderMembersTable();
+                    }
+                }
+            });
+        });
+
+        // Search functionality
+        document.addEventListener('DOMContentLoaded', () => {
+            const searchInput = document.getElementById('searchMembers');
+            if (searchInput) {
+                searchInput.addEventListener('input', renderMembersTable);
+            }
+        });
+
+        // Tab functionality
+        document.querySelectorAll('.tab-button').forEach(button => {
+            button.addEventListener('click', () => {
+                const tab = button.getAttribute('data-tab');
+                
+                // Update active tab button
+                document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
+                button.classList.add('active');
+                
+                // Show/hide tab content
+                document.querySelectorAll('.tab-content').forEach(content => {
+                    content.style.display = 'none';
+                });
+                document.getElementById(tab + 'Tab').style.display = 'block';
+            });
+        });
+
+        // Edit mode toggle
+        document.getElementById('toggleEditMode').addEventListener('click', toggleEditMode);
+
+        // Cancel edit
+        document.getElementById('cancelEdit').addEventListener('click', () => {
+            toggleEditMode();
+        });
+
+        // Event Listeners
+        document.getElementById('openRegistrationModal').addEventListener('click', () => {
+            registrationModal.style.display = 'flex';
+        });
+
+        document.getElementById('addNewMember').addEventListener('click', () => {
+            registrationModal.style.display = 'flex';
+        });
+
+        document.getElementById('attendanceCard').addEventListener('click', () => {
+            attendanceModal.style.display = 'flex';
+        });
+
+        document.getElementById('measurementsCard').addEventListener('click', () => {
+            updateMemberSelect();
+            measurementsModal.style.display = 'flex';
+        });
+
+        // Close modals
+        document.getElementById('closeRegistrationModal').addEventListener('click', () => {
+            registrationModal.style.display = 'none';
+        });
+
+        document.getElementById('closeMemberDetailsModal').addEventListener('click', () => {
+            memberDetailsModal.style.display = 'none';
+            isEditMode = false;
+        });
+
+        document.getElementById('closeAttendanceModal').addEventListener('click', () => {
+            attendanceModal.style.display = 'none';
+        });
+
+        document.getElementById('closeMeasurementsModal').addEventListener('click', () => {
+            measurementsModal.style.display = 'none';
+        });
+
+        document.getElementById('cancelRegistration').addEventListener('click', () => {
+            registrationModal.style.display = 'none';
+        });
+
+        // Member registration form
+        document.getElementById('registrationForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const name = document.getElementById('memberName').value;
+            const phone = document.getElementById('memberPhone').value;
+            const email = document.getElementById('memberEmail').value;
+            const birthday = document.getElementById('memberBirthday').value;
+            const program = document.getElementById('memberProgram').value;
+            const nfcId = document.getElementById('nfcId').value;
+            const initialWeight = document.getElementById('initialWeight').value;
+
+            // Get individual measurements
+            const measurements = {
+                abdomen: document.getElementById('initialAbdomen').value,
+                cintura: document.getElementById('initialCintura').value,
+                cadera: document.getElementById('initialCadera').value,
+                pierna: document.getElementById('initialPierna').value,
+                brazo: document.getElementById('initialBrazo').value,
+                tallaPantalon: document.getElementById('initialTallaPantalon').value,
+                tallaBlusa: document.getElementById('initialTallaBlusa').value
+            };
+
+            // Check if NFC ID already exists
+            const existingMember = members.find(m => m.nfcId === nfcId);
+            if (existingMember) {
+                showSnackbar('¡ID NFC ya registrado!', 'error');
+                return;
+            }
+
+            // Check if email already exists
+            const existingEmail = members.find(m => m.email === email);
+            if (existingEmail) {
+                showSnackbar('¡Correo electrónico ya registrado!', 'error');
+                return;
+            }
+
+            const newMember = {
+                name,
+                phone,
+                email,
+                birthday,
+                age: calculateAge(birthday),
+                program,
+                nfcId,
+                stamps: 0,
+                attendance: [],
+                measurements: [{
+                    date: new Date().toISOString(),
+                    weight: initialWeight,
+                    abdomen: measurements.abdomen,
+                    cintura: measurements.cintura,
+                    cadera: measurements.cadera,
+                    pierna: measurements.pierna,
+                    brazo: measurements.brazo,
+                    tallaPantalon: measurements.tallaPantalon,
+                    tallaBlusa: measurements.tallaBlusa,
+                    type: 'initial'
+                }],
+                registrationDate: new Date().toISOString()
+            };
+
+            members.push(newMember);
+            saveMembers();
+            showSnackbar(`¡${name} registrado exitosamente!`);
+            registrationModal.style.display = 'none';
+            document.getElementById('registrationForm').reset();
+        });
+
+        // Edit member form
+        document.getElementById('editMemberForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const nfcId = document.getElementById('editMemberId').value;
+            const member = members.find(m => m.nfcId === nfcId);
+            
+            if (member) {
+                member.name = document.getElementById('editMemberName').value;
+                member.phone = document.getElementById('editMemberPhone').value;
+                member.email = document.getElementById('editMemberEmail').value;
+                member.birthday = document.getElementById('editMemberBirthday').value;
+                member.age = calculateAge(member.birthday);
+                member.program = document.getElementById('editMemberProgram').value;
+                member.nfcId = document.getElementById('editNfcId').value;
+                
+                saveMembers();
+                showSnackbar(`¡Información de ${member.name} actualizada exitosamente!`);
+                
+                // Update view mode with new data
+                populateMemberDetails(member);
+                toggleEditMode(); // Switch back to view mode
+            }
+        });
+
+        // Scan NFC for new user registration
+        document.getElementById('scanNfcBtn').addEventListener('click', () => {
+            startNFCScan((tagId) => {
+                document.getElementById('nfcId').value = tagId;
+                showSnackbar('¡ID NFC capturado!');
+            });
+        });
+
+        // Attendance scanning
+        document.getElementById('scanAttendanceBtn').addEventListener('click', () => {
+            startNFCScan((tagId) => {
+                const member = members.find(m => m.nfcId === tagId);
+                if (!member) {
+                    showSnackbar('¡Miembro no encontrado!', 'error');
+                    return;
+                }
+
+                // Add attendance record
+                if (!member.attendance) member.attendance = [];
+                member.attendance.push({
+                    date: new Date().toISOString()
+                });
+
+                // Add stamp
+                member.stamps = (member.stamps || 0) + 1;
+
+                saveMembers();
+                showSnackbar(`¡Asistencia registrada para ${member.name}! (${member.stamps}/4 sellos)`);
+                attendanceModal.style.display = 'none';
+                document.getElementById('attendanceStatus').textContent = `${member.name} - ${member.stamps}/4 sellos`;
+            });
+        });
+
+        // Manual attendance registration
+        document.getElementById('submitManualAttendance').addEventListener('click', () => {
+            const memberId = document.getElementById('manualMemberId').value;
+            if (!memberId) {
+                showSnackbar('¡Por favor ingrese ID del miembro!', 'error');
+                return;
+            }
+
+            const member = members.find(m => 
+                m.nfcId === memberId || 
+                m.name.toLowerCase().includes(memberId.toLowerCase()) ||
+                m.email === memberId ||
+                m.phone === memberId
+            );
+            
+            if (!member) {
+                showSnackbar('¡Miembro no encontrado!', 'error');
+                return;
+            }
+
+            // Add attendance record
+            if (!member.attendance) member.attendance = [];
+            member.attendance.push({
+                date: new Date().toISOString()
+            });
+
+            // Add stamp
+            member.stamps = (member.stamps || 0) + 1;
+
+            saveMembers();
+            showSnackbar(`¡Asistencia registrada para ${member.name}! (${member.stamps}/4 sellos)`);
+            attendanceModal.style.display = 'none';
+            document.getElementById('manualMemberId').value = '';
+        });
+
+        // Measurements form
+        document.getElementById('measurementsForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const memberId = document.getElementById('selectMember').value;
+            const weight = document.getElementById('currentWeight').value;
+
+            // Get individual measurements
+            const measurements = {
+                abdomen: document.getElementById('currentAbdomen').value,
+                cintura: document.getElementById('currentCintura').value,
+                cadera: document.getElementById('currentCadera').value,
+                pierna: document.getElementById('currentPierna').value,
+                brazo: document.getElementById('currentBrazo').value,
+                tallaPantalon: document.getElementById('currentTallaPantalon').value,
+                tallaBlusa: document.getElementById('currentTallaBlusa').value
+            };
+
+            const member = members.find(m => m.nfcId === memberId);
+            if (!member) {
+                showSnackbar('¡Por favor seleccione un miembro!', 'error');
+                return;
+            }
+
+            // Add measurement record
+            if (!member.measurements) member.measurements = [];
+            member.measurements.push({
+                date: new Date().toISOString(),
+                weight: weight,
+                abdomen: measurements.abdomen,
+                cintura: measurements.cintura,
+                cadera: measurements.cadera,
+                pierna: measurements.pierna,
+                brazo: measurements.brazo,
+                tallaPantalon: measurements.tallaPantalon,
+                tallaBlusa: measurements.tallaBlusa,
+                type: 'monthly'
+            });
+
+            // Reset stamps after measurements
+            member.stamps = 0;
+
+            saveMembers();
+            showSnackbar(`¡Medidas registradas para ${member.name}!`);
+            measurementsModal.style.display = 'none';
+            document.getElementById('measurementsForm').reset();
+        });
+
+        // Export functionality
+        document.getElementById('exportBtn').addEventListener('click', () => {
+            const csv = 'Nombre,Teléfono,Email,Fecha Nacimiento,Edad,Tipo Programa,ID NFC,Sellos Actuales,Total Asistencia,Fecha Registro,Peso Actual,Peso Inicial,Cambio Peso,Abdomen Actual,Cintura Actual,Cadera Actual,Pierna Actual,Brazo Actual,Talla Pantalón Actual,Talla Blusa Actual\n' +
+                members.map(m => {
+                    const latest = m.measurements && m.measurements.length > 0 ? m.measurements[m.measurements.length - 1] : {};
+                    const initial = m.measurements && m.measurements.length > 0 ? m.measurements[0] : {};
+                    const attendanceCount = m.attendance ? m.attendance.length : 0;
+                    const weightChange = initial.weight && latest.weight ? (parseFloat(latest.weight) - parseFloat(initial.weight)).toFixed(1) : 'N/A';
+                    
+                    return `"${m.name}","${m.phone}","${m.email}","${m.birthday}","${m.age}","${m.program || ''}","${m.nfcId}","${m.stamps || 0}","${attendanceCount}","${m.registrationDate}","${latest.weight || ''}","${initial.weight || ''}","${weightChange}","${latest.abdomen || ''}","${latest.cintura || ''}","${latest.cadera || ''}","${latest.pierna || ''}","${latest.brazo || ''}","${latest.tallaPantalon || ''}","${latest.tallaBlusa || ''}"`;
+                }).join('\n');
+            
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'miembros_gimnasio_completo_' + new Date().toISOString().split('T')[0] + '.csv';
+            a.click();
+            URL.revokeObjectURL(url);
+            showSnackbar('¡Datos completos de miembros exportados exitosamente!');
+        });
+
+        // Close modals when clicking outside
+        [registrationModal, memberDetailsModal, attendanceModal, measurementsModal].forEach(modal => {
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.style.display = 'none';
+                    if (modal === memberDetailsModal) {
+                        isEditMode = false;
+                    }
+                }
+            });
+        });
+
+        // Initialize
+        updateStats();
+        updateMemberSelect();
+        renderMembersTable();
+    </script>
+</body>
+</html>
+
