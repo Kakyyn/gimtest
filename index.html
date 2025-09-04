@@ -7,8 +7,8 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="GymFlow">
     <meta name="theme-color" content="#0f0f23">
-    <link rel="apple-touch-icon" href="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/3d36a96f-d43f-4823-8251-e7fb4b166e6b.png" alt="GymFlow app icon with dumbbell symbol and modern gradient background for iPhone home screen">
-    <title>GymFlow - Sistema NFC</title>
+    <link rel="apple-touch-icon" href="https://placehold.co/180x180" alt="GymFlow app icon with dumbbell symbol and modern gradient background for iPhone home screen">
+    <title>Radical Fit Tracker</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
@@ -23,7 +23,7 @@
         
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: #0f0f23;
+            background: #121213;
             color: #ffffff;
             margin: 0;
             padding: 0;
@@ -43,13 +43,13 @@
         
         .status-bar-spacer {
             height: env(safe-area-inset-top, 44px);
-            background: #1a1a2e;
+            background: #191919;
         }
         
         .mobile-header {
-            background: #1a1a2e;
+            background: #191919;
             padding: 16px 16px 12px 16px;
-            border-bottom: 1px solid #16213e;
+            border-bottom: 1px solid #4c4c4e;
             position: relative;
             z-index: 30;
         }
@@ -62,8 +62,8 @@
         }
         
         .bottom-nav {
-            background: #1a1a2e;
-            border-top: 1px solid #16213e;
+            background: #191919;
+            border-top: 1px solid #4c4c4e;
             padding: 8px 0;
             padding-bottom: max(8px, env(safe-area-inset-bottom));
             position: relative;
@@ -75,19 +75,19 @@
             flex-direction: column;
             align-items: center;
             padding: 12px 8px;
-            color: #9ca3af;
+            color: #b4b4b4;
             cursor: pointer;
             transition: all 0.2s ease;
             -webkit-tap-highlight-color: transparent;
         }
         
         .nav-item.active {
-            color: #6366f1;
+            color: #e0c517;
         }
         
         .nav-item:active {
             transform: scale(0.95);
-            background: rgba(99, 102, 241, 0.1);
+            background: rgba(241, 215, 99, 0.1);
             border-radius: 12px;
         }
         
@@ -102,9 +102,9 @@
         }
         
         .card {
-            background: #1a1a2e;
+            background: #1c1c22;
             border-radius: 20px;
-            border: 1px solid #16213e;
+            border: 1px solid #4c4c4e;
             transition: all 0.2s ease;
             margin-bottom: 16px;
             -webkit-tap-highlight-color: transparent;
@@ -113,7 +113,7 @@
         .action-card {
             background: #1a1a2e;
             border-radius: 20px;
-            border: 1px solid #16213e;
+            border: 1px solid #4c4c4e;
             padding: 24px;
             cursor: pointer;
             transition: all 0.2s ease;
@@ -138,7 +138,7 @@
         }
         
         .btn-primary {
-            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            background: linear-gradient(135deg, #998610 0%, #998610 100%);
             border: none;
             color: white;
             padding: 18px 24px;
@@ -152,12 +152,12 @@
             justify-content: center;
             font-size: 16px;
             -webkit-tap-highlight-color: transparent;
-            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+            box-shadow: 0 4px 15px rgba(241, 220, 99, 0.3);
         }
         
         .btn-primary:active {
             transform: scale(0.95);
-            box-shadow: 0 2px 10px rgba(99, 102, 241, 0.4);
+            box-shadow: 0 2px 10px rgba(241, 232, 99, 0.4);
         }
         
         .btn-secondary {
@@ -179,7 +179,7 @@
         
         .btn-secondary:active {
             transform: scale(0.95);
-            background: #4b5563;
+            background: #63624b;
         }
         
         .btn-small {
@@ -188,7 +188,7 @@
         }
         
         .input-field {
-            background: #374151;
+            background: #26282b;
             border: 1px solid #4b5563;
             color: white;
             padding: 18px 16px;
@@ -202,8 +202,8 @@
         
         .input-field:focus {
             outline: none;
-            border-color: #6366f1;
-            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+            border-color: #1d1d20;
+            box-shadow: 0 0 0 4px rgba(17, 18, 43, 0.1);
         }
         
         .modal {
@@ -222,8 +222,8 @@
         }
         
         .modal-content {
-            background: #1a1a2e;
-            border: 1px solid #16213e;
+            background: #161619;
+            border: 1px solid #4c4c4e;
             padding: 24px;
             border-radius: 24px;
             width: 100%;
@@ -231,10 +231,11 @@
             box-sizing: border-box;
             margin-top: 40px;
             margin-bottom: 40px;
+            overflow-y: auto;  
         }
         
         .measurement-section {
-            background: #16213e;
+            background: #1d1e20;
             border-radius: 16px;
             padding: 20px;
             margin-bottom: 16px;
@@ -280,9 +281,9 @@
         }
         
         .tab-button.active {
-            background: #6366f1;
+            background: #e0c517;
             color: white;
-            border-color: #6366f1;
+            border-color: #f1ea63;
         }
         
         .tab-button:active {
@@ -294,7 +295,7 @@
             border-radius: 12px;
             padding: 16px;
             margin-bottom: 12px;
-            border-left: 4px solid #6366f1;
+            border-left: 4px solid #e0c517;
         }
         
         .info-display {
@@ -313,7 +314,7 @@
             border-radius: 16px;
             padding: 20px;
             margin-bottom: 12px;
-            border-left: 4px solid #6366f1;
+            border-left: 4px solid #e0c517;
             cursor: pointer;
             transition: all 0.2s ease;
             -webkit-tap-highlight-color: transparent;
@@ -326,33 +327,40 @@
         
         .snackbar {
             position: fixed;
-            bottom: calc(80px + env(safe-area-inset-bottom, 0px));
+            top: calc(20px + env(safe-area-inset-top, 0px));
             left: 16px;
             right: 16px;
             padding: 16px 20px;
             border-radius: 16px;
             color: white;
             font-weight: 600;
-            transform: translateY(100px);
-            transition: transform 0.3s ease;
-            z-index: 1001;
+            transform: translateY(-120px);
+            transition: transform 0.4s ease, opacity 0.4s ease;
+            z-index: 2000;
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+            opacity: 0;
+            display: flex;
+            align-items: center;
         }
         
         .snackbar.show { 
-            transform: translateY(0); 
+            transform: translateY(0);
+            opacity: 1;
         }
         
         .snackbar.success { 
-            background: linear-gradient(135deg, #10b981 0%, #059669 100%); 
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            border-left: 4px solid #047857;
         }
         
         .snackbar.warning { 
-            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); 
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            border-left: 4px solid #b45309;
         }
         
         .snackbar.error { 
-            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); 
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            border-left: 4px solid #b91c1c;
         }
         
         select {
@@ -388,13 +396,13 @@
             right: 20px;
             width: 60px;
             height: 60px;
-            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            background: linear-gradient(135deg, #e0c517 0%, #e0c517 100%);
             border-radius: 50%;
             border: none;
             color: white;
             font-size: 24px;
             cursor: pointer;
-            box-shadow: 0 8px 25px rgba(99, 102, 241, 0.5);
+            box-shadow: 0 8px 25px rgba(241, 222, 99, 0.5);
             z-index: 20;
             transition: all 0.2s ease;
             -webkit-tap-highlight-color: transparent;
@@ -416,47 +424,6 @@
             }
         }
         
-        /* Safe area adjustments */
-        .safe-area-top {
-            padding-top: env(safe-area-inset-top);
-        }
-        
-        .safe-area-bottom {
-            padding-bottom: env(safe-area-inset-bottom);
-        }
-        
-        .safe-area-left {
-            padding-left: env(safe-area-inset-left);
-        }
-        
-        .safe-area-right {
-            padding-right: env(safe-area-inset-right);
-        }
-        
-        /* Haptic feedback simulation */
-        .haptic-light:active {
-            animation: hapticLight 0.1s ease;
-        }
-        
-        @keyframes hapticLight {
-            0% { transform: scale(1); }
-            50% { transform: scale(0.98); }
-            100% { transform: scale(1); }
-        }
-        
-        /* Dark mode detection */
-        @media (prefers-color-scheme: dark) {
-            .status-bar-spacer {
-                background: #000000;
-            }
-        }
-        
-        /* Accessibility improvements */
-        .btn-primary:focus, .btn-secondary:focus, .input-field:focus {
-            outline: 2px solid #6366f1;
-            outline-offset: 2px;
-        }
-        
         /* Loading state */
         .loading {
             opacity: 0.6;
@@ -465,7 +432,7 @@
         
         .spinner {
             border: 2px solid #374151;
-            border-top: 2px solid #6366f1;
+            border-top: 2px solid #f1e063;
             border-radius: 50%;
             width: 20px;
             height: 20px;
@@ -489,12 +456,13 @@
         <div class="mobile-header">
             <div class="flex items-center justify-between">
                 <div class="flex items-center space-x-3">
-                    <div class="w-10 h-10 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-2xl flex items-center justify-center">
-                        <i class="fas fa-dumbbell text-white text-lg"></i>
+                    <div class="flex items-center">
+                        <img src="logo.png" alt="Radical Fit Logo" class="h-14 w-auto mr-3" style="max-width:120px;" />
                     </div>
                     <div>
-                        <h1 class="text-xl font-bold text-white">GymFlow</h1>
-                        <p class="text-xs text-gray-400">Sistema NFC</p>
+                        <h1 class="text-xl font-bold text-white">Sistema de Registro</h1>
+                        <span class="block text-[10px] text-yellow-300 mt-1">Desarrollado por <span class="font-semibold">Mauricio Quesada</span></span>
+
                     </div>
                 </div>
                 <div class="text-right">
@@ -510,19 +478,19 @@
             <div id="homePage" class="page active p-4">
                 <!-- Quick Stats -->
                 <div class="stats-grid">
-                    <div class="stat-card haptic-light">
+                    <div class="stat-card">
                         <div class="text-2xl font-bold text-white mb-1" id="totalMembersDisplay">0</div>
                         <div class="text-xs text-gray-400">Total Miembros</div>
                     </div>
-                    <div class="stat-card haptic-light">
+                    <div class="stat-card">
                         <div class="text-2xl font-bold text-green-400 mb-1" id="monthlyAttendance">0</div>
                         <div class="text-xs text-gray-400">Este Mes</div>
                     </div>
-                    <div class="stat-card haptic-light">
+                    <div class="stat-card">
                         <div class="text-2xl font-bold text-yellow-400 mb-1" id="measurementsDone">0</div>
                         <div class="text-xs text-gray-400">Medidas</div>
                     </div>
-                    <div class="stat-card haptic-light">
+                    <div class="stat-card">
                         <div class="text-2xl font-bold text-purple-400 mb-1" id="readyCount">0</div>
                         <div class="text-xs text-gray-400">Listos</div>
                     </div>
@@ -530,7 +498,7 @@
 
                 <!-- Main Actions -->
                 <div class="space-y-4">
-                    <div class="action-card attendance haptic-light" id="attendanceCard">
+                    <div class="action-card attendance" id="attendanceCard">
                         <div class="flex items-center space-x-4">
                             <div class="w-14 h-14 bg-green-500 bg-opacity-20 rounded-2xl flex items-center justify-center">
                                 <i class="fas fa-calendar-check text-2xl text-green-400"></i>
@@ -543,7 +511,7 @@
                         </div>
                     </div>
 
-                    <div class="action-card measurements haptic-light" id="measurementsCard">
+                    <div class="action-card measurements" id="measurementsCard">
                         <div class="flex items-center space-x-4">
                             <div class="w-14 h-14 bg-yellow-500 bg-opacity-20 rounded-2xl flex items-center justify-center">
                                 <i class="fas fa-weight-scale text-2xl text-yellow-400"></i>
@@ -559,9 +527,9 @@
                     <div class="card p-4">
                         <div class="flex items-center justify-between mb-4">
                             <h4 class="text-lg font-semibold text-white">Exportar Datos</h4>
-                            <i class="fas fa-download text-indigo-400"></i>
+                            <i class="fas fa-download text-yellow-400"></i>
                         </div>
-                        <button id="exportBtn" class="btn-secondary haptic-light">
+                        <button id="exportBtn" class="btn-secondary">
                             <i class="fas fa-download mr-2"></i>
                             Exportar a CSV
                         </button>
@@ -589,7 +557,7 @@
             <div id="registerPage" class="page p-4">
                 <div class="flex items-center justify-between mb-6">
                     <h2 class="text-2xl font-bold text-white">Nuevo Miembro</h2>
-                    <button id="clearFormBtn" class="text-indigo-400 text-sm">Limpiar</button>
+                    <button id="clearFormBtn" class="text-yellow-400 text-sm">Limpiar</button>
                 </div>
 
                 <form id="mobileRegistrationForm">
@@ -597,7 +565,7 @@
                         <!-- Personal Information -->
                         <div class="measurement-section">
                             <h4 class="text-lg font-semibold text-white mb-4">
-                                <i class="fas fa-user mr-2 text-indigo-400"></i>
+                                <i class="fas fa-user mr-2 text-yellow-400"></i>
                                 Información Personal
                             </h4>
                             
@@ -622,14 +590,10 @@
                                     <label for="mobileMemberProgram" class="block text-sm font-medium text-gray-300 mb-2">Tipo de Programa *</label>
                                     <select id="mobileMemberProgram" class="input-field" required>
                                         <option value="">Seleccione programa...</option>
-                                        <option value="Pérdida de Peso">Pérdida de Peso</option>
-                                        <option value="Ganancia Muscular">Ganancia Muscular</option>
-                                        <option value="Acondicionamiento General">Acondicionamiento General</option>
-                                        <option value="Rehabilitación">Rehabilitación</option>
-                                        <option value="CrossFit">CrossFit</option>
-                                        <option value="Yoga">Yoga</option>
-                                        <option value="Cardio">Cardio</option>
-                                        <option value="Personalizado">Personalizado</option>
+                                        <option value="Pérdida de Peso">Gainer</option>
+                                        <option value="Ganancia Muscular">Nitro</option>
+                                        <option value="Acondicionamiento General">TNT</option>
+                                        <option value="Rehabilitación">Zero</option>
                                     </select>
                                 </div>
                             </div>
@@ -638,12 +602,12 @@
                         <!-- NFC Information -->
                         <div class="measurement-section">
                             <h4 class="text-lg font-semibold text-white mb-4">
-                                <i class="fas fa-wifi mr-2 text-indigo-400"></i>
+                                <i class="fas fa-wifi mr-2 text-yellow-400"></i>
                                 ID NFC
                             </h4>
                             <div class="flex space-x-3">
                                 <input type="text" id="mobileNfcId" class="input-field" placeholder="ID NFC" required>
-                                <button type="button" id="mobileScanNfcBtn" class="btn-secondary haptic-light" style="width: 80px; flex-shrink: 0;">
+                                <button type="button" id="mobileScanNfcBtn" class="btn-secondary" style="width: 80px; flex-shrink: 0;">
                                     <i class="fas fa-wifi text-lg"></i>
                                 </button>
                             </div>
@@ -652,7 +616,7 @@
                         <!-- Weight -->
                         <div class="measurement-section">
                             <h4 class="text-lg font-semibold text-white mb-4">
-                                <i class="fas fa-weight-scale mr-2 text-indigo-400"></i>
+                                <i class="fas fa-weight-scale mr-2 text-yellow-400"></i>
                                 Peso Inicial
                             </h4>
                             <div>
@@ -664,51 +628,117 @@
                         <!-- Body Measurements -->
                         <div class="measurement-section">
                             <h4 class="text-lg font-semibold text-white mb-4">
-                                <i class="fas fa-ruler mr-2 text-indigo-400"></i>
+                                <i class="fas fa-ruler mr-2 text-yellow-400"></i>
                                 Medidas Corporales
                             </h4>
                             
                             <div class="form-row">
                                 <div>
-                                    <label for="mobileInitialAbdomen" class="block text-sm font-medium text-gray-300 mb-2">Abdomen/Pecho (cm) *</label>
+                                    <label for="mobileInitialAbdomen" class="block text-sm font-medium text-gray-300 mb-2">Abdomen (bajo el pecho) (cm) *</label>
                                     <input type="number" id="mobileInitialAbdomen" step="0.1" class="input-field" placeholder="Medida en cm" required>
                                 </div>
                                 <div>
-                                    <label for="mobileInitialCintura" class="block text-sm font-medium text-gray-300 mb-2">Cintura/Ombligo (cm) *</label>
+                                    <label for="mobileInitialCintura" class="block text-sm font-medium text-gray-300 mb-2">Cintura (a nivel del ombligo) (cm) *</label>
                                     <input type="number" id="mobileInitialCintura" step="0.1" class="input-field" placeholder="Medida en cm" required>
                                 </div>
                                 <div>
-                                    <label for="mobileInitialCadera" class="block text-sm font-medium text-gray-300 mb-2">Cadera/Glúteos (cm) *</label>
+                                    <label for="mobileInitialCadera" class="block text-sm font-medium text-gray-300 mb-2">Cadera (cm) *</label>
                                     <input type="number" id="mobileInitialCadera" step="0.1" class="input-field" placeholder="Medida en cm" required>
                                 </div>
                                 <div>
-                                    <label for="mobileInitialPierna" class="block text-sm font-medium text-gray-300 mb-2">Pierna Cuádriceps (cm) *</label>
+                                    <label for="mobileInitialPierna" class="block text-sm font-medium text-gray-300 mb-2">Pierna (muslo) (cm) *</label>
                                     <input type="number" id="mobileInitialPierna" step="0.1" class="input-field" placeholder="Medida en cm" required>
                                 </div>
                                 <div>
-                                    <label for="mobileInitialBrazo" class="block text-sm font-medium text-gray-300 mb-2">Brazo Flexionado (cm) *</label>
+                                    <label for="mobileInitialBrazo" class="block text-sm font-medium text-gray-300 mb-2">Brazo (entrenado) (cm) *</label>
                                     <input type="number" id="mobileInitialBrazo" step="0.1" class="input-field" placeholder="Medida en cm" required>
                                 </div>
-                            </div>
-                            
-                            <div class="form-row-2 mt-4">
                                 <div>
-                                    <label for="mobileInitialTallaPantalon" class="block text-sm font-medium text-gray-300 mb-2">Talla Pantalón *</label>
-                                    <input type="text" id="mobileInitialTallaPantalon" class="input-field" placeholder="32, M, L..." required>
+                                    <label for="mobileInitialEspalda" class="block text-sm font-medium text-gray-300 mb-2">Espalda (centro bíceps/cuádriceps) (cm) *</label>
+                                    <input type="number" id="mobileInitialEspalda" step="0.1" class="input-field" placeholder="Medida en cm" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Tallas y Ropa -->
+                        <div class="measurement-section">
+                            <h4 class="text-lg font-semibold text-white mb-4">
+                                <i class="fas fa-tshirt mr-2 text-yellow-400"></i>
+                                Tallas y Ropa
+                            </h4>
+                            
+                            <div class="form-row">
+                                <div>
+                                    <label for="mobileInitialTallaLycra" class="block text-sm font-medium text-gray-300 mb-2">Talla de lycra / pantalón *</label>
+                                    <input type="text" id="mobileInitialTallaLycra" class="input-field" placeholder="32, M, L..." required>
                                 </div>
                                 <div>
-                                    <label for="mobileInitialTallaBlusa" class="block text-sm font-medium text-gray-300 mb-2">Talla Blusa *</label>
+                                    <label for="mobileInitialTallaBlusa" class="block text-sm font-medium text-gray-300 mb-2">Talla blusa *</label>
                                     <input type="text" id="mobileInitialTallaBlusa" class="input-field" placeholder="S, M, L..." required>
+                                </div>
+                                <div>
+                                    <label for="mobileInitialTallaInterior" class="block text-sm font-medium text-gray-300 mb-2">Talla de ropa interior *</label>
+                                    <input type="text" id="mobileInitialTallaInterior" class="input-field" placeholder="S, M, L..." required>
+                                </div>
+                                <div>
+                                    <label for="mobileInitialTallaBrassier" class="block text-sm font-medium text-gray-300 mb-2">Talla de brassier *</label>
+                                    <input type="text" id="mobileInitialTallaBrassier" class="input-field" placeholder="32A, 34B..." required>
+                                </div>
+                            </div>
+
+                            <div class="mt-4">
+                                <h5 class="text-md font-semibold text-white mb-3">Ropa ajustada</h5>
+                                <div class="form-row">
+                                    <div>
+                                        <label for="mobileInitialRopaCamisa" class="block text-sm font-medium text-gray-300 mb-2">Camisa/Blusa</label>
+                                        <select id="mobileInitialRopaCamisa" class="input-field">
+                                            <option value="">Seleccionar...</option>
+                                            <option value="muy_ajustada">Muy ajustada</option>
+                                            <option value="ajustada">Ajustada</option>
+                                            <option value="comoda">Cómoda</option>
+                                            <option value="holgada">Holgada</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label for="mobileInitialRopaPantalon" class="block text-sm font-medium text-gray-300 mb-2">Pantalón</label>
+                                        <select id="mobileInitialRopaPantalon" class="input-field">
+                                            <option value="">Seleccionar...</option>
+                                            <option value="muy_ajustado">Muy ajustado</option>
+                                            <option value="ajustado">Ajustado</option>
+                                            <option value="comodo">Cómodo</option>
+                                            <option value="holgado">Holgado</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label for="mobileInitialRopaVestido" class="block text-sm font-medium text-gray-300 mb-2">Vestido</label>
+                                        <select id="mobileInitialRopaVestido" class="input-field">
+                                            <option value="">Seleccionar...</option>
+                                            <option value="muy_ajustado">Muy ajustado</option>
+                                            <option value="ajustado">Ajustado</option>
+                                            <option value="comodo">Cómodo</option>
+                                            <option value="holgado">Holgada</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label for="mobileInitialRopaUniforme" class="block text-sm font-medium text-gray-300 mb-2">Uniforme</label>
+                                        <select id="mobileInitialRopaUniforme" class="input-field">
+                                            <option value="">Seleccionar...</option>
+                                            <option value="muy_ajustado">Muy ajustado</option>
+                                            <option value="ajustado">Ajustado</option>
+                                            <option value="comodo">Cómodo</option>
+                                            <option value="holgado">Holgada</option>
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
                         <div class="space-y-3 pb-4">
-                            <button type="submit" class="btn-primary haptic-light">
+                            <button type="submit" class="btn-primary">
                                 <i class="fas fa-save mr-2"></i>
                                 Registrar Miembro
                             </button>
-                            <button type="button" id="mobileCancelRegistration" class="btn-secondary haptic-light">
+                            <button type="button" id="mobileCancelRegistration" class="btn-secondary">
                                 <i class="fas fa-times mr-2"></i>
                                 Cancelar
                             </button>
@@ -719,22 +749,22 @@
         </div>
 
         <!-- Floating Action Button -->
-        <button id="floatingActionBtn" class="floating-action haptic-light">
+        <button id="floatingActionBtn" class="floating-action">
             <i class="fas fa-plus"></i>
         </button>
 
         <!-- Bottom Navigation -->
         <div class="bottom-nav">
             <div class="grid grid-cols-3 h-full">
-                <div class="nav-item active haptic-light" data-page="home">
+                <div class="nav-item active" data-page="home">
                     <i class="fas fa-home"></i>
                     <span>Inicio</span>
                 </div>
-                <div class="nav-item haptic-light" data-page="members">
+                <div class="nav-item" data-page="members">
                     <i class="fas fa-users"></i>
                     <span>Miembros</span>
                 </div>
-                <div class="nav-item haptic-light" data-page="register">
+                <div class="nav-item" data-page="register">
                     <i class="fas fa-plus"></i>
                     <span>Registrar</span>
                 </div>
@@ -753,7 +783,7 @@
             </div>
             
             <div class="space-y-4">
-                <button id="scanAttendanceBtn" class="btn-primary haptic-light">
+                <button id="scanAttendanceBtn" class="btn-primary">
                     <i class="fas fa-wifi mr-2"></i>
                     Escanear NFC
                 </button>
@@ -765,7 +795,7 @@
                     <input type="text" id="manualMemberId" class="input-field" placeholder="Nombre, email, teléfono o ID">
                 </div>
                 
-                <button id="submitManualAttendance" class="btn-secondary haptic-light">
+                <button id="submitManualAttendance" class="btn-secondary">
                     <i class="fas fa-check mr-2"></i>
                     Registrar Asistencia
                 </button>
@@ -811,42 +841,104 @@
                         
                         <div class="form-row">
                             <div>
-                                <label for="currentAbdomen" class="block text-sm font-medium text-gray-300 mb-2">Abdomen/Pecho (cm) *</label>
+                                <label for="currentAbdomen" class="block text-sm font-medium text-gray-300 mb-2">Abdomen (bajo el pecho) (cm) *</label>
                                 <input type="number" id="currentAbdomen" step="0.1" class="input-field" placeholder="Medida" required>
                             </div>
                             <div>
-                                <label for="currentCintura" class="block text-sm font-medium text-gray-300 mb-2">Cintura/Ombligo (cm) *</label>
+                                <label for="currentCintura" class="block text-sm font-medium text-gray-300 mb-2">Cintura (a nivel del ombligo) (cm) *</label>
                                 <input type="number" id="currentCintura" step="0.1" class="input-field" placeholder="Medida" required>
                             </div>
                             <div>
-                                <label for="currentCadera" class="block text-sm font-medium text-gray-300 mb-2">Cadera/Glúteos (cm) *</label>
+                                <label for="currentCadera" class="block text-sm font-medium text-gray-300 mb-2">Cadera (cm) *</label>
                                 <input type="number" id="currentCadera" step="0.1" class="input-field" placeholder="Medida" required>
                             </div>
                             <div>
-                                <label for="currentPierna" class="block text-sm font-medium text-gray-300 mb-2">Pierna Cuádriceps (cm) *</label>
+                                <label for="currentPierna" class="block text-sm font-medium text-gray-300 mb-2">Pierna (muslo) (cm) *</label>
                                 <input type="number" id="currentPierna" step="0.1" class="input-field" placeholder="Medida" required>
                             </div>
                             <div>
-                                <label for="currentBrazo" class="block text-sm font-medium text-gray-300 mb-2">Brazo Flexionado (cm) *</label>
+                                <label for="currentBrazo" class="block text-sm font-medium text-gray-300 mb-2">Brazo (entrenado) (cm) *</label>
                                 <input type="number" id="currentBrazo" step="0.1" class="input-field" placeholder="Medida" required>
                             </div>
-                        </div>
-                        
-                        <div class="form-row-2 mt-4">
                             <div>
-                                <label for="currentTallaPantalon" class="block text-sm font-medium text-gray-300 mb-2">Talla Pantalón *</label>
-                                <input type="text" id="currentTallaPantalon" class="input-field" placeholder="32, M, L" required>
+                                <label for="currentEspalda" class="block text-sm font-medium text-gray-300 mb-2">Espalda (centro bíceps/cuádriceps) (cm) *</label>
+                                <input type="number" id="currentEspalda" step="0.1" class="input-field" placeholder="Medida" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="measurement-section">
+                        <h4 class="text-lg font-semibold text-white mb-4">Tallas y Ropa Actuales</h4>
+                        
+                        <div class="form-row">
+                            <div>
+                                <label for="currentTallaLycra" class="block text-sm font-medium text-gray-300 mb-2">Talla de lycra / pantalón *</label>
+                                <input type="text" id="currentTallaLycra" class="input-field" placeholder="32, M, L" required>
                             </div>
                             <div>
-                                <label for="currentTallaBlusa" class="block text-sm font-medium text-gray-300 mb-2">Talla Blusa *</label>
+                                <label for="currentTallaBlusa" class="block text-sm font-medium text-gray-300 mb-2">Talla blusa *</label>
                                 <input type="text" id="currentTallaBlusa" class="input-field" placeholder="S, M, L" required>
+                            </div>
+                            <div>
+                                <label for="currentTallaInterior" class="block text-sm font-medium text-gray-300 mb-2">Talla de ropa interior *</label>
+                                <input type="text" id="currentTallaInterior" class="input-field" placeholder="S, M, L" required>
+                            </div>
+                            <div>
+                                <label for="currentTallaBrassier" class="block text-sm font-medium text-gray-300 mb-2">Talla de brassier *</label>
+                                <input type="text" id="currentTallaBrassier" class="input-field" placeholder="32A, 34B" required>
+                            </div>
+                        </div>
+
+                        <div class="mt-4">
+                            <h5 class="text-md font-semibold text-white mb-3">¿Cómo te queda la ropa que estaba ajustada?</h5>
+                            <div class="form-row">
+                                <div>
+                                    <label for="currentRopaCamisa" class="block text-sm font-medium text-gray-300 mb-2">Camisa/Blusa</label>
+                                    <select id="currentRopaCamisa" class="input-field">
+                                        <option value="">Seleccionar...</option>
+                                        <option value="mas_ajustado">Más ajustado</option>
+                                        <option value="igual">Igual</option>
+                                        <option value="mas_holgada">Más holgada</option>
+                                        <option value="muy_holgada">Muy holgada</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label for="currentRopaPantalon" class="block text-sm font-medium text-gray-300 mb-2">Pantalón</label>
+                                    <select id="currentRopaPantalon" class="input-field">
+                                        <option value="">Seleccionar...</option>
+                                        <option value="mas_ajustado">Más ajustado</option>
+                                        <option value="igual">Igual</option>
+                                        <option value="mas_holgado">Más holgado</option>
+                                        <option value="muy_holgado">Muy holgado</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label for="currentRopaVestido" class="block text-sm font-medium text-gray-300 mb-2">Vestido</label>
+                                    <select id="currentRopaVestido" class="input-field">
+                                        <option value="">Seleccionar...</option>
+                                        <option value="mas_ajustado">Más ajustado</option>
+                                        <option value="igual">Igual</option>
+                                        <option value="mas_holgado">Más holgado</option>
+                                        <option value="muy_holgado">Muy holgado</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label for="currentRopaUniforme" class="block text-sm font-medium text-gray-300 mb-2">Uniforme</label>
+                                    <select id="currentRopaUniforme" class="input-field">
+                                        <option value="">Seleccionar...</option>
+                                        <option value="mas_ajustado">Más ajustado</option>
+                                        <option value="igual">Igual</option>
+                                        <option value="mas_holgado">Más holgado</option>
+                                        <option value="muy_holgado">Muy holgado</option>
+                                    </select>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 
                 <div class="pb-4">
-                    <button type="submit" class="btn-primary haptic-light">
+                    <button type="submit" class="btn-primary">
                         <i class="fas fa-save mr-2"></i>
                         Guardar Medidas
                     </button>
@@ -867,9 +959,15 @@
             
             <!-- Tab Navigation -->
             <div class="flex space-x-1 mb-6">
-                <button class="tab-button active haptic-light" data-tab="info">Info</button>
-                <button class="tab-button haptic-light" data-tab="weightMeasurements">Medidas</button>
-                <button class="tab-button haptic-light" data-tab="attendance">Asistencia</button>
+                <button class="tab-button active" data-tab="info">Info</button>
+                <button class="tab-button" data-tab="weightMeasurements">Medidas</button>
+                <button class="tab-button" data-tab="tallasRopa">Tallas</button>
+                <button class="tab-button" data-tab="factoresSalud">Factores Salud</button> <!-- NEW TAB -->
+                <button class="tab-button" data-tab="saludMovilidad">Salud/Movilidad</button> <!-- NEW TAB -->
+                <button class="tab-button" data-tab="condicionesEspeciales">Condiciones Especiales</button> <!-- NEW TAB -->
+                <button class="tab-button" data-tab="historialSuplementos">Suplementos/Medicación</button> <!-- NEW TAB -->
+                <button class="tab-button" data-tab="habitosAlimentacion">Hábitos/Alimentación</button> <!-- NEW TAB -->
+                <button class="tab-button" data-tab="attendance">Asistencia</button>
             </div>
 
             <!-- Tab Content -->
@@ -877,11 +975,13 @@
                 <div class="measurement-section">
                     <div class="flex items-center justify-between mb-4">
                         <h4 class="text-lg font-semibold text-white">Información</h4>
-                        <button id="toggleEditMode" class="btn-secondary btn-small haptic-light">
+                        <button id="toggleEditMode" class="btn-secondary btn-small">
                             <i class="fas fa-edit mr-2"></i>
                             Editar
                         </button>
                     </div>
+
+                    
                     
                     <!-- View Mode -->
                     <div id="viewMode" class="view-mode">
@@ -938,14 +1038,10 @@
                                     <label for="editMemberProgram" class="block text-sm font-medium text-gray-300 mb-2">Programa</label>
                                     <select id="editMemberProgram" class="input-field">
                                         <option value="">Seleccione...</option>
-                                        <option value="Pérdida de Peso">Pérdida de Peso</option>
-                                        <option value="Ganancia Muscular">Ganancia Muscular</option>
-                                        <option value="Acondicionamiento General">Acondicionamiento General</option>
-                                        <option value="Rehabilitación">Rehabilitación</option>
-                                        <option value="CrossFit">CrossFit</option>
-                                        <option value="Yoga">Yoga</option>
-                                        <option value="Cardio">Cardio</option>
-                                        <option value="Personalizado">Personalizado</option>
+                                        <option value="Pérdida de Peso">Gainer</option>
+                                        <option value="Ganancia Muscular">Nitro</option>
+                                        <option value="Acondicionamiento General">TNT</option>
+                                        <option value="Rehabilitación">Zero</option>
                                     </select>
                                 </div>
                                 <div>
@@ -954,11 +1050,11 @@
                                 </div>
                             </div>
                             <div class="space-y-3 mt-6">
-                                <button type="submit" class="btn-primary haptic-light">
+                                <button type="submit" class="btn-primary">
                                     <i class="fas fa-save mr-2"></i>
                                     Guardar Cambios
                                 </button>
-                                <button type="button" id="cancelEdit" class="btn-secondary haptic-light">
+                                <button type="button" id="cancelEdit" class="btn-secondary">
                                     <i class="fas fa-times mr-2"></i>
                                     Cancelar
                                 </button>
@@ -977,6 +1073,15 @@
                 </div>
             </div>
 
+            <div id="tallasRopaTab" class="tab-content" style="display: none;">
+                <div class="measurement-section">
+                    <h4 class="text-lg font-semibold text-white mb-4">Historial Tallas y Ropa</h4>
+                    <div id="tallasRopaHistory">
+                        <!-- Dynamic content -->
+                    </div>
+                </div>
+            </div>
+
             <div id="attendanceTab" class="tab-content" style="display: none;">
                 <div class="measurement-section">
                     <h4 class="text-lg font-semibold text-white mb-4">Historial Asistencia</h4>
@@ -985,10 +1090,177 @@
                     </div>
                 </div>
             </div>
+            <!-- Add new tab content for Factores de Salud -->
+            <div id="factoresSaludTab" class="tab-content" style="display: none;">
+                <div class="measurement-section">
+                    <h4 class="text-lg font-semibold text-white mb-4">Factores de Salud</h4>
+                    <form id="factoresSaludForm">
+                        <input type="hidden" class="currentMemberNfcId" />
+                        <div class="space-y-3">
+                            <label class="flex items-center space-x-3">
+                                <input type="checkbox" id="fsFaltaEnergia" class="form-checkbox text-yellow-600" />
+                                <span class="text-white">Falta de energía</span>
+                            </label>
+                            <label class="flex items-center space-x-3">
+                                <input type="checkbox" id="fsEstres" class="form-checkbox text-yellow-600" />
+                                <span class="text-white">Exceso de estrés</span>
+                            </label>
+                            <label class="flex items-center space-x-3">
+                                <input type="checkbox" id="fsDescontrolHormonal" class="form-checkbox text-yellow-600" />
+                                <span class="text-white">Descontrol hormonal</span>
+                            </label>
+                            <label class="flex items-center space-x-3">
+                                <input type="checkbox" id="fsEstrias" class="form-checkbox text-yellow-600" />
+                                <span class="text-white">Estrías</span>
+                            </label>
+                            <label class="flex items-center space-x-3">
+                                <input type="checkbox" id="fsCelulitis" class="form-checkbox text-yellow-600" />
+                                <span class="text-white">Celulitis</span>
+                            </label>
+                            <div>
+                                <label class="block text-white mb-2">Flacidez (escala 1-10)</label>
+                                    <select id="fsFlacidez" class="input-field">
+                                        <option value="">Seleccione...</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
+                                        <option value="7">7</option>
+                                        <option value="8">8</option>
+                                        <option value="9">9</option>
+                                        <option value="10">10</option>
+                                    </select>
+                            </div>
+                            <button type="submit" class="btn-primary mt-4">Guardar Factores</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Add new tab content for Salud y Movilidad -->
+            <div id="saludMovilidadTab" class="tab-content" style="display: none;">
+                <div class="measurement-section">
+                    <h4 class="text-lg font-semibold text-white mb-4">Salud y Movilidad</h4>
+                    <form id="saludMovilidadForm">
+                        <input type="hidden" class="currentMemberNfcId" />
+                        <div class="space-y-3">
+                            <label class="flex items-center space-x-3"><input type="checkbox" id="smTrigliceridos" class="form-checkbox text-yellow-600" /><span class="text-white">Triglicéridos</span></label>
+                            <label class="flex items-center space-x-3"><input type="checkbox" id="smColesterol" class="form-checkbox text-yellow-600" /><span class="text-white">Colesterol</span></label>
+                            <label class="flex items-center space-x-3"><input type="checkbox" id="smDiabetes" class="form-checkbox text-yellow-600" /><span class="text-white">Diabetes</span></label>
+                            <label class="flex items-center space-x-3"><input type="checkbox" id="smHigadoGraso" class="form-checkbox text-yellow-600" /><span class="text-white">Hígado graso</span></label>
+                            <label class="flex items-center space-x-3"><input type="checkbox" id="smPiedrasVesicula" class="form-checkbox text-yellow-600" /><span class="text-white">Piedras en vesícula</span></label>
+                            <label class="flex items-center space-x-3"><input type="checkbox" id="smPrediabetes" class="form-checkbox text-yellow-600" /><span class="text-white">Prediabetes</span></label>
+                            <label class="flex items-center space-x-3"><input type="checkbox" id="smReflujo" class="form-checkbox text-yellow-600" /><span class="text-white">Reflujo</span></label>
+                            <label class="flex items-center space-x-3"><input type="checkbox" id="smGastritis" class="form-checkbox text-yellow-600" /><span class="text-white">Gastritis</span></label>
+                            <label class="flex items-center space-x-3"><input type="checkbox" id="smColitis" class="form-checkbox text-yellow-600" /><span class="text-white">Colitis</span></label>
+                            <label class="flex items-center space-x-3"><input type="checkbox" id="smPiedrasRinon" class="form-checkbox text-yellow-600" /><span class="text-white">Piedras en el riñón</span></label>
+                            <label class="flex items-center space-x-3"><input type="checkbox" id="smRetencionLiquidos" class="form-checkbox text-yellow-600" /><span class="text-white">Retención de líquidos</span></label>
+                            <label class="flex items-center space-x-3"><input type="checkbox" id="smFaltaEnergia" class="form-checkbox text-yellow-600" /><span class="text-white">Falta de energía</span></label>
+                            <label class="flex items-center space-x-3"><input type="checkbox" id="smEstrenimiento" class="form-checkbox text-yellow-600" /><span class="text-white">Estreñimiento</span></label>
+                            <label class="flex items-center space-x-3"><input type="checkbox" id="smMigranas" class="form-checkbox text-yellow-600" /><span class="text-white">Migrañas</span></label>
+                            <label class="flex items-center space-x-3"><input type="checkbox" id="smCansancioAire" class="form-checkbox text-yellow-600" /><span class="text-white">Cansancio o falta de aire</span></label>
+                            <label class="flex items-center space-x-3"><input type="checkbox" id="smLevantarme" class="form-checkbox text-yellow-600" /><span class="text-white">Me cuesta levantarme</span></label>
+                            <label class="flex items-center space-x-3"><input type="checkbox" id="smAgacharme" class="form-checkbox text-yellow-600" /><span class="text-white">Me cuesta agacharme a tomar algo</span></label>
+                            <label class="flex items-center space-x-3"><input type="checkbox" id="smPocaResistencia" class="form-checkbox text-yellow-600" /><span class="text-white">Poca resistencia de entrenamiento</span></label>
+                            <label class="flex items-center space-x-3"><input type="checkbox" id="smEstirarme" class="form-checkbox text-yellow-600" /><span class="text-white">Me cuesta estirarme</span></label>
+                            <label class="flex items-center space-x-3"><input type="checkbox" id="smDolorCaminar" class="form-checkbox text-yellow-600" /><span class="text-white">Dolor al caminar o subir escaleras</span></label>
+                            <label class="flex items-center space-x-3"><input type="checkbox" id="smDoloresArticulares" class="form-checkbox text-yellow-600" /><span class="text-white">Dolores articulares</span></label>
+                            <label class="flex items-center space-x-3"><input type="checkbox" id="smDormirRonco" class="form-checkbox text-yellow-600" /><span class="text-white">Me cuesta dormir o ronco</span></label>
+                            <label class="flex items-center space-x-3"><input type="checkbox" id="smConducirVolante" class="form-checkbox text-yellow-600" /><span class="text-white">Me cuesta conducir el volante</span></label>
+                            <label class="flex items-center space-x-3"><input type="checkbox" id="smAgacharmeAmarrar" class="form-checkbox text-yellow-600" /><span class="text-white">No puedo agacharme para amarrarme los zapatos</span></label>
+                            <label class="flex items-center space-x-3"><input type="checkbox" id="smNervioCiatico" class="form-checkbox text-yellow-600" /><span class="text-white">Se me inflama el nervio ciático</span></label>
+                            <label class="flex items-center space-x-3"><input type="checkbox" id="smHuesosArticulaciones" class="form-checkbox text-yellow-600" /><span class="text-white">Me duelen huesos o articulaciones</span></label>
+                            <label class="flex items-center space-x-3"><input type="checkbox" id="smRopaInterior" class="form-checkbox text-yellow-600" /><span class="text-white">Se me arrolla la ropa interior</span></label>
+                            <button type="submit" class="btn-primary mt-4">Guardar Salud/Movilidad</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Add new tab content for Condiciones Especiales -->
+            <div id="condicionesEspecialesTab" class="tab-content" style="display: none;">
+                <div class="measurement-section">
+                    <h4 class="text-lg font-semibold text-white mb-4">Condiciones Especiales</h4>
+                    <form id="condicionesEspecialesForm">
+                        <input type="hidden" class="currentMemberNfcId" />
+                        <div class="space-y-3">
+                            <label class="flex items-center space-x-3">
+                                <input type="checkbox" id="ceMovilidadReducida" class="form-checkbox text-yellow-600" />
+                                <span class="text-white">Movilidad reducida</span>
+                            </label>
+                            <label class="flex items-center space-x-3">
+                                <input type="checkbox" id="ceDoloresArticulares" class="form-checkbox text-yellow-600" />
+                                <span class="text-white">Dolores articulares</span>
+                            </label>
+                            <label class="flex items-center space-x-3">
+                                <input type="checkbox" id="ceCondicionEspecial" class="form-checkbox text-yellow-600" />
+                                <span class="text-white">Condición especial de salud</span>
+                            </label>
+                            <label class="flex items-center space-x-3">
+                                <input type="checkbox" id="ceDependencias" class="form-checkbox text-yellow-600" />
+                                <span class="text-white">Dependencias (pastillas o tratamientos)</span>
+                            </label>
+                            <button type="submit" class="btn-primary mt-4">Guardar Condiciones</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Add new tab content for Historial de Suplementos / Medicación -->
+            <div id="historialSuplementosTab" class="tab-content" style="display: none;">
+                <div class="measurement-section">
+                    <h4 class="text-lg font-semibold text-white mb-4">Historial de Suplementos / Medicación</h4>
+                    <form id="historialSuplementosForm">
+                        <input type="hidden" class="currentMemberNfcId" />
+                        <div class="space-y-3">
+                            <label class="flex items-center space-x-3">
+                                <input type="checkbox" id="hsEsteroides" class="form-checkbox text-yellow-600" />
+                                <span class="text-white">¿Ha usado esteroides o anabólicos?</span>
+                            </label>
+                            <label class="flex items-center space-x-3">
+                                <input type="checkbox" id="hsSuplementosBajarPeso" class="form-checkbox text-yellow-600" />
+                                <span class="text-white">¿Ha usado suplementos para bajar de peso?</span>
+                            </label>
+                            <label class="flex items-center space-x-3">
+                                <input type="checkbox" id="hsPastillasBajarPeso" class="form-checkbox text-yellow-600" />
+                                <span class="text-white">¿Ha usado pastillas para bajar de peso?</span>
+                            </label>
+                            <button type="submit" class="btn-primary mt-4">Guardar Historial</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Add new tab content for Hábitos y Alimentación -->
+            <div id="habitosAlimentacionTab" class="tab-content" style="display: none;">
+                <div class="measurement-section">
+                    <h4 class="text-lg font-semibold text-white mb-4">Hábitos y Alimentación</h4>
+                    <form id="habitosAlimentacionForm">
+                        <input type="hidden" class="currentMemberNfcId" />
+                        <div class="space-y-3">
+                            <label class="flex items-center space-x-3">
+                                <input type="checkbox" id="haEstreñimiento" class="form-checkbox text-yellow-600" />
+                                <span class="text-white">¿Me produce estreñimiento hacer cambios en la alimentación?</span>
+                            </label>
+                            <label class="flex items-center space-x-3">
+                                <input type="checkbox" id="haDietaEspecial" class="form-checkbox text-yellow-600" />
+                                <span class="text-white">¿Tengo una dieta especial por condición médica?</span>
+                            </label>
+                            <label class="flex items-center space-x-3">
+                                <input type="checkbox" id="haSaltabaComidas" class="form-checkbox text-yellow-600" />
+                                <span class="text-white">¿Anteriormente me saltaba comidas, consumía mucha comida chatarra o no tomaba agua?</span>
+                            </label>
+                            <button type="submit" class="btn-primary mt-4">Guardar Hábitos</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 
-    <!-- Snackbar -->
+    <!-- Top Notification/Snackbar -->
     <div id="snackbar" class="snackbar">
         <i class="fas fa-check-circle mr-2"></i>
         <span id="snackbarText"></span>
@@ -1033,7 +1305,7 @@
             }
         }
 
-        // Show snackbar with haptic feedback
+        // Show snackbar with haptic feedback at TOP
         function showSnackbar(message, type = 'success') {
             hapticFeedback(type === 'error' ? 'heavy' : type === 'warning' ? 'medium' : 'light');
             
@@ -1044,9 +1316,15 @@
             };
             
             const snackbarIcon = snackbar.querySelector('i');
-            snackbarIcon.className = `${iconMap[type]} mr-2`;
+            if (snackbarIcon) {
+                snackbarIcon.className = `${iconMap[type]} mr-2`;
+            }
             
-            document.getElementById('snackbarText').textContent = message;
+            const snackbarText = document.getElementById('snackbarText');
+            if (snackbarText) {
+                snackbarText.textContent = message;
+            }
+            
             snackbar.className = `snackbar ${type} show`;
             
             setTimeout(() => {
@@ -1136,20 +1414,16 @@
             );
 
             filteredMembers.forEach(member => {
-                const lastVisit = member.attendance && member.attendance.length > 0 
-                    ? new Date(member.attendance[member.attendance.length - 1].date).toLocaleDateString()
-                    : 'Nunca';
-
                 const div = document.createElement('div');
-                div.className = 'member-item haptic-light';
-                div.onclick = () => {
+                div.className = 'member-item';
+                div.addEventListener('click', () => {
                     hapticFeedback('light');
                     viewMember(member.nfcId);
-                };
+                });
                 
                 div.innerHTML = `
                     <div class="flex items-center space-x-4">
-                        <div class="w-14 h-14 bg-indigo-500 rounded-2xl flex items-center justify-center">
+                        <div class="w-14 h-14 bg-yellow-500 rounded-2xl flex items-center justify-center">
                             <span class="text-white font-bold text-lg">${member.name.charAt(0).toUpperCase()}</span>
                         </div>
                         <div class="flex-1">
@@ -1194,12 +1468,13 @@
             if (editMode) editMode.style.display = 'none';
             if (toggleBtn) {
                 toggleBtn.innerHTML = '<i class="fas fa-edit mr-2"></i>Editar';
-                toggleBtn.className = 'btn-secondary btn-small haptic-light';
+                toggleBtn.className = 'btn-secondary btn-small';
             }
 
             // Populate member details
             document.getElementById('memberDetailsTitle').textContent = member.name;
             populateMemberDetails(member);
+            document.querySelectorAll('.currentMemberNfcId').forEach(input => input.value = member.nfcId);
             memberDetailsModal.style.display = 'flex';
             
             // Reset to first tab
@@ -1300,8 +1575,8 @@
                                     <div class="text-white font-medium">${measurement.brazo} cm</div>
                                 </div>
                                 <div class="bg-gray-800 rounded-lg p-2">
-                                    <span class="text-gray-400">Tallas:</span>
-                                    <div class="text-white font-medium">${measurement.tallaPantalon} / ${measurement.tallaBlusa}</div>
+                                    <span class="text-gray-400">Espalda:</span>
+                                    <div class="text-white font-medium">${measurement.espalda || 'N/A'} cm</div>
                                 </div>
                             </div>
                         `;
@@ -1309,6 +1584,84 @@
                     });
                 } else {
                     weightMeasurementsHistory.innerHTML = '<p class="text-gray-400 text-center py-8">Sin registros de medidas</p>';
+                }
+            }
+
+            // Tallas y Ropa History
+            const tallasRopaHistory = document.getElementById('tallasRopaHistory');
+            if (tallasRopaHistory) {
+                tallasRopaHistory.innerHTML = '';
+                
+                if (member.measurements && member.measurements.length > 0) {
+                    member.measurements.forEach((measurement, index) => {
+                        const div = document.createElement('div');
+                        div.className = 'history-item';
+                        
+                        div.innerHTML = `
+                            <div class="mb-3">
+                                <div class="flex justify-between items-center mb-2">
+                                    <h5 class="text-white font-semibold">
+                                        ${measurement.type === 'initial' ? 'Inicial' : 'Mensual'} #${index + 1}
+                                    </h5>
+                                </div>
+                                <p class="text-gray-400 text-xs">${new Date(measurement.date).toLocaleDateString()}</p>
+                            </div>
+                            
+                            <div class="grid grid-cols-2 gap-2 text-xs mb-4">
+                                <div class="bg-gray-800 rounded-lg p-2">
+                                    <span class="text-gray-400">Lycra/Pantalón:</span>
+                                    <div class="text-white font-medium">${measurement.tallaLycra || measurement.tallaPantalon || 'N/A'}</div>
+                                </div>
+                                <div class="bg-gray-800 rounded-lg p-2">
+                                    <span class="text-gray-400">Blusa:</span>
+                                    <div class="text-white font-medium">${measurement.tallaBlusa || 'N/A'}</div>
+                                </div>
+                                <div class="bg-gray-800 rounded-lg p-2">
+                                    <span class="text-gray-400">Ropa Interior:</span>
+                                    <div class="text-white font-medium">${measurement.tallaInterior || 'N/A'}</div>
+                                </div>
+                                <div class="bg-gray-800 rounded-lg p-2">
+                                    <span class="text-gray-400">Brassier:</span>
+                                    <div class="text-white font-medium">${measurement.tallaBrassier || 'N/A'}</div>
+                                </div>
+                            </div>
+                            
+                            ${measurement.ropaCamisa || measurement.ropaPantalon || measurement.ropaVestido || measurement.ropaUniforme ? `
+                                <div class="mt-3">
+                                    <h6 class="text-white font-medium mb-2 text-sm">Progreso de Ropa:</h6>
+                                    <div class="grid grid-cols-2 gap-2 text-xs">
+                                        ${measurement.ropaCamisa ? `
+                                            <div class="bg-gray-800 rounded-lg p-2">
+                                                <span class="text-gray-400">Camisa/Blusa:</span>
+                                                <div class="text-white font-medium">${measurement.ropaCamisa.replace('_', ' ')}</div>
+                                            </div>
+                                        ` : ''}
+                                        ${measurement.ropaPantalon ? `
+                                            <div class="bg-gray-800 rounded-lg p-2">
+                                                <span class="text-gray-400">Pantalón:</span>
+                                                <div class="text-white font-medium">${measurement.ropaPantalon.replace('_', ' ')}</div>
+                                            </div>
+                                        ` : ''}
+                                        ${measurement.ropaVestido ? `
+                                            <div class="bg-gray-800 rounded-lg p-2">
+                                                <span class="text-gray-400">Vestido:</span>
+                                                <div class="text-white font-medium">${measurement.ropaVestido.replace('_', ' ')}</div>
+                                            </div>
+                                        ` : ''}
+                                        ${measurement.ropaUniforme ? `
+                                            <div class="bg-gray-800 rounded-lg p-2">
+                                                <span class="text-gray-400">Uniforme:</span>
+                                                <div class="text-white font-medium">${measurement.ropaUniforme.replace('_', ' ')}</div>
+                                            </div>
+                                        ` : ''}
+                                    </div>
+                                </div>
+                            ` : ''}
+                        `;
+                        tallasRopaHistory.appendChild(div);
+                    });
+                } else {
+                    tallasRopaHistory.innerHTML = '<p class="text-gray-400 text-center py-8">Sin registros de tallas</p>';
                 }
             }
 
@@ -1355,7 +1708,7 @@
                 if (editMode) editMode.style.display = 'none';
                 if (toggleBtn) {
                     toggleBtn.innerHTML = '<i class="fas fa-edit mr-2"></i>Editar';
-                    toggleBtn.className = 'btn-secondary btn-small haptic-light';
+                    toggleBtn.className = 'btn-secondary btn-small';
                 }
             } else {
                 isEditMode = true;
@@ -1363,7 +1716,7 @@
                 if (editMode) editMode.style.display = 'block';
                 if (toggleBtn) {
                     toggleBtn.innerHTML = '<i class="fas fa-eye mr-2"></i>Ver';
-                    toggleBtn.className = 'btn-primary btn-small haptic-light';
+                    toggleBtn.className = 'btn-primary btn-small';
                 }
             }
         }
@@ -1446,6 +1799,187 @@
                     }
                 });
             });
+
+            // Factores de Salud: Save & Load
+            const factoresSaludForm = document.getElementById('factoresSaludForm');
+            if (factoresSaludForm) {
+                factoresSaludForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    const nfcId = document.querySelector('.currentMemberNfcId')?.value;                    const member = members.find(m => m.nfcId === nfcId);
+                    if (!member) return;
+
+                    member.factoresSalud = {
+                        faltaEnergia: document.getElementById('fsFaltaEnergia').checked,
+                        estres: document.getElementById('fsEstres').checked,
+                        descontrolHormonal: document.getElementById('fsDescontrolHormonal').checked,
+                        estrias: document.getElementById('fsEstrias').checked,
+                        celulitis: document.getElementById('fsCelulitis').checked,
+                        flacidez: document.getElementById('fsFlacidez').value
+                    };
+                    saveMembers();
+                    showSnackbar('Factores de Salud guardados');
+                });
+            }
+
+            // Salud y Movilidad: Save & Load
+            const saludMovilidadForm = document.getElementById('saludMovilidadForm');
+            if (saludMovilidadForm) {
+                saludMovilidadForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    const nfcId = document.querySelector('.currentMemberNfcId')?.value;
+                    const member = members.find(m => m.nfcId === nfcId);
+                    if (!member) return;
+
+                    member.saludMovilidad = {
+                        trigliceridos: document.getElementById('smTrigliceridos').checked,
+                        colesterol: document.getElementById('smColesterol').checked,
+                        diabetes: document.getElementById('smDiabetes').checked,
+                        higadoGraso: document.getElementById('smHigadoGraso').checked,
+                        piedrasVesicula: document.getElementById('smPiedrasVesicula').checked,
+                        prediabetes: document.getElementById('smPrediabetes').checked,
+                        reflujo: document.getElementById('smReflujo').checked,
+                        gastritis: document.getElementById('smGastritis').checked,
+                        colitis: document.getElementById('smColitis').checked,
+                        piedrasRinon: document.getElementById('smPiedrasRinon').checked,
+                        retencionLiquidos: document.getElementById('smRetencionLiquidos').checked,
+                        faltaEnergia: document.getElementById('smFaltaEnergia').checked,
+                        estrenimiento: document.getElementById('smEstrenimiento').checked,
+                        migranas: document.getElementById('smMigranas').checked,
+                        cansancioAire: document.getElementById('smCansancioAire').checked,
+                        levantarme: document.getElementById('smLevantarme').checked,
+                        agacharme: document.getElementById('smAgacharme').checked,
+                        pocaResistencia: document.getElementById('smPocaResistencia').checked,
+                        estirarme: document.getElementById('smEstirarme').checked,
+                        dolorCaminar: document.getElementById('smDolorCaminar').checked,
+                        doloresArticulares: document.getElementById('smDoloresArticulares').checked,
+                        dormirRonco: document.getElementById('smDormirRonco').checked,
+                        conducirVolante: document.getElementById('smConducirVolante').checked,
+                        agacharmeAmarrar: document.getElementById('smAgacharmeAmarrar').checked,
+                        nervioCiatico: document.getElementById('smNervioCiatico').checked,
+                        huesosArticulaciones: document.getElementById('smHuesosArticulaciones').checked,
+                        ropaInterior: document.getElementById('smRopaInterior').checked
+                    };
+                    saveMembers();
+                    showSnackbar('Salud y Movilidad guardados');
+                });
+            }
+
+            // Condiciones Especiales: Save & Load
+            const condicionesEspecialesForm = document.getElementById('condicionesEspecialesForm');
+            if (condicionesEspecialesForm) {
+                condicionesEspecialesForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    const nfcId = document.querySelector('.currentMemberNfcId')?.value;
+                    const member = members.find(m => m.nfcId === nfcId);
+                    if (!member) return;
+                    member.condicionesEspeciales = {
+                        movilidadReducida: document.getElementById('ceMovilidadReducida').checked,
+                        doloresArticulares: document.getElementById('ceDoloresArticulares').checked,
+                        condicionEspecial: document.getElementById('ceCondicionEspecial').checked,
+                        dependencias: document.getElementById('ceDependencias').checked
+                    };
+                    saveMembers();
+                    showSnackbar('Condiciones especiales guardadas');
+                });
+            }
+
+            // Historial de Suplementos / Medicación: Save & Load
+            const historialSuplementosForm = document.getElementById('historialSuplementosForm');
+            if (historialSuplementosForm) {
+                historialSuplementosForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    const nfcId = document.querySelector('.currentMemberNfcId')?.value;
+                    const member = members.find(m => m.nfcId === nfcId);
+                    if (!member) return;
+                    member.historialSuplementos = {
+                        esteroides: document.getElementById('hsEsteroides').checked,
+                        suplementosBajarPeso: document.getElementById('hsSuplementosBajarPeso').checked,
+                        pastillasBajarPeso: document.getElementById('hsPastillasBajarPeso').checked
+                    };
+                    saveMembers();
+                    showSnackbar('Historial de suplementos guardado');
+                });
+            }
+
+            // Hábitos y Alimentación: Save & Load
+            const habitosAlimentacionForm = document.getElementById('habitosAlimentacionForm');
+            if (habitosAlimentacionForm) {
+                habitosAlimentacionForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    const nfcId = document.querySelector('.currentMemberNfcId')?.value;
+                    const member = members.find(m => m.nfcId === nfcId);
+                    if (!member) return;
+                    member.habitosAlimentacion = {
+                        estrenimiento: document.getElementById('haEstreñimiento').checked,
+                        dietaEspecial: document.getElementById('haDietaEspecial').checked,
+                        saltabaComidas: document.getElementById('haSaltabaComidas').checked
+                    };
+                    saveMembers();
+                    showSnackbar('Hábitos y alimentación guardados');
+                });
+            }
+
+            // --- Update populateMemberDetails to load these fields as well ---
+
+// Replace the override for populateMemberDetails with:
+
+            const originalPopulateMemberDetails2 = populateMemberDetails;
+            populateMemberDetails = function(member) {
+                originalPopulateMemberDetails2(member);
+
+                // Factores de Salud
+                document.getElementById('fsFaltaEnergia').checked = !!(member.factoresSalud && member.factoresSalud.faltaEnergia);
+                document.getElementById('fsEstres').checked = !!(member.factoresSalud && member.factoresSalud.estres);
+                document.getElementById('fsDescontrolHormonal').checked = !!(member.factoresSalud && member.factoresSalud.descontrolHormonal);
+                document.getElementById('fsEstrias').checked = !!(member.factoresSalud && member.factoresSalud.estrias);
+                document.getElementById('fsCelulitis').checked = !!(member.factoresSalud && member.factoresSalud.celulitis);
+                document.getElementById('fsFlacidez').value = member.factoresSalud && member.factoresSalud.flacidez ? member.factoresSalud.flacidez : '';
+
+                // Salud y Movilidad
+                document.getElementById('smTrigliceridos').checked = !!(member.saludMovilidad && member.saludMovilidad.trigliceridos);
+                document.getElementById('smColesterol').checked = !!(member.saludMovilidad && member.saludMovilidad.colesterol);
+                document.getElementById('smDiabetes').checked = !!(member.saludMovilidad && member.saludMovilidad.diabetes);
+                document.getElementById('smHigadoGraso').checked = !!(member.saludMovilidad && member.saludMovilidad.higadoGraso);
+                document.getElementById('smPiedrasVesicula').checked = !!(member.saludMovilidad && member.saludMovilidad.piedrasVesicula);
+                document.getElementById('smPrediabetes').checked = !!(member.saludMovilidad && member.saludMovilidad.prediabetes);
+                document.getElementById('smReflujo').checked = !!(member.saludMovilidad && member.saludMovilidad.reflujo);
+                document.getElementById('smGastritis').checked = !!(member.saludMovilidad && member.saludMovilidad.gastritis);
+                document.getElementById('smColitis').checked = !!(member.saludMovilidad && member.saludMovilidad.colitis);
+                document.getElementById('smPiedrasRinon').checked = !!(member.saludMovilidad && member.saludMovilidad.piedrasRinon);
+                document.getElementById('smRetencionLiquidos').checked = !!(member.saludMovilidad && member.saludMovilidad.retencionLiquidos);
+                document.getElementById('smFaltaEnergia').checked = !!(member.saludMovilidad && member.saludMovilidad.faltaEnergia);
+                document.getElementById('smEstrenimiento').checked = !!(member.saludMovilidad && member.saludMovilidad.estrenimiento);
+                document.getElementById('smMigranas').checked = !!(member.saludMovilidad && member.saludMovilidad.migranas);
+                document.getElementById('smCansancioAire').checked = !!(member.saludMovilidad && member.saludMovilidad.cansancioAire);
+                document.getElementById('smLevantarme').checked = !!(member.saludMovilidad && member.saludMovilidad.levantarme);
+                document.getElementById('smAgacharme').checked = !!(member.saludMovilidad && member.saludMovilidad.agacharme);
+                document.getElementById('smPocaResistencia').checked = !!(member.saludMovilidad && member.saludMovilidad.pocaResistencia);
+                document.getElementById('smEstirarme').checked = !!(member.saludMovilidad && member.saludMovilidad.estirarme);
+                document.getElementById('smDolorCaminar').checked = !!(member.saludMovilidad && member.saludMovilidad.dolorCaminar);
+                document.getElementById('smDoloresArticulares').checked = !!(member.saludMovilidad && member.saludMovilidad.doloresArticulares);
+                document.getElementById('smDormirRonco').checked = !!(member.saludMovilidad && member.saludMovilidad.dormirRonco);
+                document.getElementById('smConducirVolante').checked = !!(member.saludMovilidad && member.saludMovilidad.conducirVolante);
+                document.getElementById('smAgacharmeAmarrar').checked = !!(member.saludMovilidad && member.saludMovilidad.agacharmeAmarrar);
+                document.getElementById('smNervioCiatico').checked = !!(member.saludMovilidad && member.saludMovilidad.nervioCiatico);
+                document.getElementById('smHuesosArticulaciones').checked = !!(member.saludMovilidad && member.saludMovilidad.huesosArticulaciones);
+                document.getElementById('smRopaInterior').checked = !!(member.saludMovilidad && member.saludMovilidad.ropaInterior);
+
+                // Condiciones Especiales
+                document.getElementById('ceMovilidadReducida').checked = !!(member.condicionesEspeciales && member.condicionesEspeciales.movilidadReducida);
+                document.getElementById('ceDoloresArticulares').checked = !!(member.condicionesEspeciales && member.condicionesEspeciales.doloresArticulares);
+                document.getElementById('ceCondicionEspecial').checked = !!(member.condicionesEspeciales && member.condicionesEspeciales.condicionEspecial);
+                document.getElementById('ceDependencias').checked = !!(member.condicionesEspeciales && member.condicionesEspeciales.dependencias);
+
+                // Historial de Suplementos / Medicación
+                document.getElementById('hsEsteroides').checked = !!(member.historialSuplementos && member.historialSuplementos.esteroides);
+                document.getElementById('hsSuplementosBajarPeso').checked = !!(member.historialSuplementos && member.historialSuplementos.suplementosBajarPeso);
+                document.getElementById('hsPastillasBajarPeso').checked = !!(member.historialSuplementos && member.historialSuplementos.pastillasBajarPeso);
+
+                // Hábitos y Alimentación
+                document.getElementById('haEstreñimiento').checked = !!(member.habitosAlimentacion && member.habitosAlimentacion.estrenimiento);
+                document.getElementById('haDietaEspecial').checked = !!(member.habitosAlimentacion && member.habitosAlimentacion.dietaEspecial);
+                document.getElementById('haSaltabaComidas').checked = !!(member.habitosAlimentacion && member.habitosAlimentacion.saltabaComidas);
+            };
 
             // Floating action button
             const floatingBtn = document.getElementById('floatingActionBtn');
@@ -1556,7 +2090,7 @@
                     const submitBtn = e.target.querySelector('button[type="submit"]');
                     setButtonLoading(submitBtn, true);
                     
-                    setTimeout(() => { // Simulate processing delay
+                    setTimeout(() => {
                         const name = document.getElementById('mobileMemberName').value;
                         const phone = document.getElementById('mobileMemberPhone').value;
                         const email = document.getElementById('mobileMemberEmail').value;
@@ -1571,8 +2105,15 @@
                             cadera: document.getElementById('mobileInitialCadera').value,
                             pierna: document.getElementById('mobileInitialPierna').value,
                             brazo: document.getElementById('mobileInitialBrazo').value,
-                            tallaPantalon: document.getElementById('mobileInitialTallaPantalon').value,
-                            tallaBlusa: document.getElementById('mobileInitialTallaBlusa').value
+                            espalda: document.getElementById('mobileInitialEspalda').value,
+                            tallaLycra: document.getElementById('mobileInitialTallaLycra').value,
+                            tallaBlusa: document.getElementById('mobileInitialTallaBlusa').value,
+                            tallaInterior: document.getElementById('mobileInitialTallaInterior').value,
+                            tallaBrassier: document.getElementById('mobileInitialTallaBrassier').value,
+                            ropaCamisa: document.getElementById('mobileInitialRopaCamisa').value,
+                            ropaPantalon: document.getElementById('mobileInitialRopaPantalon').value,
+                            ropaVestido: document.getElementById('mobileInitialRopaVestido').value,
+                            ropaUniforme: document.getElementById('mobileInitialRopaUniforme').value
                         };
 
                         // Validation
@@ -1690,29 +2231,31 @@
                     hapticFeedback('medium');
                     setButtonLoading(scanAttendanceBtn, true);
                     
-                    startNFCScan((tagId) => {
-                        const member = members.find(m => m.nfcId === tagId);
-                        if (!member) {
+                    setTimeout(() => {
+                        startNFCScan((tagId) => {
+                            const member = members.find(m => m.nfcId === tagId);
+                            if (!member) {
+                                setButtonLoading(scanAttendanceBtn, false);
+                                showSnackbar('¡Miembro no encontrado!', 'error');
+                                return;
+                            }
+
+                            if (!member.attendance) member.attendance = [];
+                            member.attendance.push({ date: new Date().toISOString() });
+                            member.stamps = (member.stamps || 0) + 1;
+
+                            saveMembers();
                             setButtonLoading(scanAttendanceBtn, false);
-                            showSnackbar('¡Miembro no encontrado!', 'error');
-                            return;
-                        }
-
-                        if (!member.attendance) member.attendance = [];
-                        member.attendance.push({ date: new Date().toISOString() });
-                        member.stamps = (member.stamps || 0) + 1;
-
-                        saveMembers();
-                        setButtonLoading(scanAttendanceBtn, false);
-                        
-                        if (member.stamps >= 4) {
-                            showSnackbar(`¡${member.name} completó 4 sellos! Listo para medidas.`);
-                        } else {
-                            showSnackbar(`¡${member.name}: ${member.stamps}/4 sellos registrados!`);
-                        }
-                        
-                        attendanceModal.style.display = 'none';
-                    });
+                            
+                            if (member.stamps >= 4) {
+                                showSnackbar(`¡${member.name} completó 4 sellos! Listo para medidas.`);
+                            } else {
+                                showSnackbar(`¡${member.name}: ${member.stamps}/4 sellos registrados!`);
+                            }
+                            
+                            attendanceModal.style.display = 'none';
+                        });
+                    }, 200);
                 });
             }
 
@@ -1778,8 +2321,15 @@
                             cadera: document.getElementById('currentCadera')?.value || '',
                             pierna: document.getElementById('currentPierna')?.value || '',
                             brazo: document.getElementById('currentBrazo')?.value || '',
-                            tallaPantalon: document.getElementById('currentTallaPantalon')?.value || '',
-                            tallaBlusa: document.getElementById('currentTallaBlusa')?.value || ''
+                            espalda: document.getElementById('currentEspalda')?.value || '',
+                            tallaLycra: document.getElementById('currentTallaLycra')?.value || '',
+                            tallaBlusa: document.getElementById('currentTallaBlusa')?.value || '',
+                            tallaInterior: document.getElementById('currentTallaInterior')?.value || '',
+                            tallaBrassier: document.getElementById('currentTallaBrassier')?.value || '',
+                            ropaCamisa: document.getElementById('currentRopaCamisa')?.value || '',
+                            ropaPantalon: document.getElementById('currentRopaPantalon')?.value || '',
+                            ropaVestido: document.getElementById('currentRopaVestido')?.value || '',
+                            ropaUniforme: document.getElementById('currentRopaUniforme')?.value || ''
                         };
 
                         const weightInput = document.getElementById('currentWeight');
@@ -1868,19 +2418,7 @@
 
         // Global functions for onclick handlers
         window.viewMember = viewMember;
-        
-        // Service Worker registration for PWA capabilities
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/sw.js')
-                    .then(registration => {
-                        console.log('SW registered: ', registration);
-                    })
-                    .catch(registrationError => {
-                        console.log('SW registration failed: ', registrationError);
-                    });
-            });
-        }
+    
 
         // Add to home screen prompt
         let deferredPrompt;
@@ -1895,6 +2433,18 @@
                 }
             }, 3000);
         });
+
+        // To GET data
+    //   fetch('YOUR_WEB_APP_URL')
+     //   .then(res => res.json())
+     //   .then(data => console.log(data));
+
+        // To POST data
+     //   fetch('YOUR_WEB_APP_URL', {
+     //   method: 'POST',
+     //   body: JSON.stringify({ name: 'Juan', email: 'juan@email.com', phone: '12345678' }),
+     //   headers: { 'Content-Type': 'application/json' }
+     //   });
     </script>
 </body>
 </html>
