@@ -24,7 +24,7 @@
         
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: #121213;
+            background: #181820;
             color: #ffffff;
             margin: 0;
             padding: 0;
@@ -44,13 +44,13 @@
         
         .status-bar-spacer {
             height: env(safe-area-inset-top, 44px);
-            background: #191919;
+            background: #140059;
         }
         
         .mobile-header {
-            background: #191919;
+            background: #140059;
             padding: 16px 16px 12px 16px;
-            border-bottom: 1px solid #4c4c4e;
+            border-bottom: 1px solid #fed700;
             position: relative;
             z-index: 30;
         }
@@ -63,8 +63,8 @@
         }
         
         .bottom-nav {
-            background: #191919;
-            border-top: 1px solid #4c4c4e;
+            background: #140059;
+            border-top: 1px solid #fed700;
             padding: 8px 0;
             padding-bottom: max(8px, env(safe-area-inset-bottom));
             position: relative;
@@ -83,7 +83,7 @@
         }
         
         .nav-item.active {
-            color: #e0c517;
+            color: #fed700;
         }
         
         .nav-item:active {
@@ -103,18 +103,18 @@
         }
         
         .card {
-            background: #1c1c22;
+            background: #23233a;
             border-radius: 20px;
-            border: 1px solid #4c4c4e;
+            border: 1px solid #23233a;
             transition: all 0.2s ease;
             margin-bottom: 16px;
             -webkit-tap-highlight-color: transparent;
         }
         
         .action-card {
-            background: #1a1a2e;
+            background: #23233a;
             border-radius: 20px;
-            border: 1px solid #4c4c4e;
+            border: 1px solid #23233a;
             padding: 24px;
             cursor: pointer;
             transition: all 0.2s ease;
@@ -139,9 +139,9 @@
         }
         
         .btn-primary {
-            background: linear-gradient(135deg, #998610 0%, #998610 100%);
+            background: linear-gradient(135deg, #fed700 0%, #fff700 100%);
             border: none;
-            color: white;
+            color: 140059;
             padding: 18px 24px;
             border-radius: 16px;
             cursor: pointer;
@@ -162,9 +162,9 @@
         }
         
         .btn-secondary {
-            background: #374151;
-            border: 1px solid #4b5563;
-            color: white;
+            background: #23233a;
+            border: 1px solid #fed700;
+            color: #fed700;
             padding: 18px 24px;
             border-radius: 16px;
             cursor: pointer;
@@ -189,8 +189,8 @@
         }
         
         .input-field {
-            background: #26282b;
-            border: 1px solid #4b5563;
+            background: #23233a;
+            border: 1px solid #fed700;
             color: white;
             padding: 18px 16px;
             border-radius: 16px;
@@ -214,7 +214,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.95);
+            background: rgba(30, 0, 89, 0.97);
             z-index: 1000;
             padding: 20px;
             box-sizing: border-box;
@@ -223,8 +223,8 @@
         }
         
         .modal-content {
-            background: #161619;
-            border: 1px solid #4c4c4e;
+            background: #23233a;
+            border: 1px solid #fed700;
             padding: 24px;
             border-radius: 24px;
             width: 100%;
@@ -267,9 +267,9 @@
         
         .tab-button {
             padding: 14px 12px;
-            background: #374151;
-            border: 1px solid #4b5563;
-            color: #9ca3af;
+            background: #23233a;
+            border: 1px solid #fed700;
+            color: #fed700;
             border-radius: 12px;
             cursor: pointer;
             transition: all 0.2s ease;
@@ -282,9 +282,9 @@
         }
         
         .tab-button.active {
-            background: #e0c517;
-            color: white;
-            border-color: #f1ea63;
+            background: #fed700;
+            color: #140059;
+            border-color: #fed700;
         }
         
         .tab-button:active {
@@ -311,11 +311,11 @@
         }
         
         .member-item {
-            background: #374151;
+            background: #23233a;
             border-radius: 16px;
             padding: 20px;
             margin-bottom: 12px;
-            border-left: 4px solid #e0c517;
+            border-left: 4px solid #fed700;
             cursor: pointer;
             transition: all 0.2s ease;
             -webkit-tap-highlight-color: transparent;
@@ -333,10 +333,11 @@
             right: 16px;
             padding: 16px 20px;
             border-radius: 16px;
-            color: white;
+            color: #140059;
             font-weight: 600;
             transform: translateY(-120px);
             transition: transform 0.4s ease, opacity 0.4s ease;
+            background: #fed700;
             z-index: 2000;
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
             opacity: 0;
@@ -350,12 +351,12 @@
         }
         
         .snackbar.success { 
-            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            background: linear-gradient(135deg, #fed700 0%, #140059 100%);
             border-left: 4px solid #047857;
         }
         
         .snackbar.warning { 
-            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            background: linear-gradient(135deg, #fff700 0%, #140059 100%);
             border-left: 4px solid #b45309;
         }
         
@@ -454,10 +455,11 @@
         <div class="status-bar-spacer"></div>
         
         <!-- Mobile Header -->
-        <div class="mobile-header">
-            <div class="flex items-center justify-center relative">
-                <img src="https://raw.githubusercontent.com/Kakyyn/gimtest/main/logo.png" alt="Radical Fit Logo" class="h-35 w-auto" style="max-width:200px;" />
-            </div>
+        <div class="mobile-header flex items-center justify-center" style="height: 100px;">
+            <img src="https://raw.githubusercontent.com/Kakyyn/gimtest/main/logo.png"
+                alt="Radical Fit Logo"
+                class="h-24 w-auto"
+                style="max-width:220px; margin:0 auto; display:block;" />
         </div>
 
         <!-- Main Content -->
@@ -757,10 +759,6 @@
                     <span>Registrar</span>
                 </div>
             </div>
-        </div>
-                <!-- Developed by badge above bottom bar -->
-        <div class="w-full text-center py-2 text-[11px] text-yellow-300 bg-transparent">
-            Desarrollado por <span class="font-semibold">Mauricio Quesada</span>
         </div>
     </div>
 
