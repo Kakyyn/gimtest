@@ -447,6 +447,20 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
+
+        .modal-content .flex.flex-nowrap {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+        }
+
+        .modal-content .flex.flex-nowrap::-webkit-scrollbar {
+            display: none;
+        }
+
+        .tab-button {
+            flex: 0 0 auto;
+        }
     </style>
 </head>
 <body>
@@ -948,16 +962,18 @@
             </div>
             
             <!-- Tab Navigation -->
-            <div class="flex space-x-1 mb-6">
-                <button class="tab-button active" data-tab="info">Info</button>
-                <button class="tab-button" data-tab="weightMeasurements">Medidas</button>
-                <button class="tab-button" data-tab="tallasRopa">Tallas</button>
-                <button class="tab-button" data-tab="factoresSalud">Factores Salud</button> <!-- NEW TAB -->
-                <button class="tab-button" data-tab="saludMovilidad">Salud/Movilidad</button> <!-- NEW TAB -->
-                <button class="tab-button" data-tab="condicionesEspeciales">Condiciones Especiales</button> <!-- NEW TAB -->
-                <button class="tab-button" data-tab="historialSuplementos">Suplementos/Medicación</button> <!-- NEW TAB -->
-                <button class="tab-button" data-tab="habitosAlimentacion">Hábitos/Alimentación</button> <!-- NEW TAB -->
-                <button class="tab-button" data-tab="attendance">Asistencia</button>
+            <div class="w-full overflow-x-auto mb-6">
+                <div class="flex flex-nowrap space-x-1" style="min-width: 600px;">
+                    <button class="tab-button active" data-tab="info">Info</button>
+                    <button class="tab-button" data-tab="weightMeasurements">Medidas</button>
+                    <button class="tab-button" data-tab="tallasRopa">Tallas</button>
+                    <button class="tab-button" data-tab="factoresSalud">Factores Salud</button> <!-- NEW TAB -->
+                    <button class="tab-button" data-tab="saludMovilidad">Salud/Movilidad</button> <!-- NEW TAB -->
+                    <button class="tab-button" data-tab="condicionesEspeciales">Condiciones Especiales</button> <!-- NEW TAB -->
+                    <button class="tab-button" data-tab="historialSuplementos">Suplementos/Medicación</button> <!-- NEW TAB -->
+                    <button class="tab-button" data-tab="habitosAlimentacion">Hábitos/Alimentación</button> <!-- NEW TAB -->
+                    <button class="tab-button" data-tab="attendance">Asistencia</button>
+                </div>
             </div>
 
             <!-- Tab Content -->
