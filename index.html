@@ -36,7 +36,7 @@
         }
         
         .app-container {
-            height: 100vh;
+            /*height: 100vh;*/
             display: flex;
             flex-direction: column;
             position: relative;
@@ -59,15 +59,19 @@
             flex: 1;
             overflow-y: auto;
             -webkit-overflow-scrolling: touch;
-            padding-bottom: env(safe-area-inset-bottom, 20px);
+            padding-bottom: calc(70px + env(safe-area-inset-bottom, 20px)); /* 70px = height of bottom nav */
         }
         
         .bottom-nav {
+            position: fixed;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            width: 100vw;
             background: #140059;
             border-top: 1px solid #fed700;
             padding: 8px 0;
             padding-bottom: max(8px, env(safe-area-inset-bottom));
-            position: relative;
             z-index: 30;
         }
         
@@ -256,7 +260,6 @@
         
         .page {
             display: none;
-            height: 100%;
             overflow-y: auto;
             -webkit-overflow-scrolling: touch;
         }
@@ -461,6 +464,52 @@
         .tab-button {
             flex: 0 0 auto;
         }
+
+        body.light-mode {
+            background: #d5d5d5;
+            color: #23233a;
+        }
+        body.light-mode .mobile-header,
+        body.light-mode .bottom-nav {
+            background: #140059;
+            color: #fed700;
+        }
+        body.light-mode .card,
+        body.light-mode .action-card,
+        body.light-mode .modal-content,
+        body.light-mode .measurement-section,
+        body.light-mode .member-item {
+            background: #fff;
+            color: #23233a;
+            border-color: #fed700;
+        }
+        body.light-mode .btn-primary {
+            background: linear-gradient(135deg, #140059 0%, #23233a 100%);
+            color: #fed700;
+        }
+        body.light-mode .btn-secondary {
+            background: #fff;
+            color: #140059;
+            border-color: #140059;
+        }
+        body.light-mode .input-field {
+            background: #fff;
+            color: #23233a;
+            border-color: #fed700;
+        }
+        body.light-mode .tab-button {
+            background: #fff;
+            color: #fed700;
+            border-color: #fed700;
+        }
+        body.light-mode .tab-button.active {
+            background: #fed700;
+            color: #140059;
+        }
+        body.light-mode .snackbar {
+            background: #fed700;
+            color: #140059;
+        }
     </style>
 </head>
 <body>
@@ -477,7 +526,11 @@
         </div>
 
         <!-- Main Content -->
-        <div class="main-content">
+        <div class="main-content relative">
+                <img src="https://raw.githubusercontent.com/Kakyyn/gimtest/main/logo.png"
+                    alt="Logo Marca de Agua"
+                    class="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none select-none opacity-10 z-0"
+                    style="width: 70vw; max-width: 1000px; min-width: 700px; filter: blur(1px);" />
             <!-- Home Page -->
             <div id="homePage" class="page active p-4">
                 <!-- Quick Stats -->
@@ -526,17 +579,6 @@
                             </div>
                             <i class="fas fa-chevron-right text-gray-400 text-lg"></i>
                         </div>
-                    </div>
-
-                    <div class="card p-4">
-                        <div class="flex items-center justify-between mb-4">
-                            <h4 class="text-lg font-semibold text-white">Exportar Datos</h4>
-                            <i class="fas fa-download text-yellow-400"></i>
-                        </div>
-                        <button id="exportBtn" class="btn-secondary">
-                            <i class="fas fa-download mr-2"></i>
-                            Exportar a CSV
-                        </button>
                     </div>
                 </div>
             </div>
@@ -759,7 +801,7 @@
 
         <!-- Bottom Navigation -->
         <div class="bottom-nav">
-            <div class="grid grid-cols-3 h-full">
+            <div class="grid grid-cols-4 h-full">
                 <div class="nav-item active" data-page="home">
                     <i class="fas fa-home"></i>
                     <span>Inicio</span>
@@ -768,9 +810,13 @@
                     <i class="fas fa-users"></i>
                     <span>Miembros</span>
                 </div>
-                <div class="nav-item" data-page="register">
-                    <i class="fas fa-plus"></i>
-                    <span>Registrar</span>
+                <div class="nav-item" data-page="purchases">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span>Compras</span>
+                </div>
+                <div class="nav-item" data-page="settings">
+                    <i class="fas fa-cog"></i>
+                    <span>Configuración</span>
                 </div>
             </div>
         </div>
@@ -972,6 +1018,7 @@
                     <button class="tab-button" data-tab="condicionesEspeciales">Condiciones Especiales</button> <!-- NEW TAB -->
                     <button class="tab-button" data-tab="historialSuplementos">Suplementos/Medicación</button> <!-- NEW TAB -->
                     <button class="tab-button" data-tab="habitosAlimentacion">Hábitos/Alimentación</button> <!-- NEW TAB -->
+                    <button class="tab-button" data-tab="beforeAfter">Antes/Después</button>
                     <button class="tab-button" data-tab="attendance">Asistencia</button>
                 </div>
             </div>
@@ -987,8 +1034,6 @@
                         </button>
                     </div>
 
-                    
-                    
                     <!-- View Mode -->
                     <div id="viewMode" class="view-mode">
                         <div class="space-y-3">
@@ -1067,6 +1112,13 @@
                             </div>
                         </form>
                     </div>
+
+                    <div class="mt-6 flex justify-end">
+                        <button id="deleteMemberBtn" class="btn-secondary bg-red-600 hover:bg-red-700 text-white">
+                            <i class="fas fa-trash-alt mr-2"></i>
+                            Eliminar Miembro
+                        </button>
+                    </div>
                 </div>
             </div>
 
@@ -1085,6 +1137,28 @@
                     <div id="tallasRopaHistory">
                         <!-- Dynamic content -->
                     </div>
+                </div>
+            </div>
+
+            <div id="beforeAfterTab" class="tab-content" style="display: none;">
+                <div class="measurement-section">
+                    <h4 class="text-lg font-semibold text-white mb-4">Fotos Antes y Después</h4>
+                    <form id="beforeAfterForm">
+                        <input type="hidden" class="currentMemberNfcId" />
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-white mb-2">Foto Antes</label>
+                                <input type="file" id="beforeImage" accept="image/*" class="input-field" />
+                                <img id="beforePreview" src="" alt="Antes" class="mt-2 rounded-lg w-full max-h-48 object-contain" style="display:none;" />
+                            </div>
+                            <div>
+                                <label class="block text-white mb-2">Foto Después</label>
+                                <input type="file" id="afterImage" accept="image/*" class="input-field" />
+                                <img id="afterPreview" src="" alt="Después" class="mt-2 rounded-lg w-full max-h-48 object-contain" style="display:none;" />
+                            </div>
+                            <button type="submit" class="btn-primary mt-4">Guardar Fotos</button>
+                        </div>
+                    </form>
                 </div>
             </div>
 
@@ -1266,6 +1340,73 @@
         </div>
     </div>
 
+    <div id="purchasesPage" class="page p-4">
+                <div class="flex items-center justify-between mb-6">
+                    <h2 class="text-2xl font-bold text-white">Compras</h2>
+                <div class="flex space-x-2">
+                    <button id="registerPurchaseBtn" class="btn-secondary btn-small"><i class="fas fa-plus mr-1"></i> Registrar Compra</button>
+                    <button id="raffleBtn" class="btn-secondary btn-small"><i class="fas fa-gift mr-1"></i> Sorteo</button>
+                </div>
+            </div>
+        <div id="raffleWinnerBanner" class="mb-4"></div>
+        <div id="purchasesList" class="space-y-3"></div>
+    </div>
+
+    <div id="settingsPage" class="page p-4">
+        <h2 class="text-2xl font-bold text-white mb-6">Configuración</h2>
+        <div class="card p-4 mb-4">
+            <div class="flex items-center justify-between mb-4">
+                <span class="font-semibold text-white">Modo Oscuro/Claro</span>
+                <label class="flex items-center cursor-pointer">
+                    <input type="checkbox" id="themeToggle" class="hidden">
+                    <span class="w-10 h-6 flex items-center bg-gray-300 rounded-full p-1 duration-300 ease-in-out" id="themeSwitchBg">
+                        <span class="bg-white w-4 h-4 rounded-full shadow-md transform duration-300 ease-in-out" id="themeSwitchDot"></span>
+                    </span>
+                </label>
+            </div>
+            <button id="exportBtnSettings" class="btn-secondary mb-3">
+                <i class="fas fa-download mr-2"></i>
+                Exportar Datos
+            </button>
+            <input type="file" id="importFileInput" accept=".json" style="display:none;">
+            <button id="importBtnSettings" class="btn-secondary mb-3">
+                <i class="fas fa-upload mr-2"></i>
+                Importar Datos
+            </button>
+            <button id="resetBtnSettings" class="btn-secondary bg-red-600 hover:bg-red-700 border-none text-white">
+                <i class="fas fa-trash-alt mr-2"></i>
+                Resetear Todo
+            </button>
+        </div>
+    </div>
+
+
+    <div id="purchaseModal" class="modal">
+        <div class="modal-content">
+            <div class="flex items-center justify-between mb-6">
+                <h3 class="text-xl font-semibold text-white">Registrar Compra</h3>
+                <button id="closePurchaseModal" class="text-gray-400 hover:text-white">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            <div class="space-y-4">
+                <button id="scanPurchaseNfcBtn" class="btn-primary">
+                    <i class="fas fa-wifi mr-2"></i>
+                    Escanear NFC
+                </button>
+                <div class="text-center text-gray-400 text-sm">— o —</div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-300 mb-2">ID del miembro:</label>
+                    <input type="text" id="manualPurchaseMemberId" class="input-field" placeholder="Nombre, email, teléfono o ID">
+                </div>
+                <button id="submitManualPurchase" class="btn-secondary">
+                    <i class="fas fa-check mr-2"></i>
+                    Registrar Compra
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- Top Notification/Snackbar -->
     <div id="snackbar" class="snackbar">
         <i class="fas fa-check-circle mr-2"></i>
@@ -1309,6 +1450,11 @@
                         break;
                 }
             }
+        }
+
+        function getTodayKey() {
+            const d = new Date();
+            return d.getFullYear() + '-' + (d.getMonth()+1).toString().padStart(2,'0') + '-' + d.getDate().toString().padStart(2,'0');
         }
 
         // Show snackbar with haptic feedback at TOP
@@ -1698,6 +1844,24 @@
                     attendanceHistory.innerHTML = '<p class="text-gray-400 text-center py-8">Sin registros de asistencia</p>';
                 }
             }
+
+            // Before/After images
+            const beforePreview = document.getElementById('beforePreview');
+            const afterPreview = document.getElementById('afterPreview');
+            if (beforePreview && member.beforeAfter && member.beforeAfter.before) {
+                beforePreview.src = member.beforeAfter.before;
+                beforePreview.style.display = 'block';
+            } else if (beforePreview) {
+                beforePreview.src = '';
+                beforePreview.style.display = 'none';
+            }
+            if (afterPreview && member.beforeAfter && member.beforeAfter.after) {
+                afterPreview.src = member.beforeAfter.after;
+                afterPreview.style.display = 'block';
+            } else if (afterPreview) {
+                afterPreview.src = '';
+                afterPreview.style.display = 'none';
+            }
         }
 
         // Toggle edit mode
@@ -1801,6 +1965,12 @@
                         
                         if (page === 'members') {
                             renderMembersList();
+                        }
+                        if (page === 'purchases') {
+                            renderPurchasesList();
+                        }
+                        if (page === 'settings') {
+                            // No extra render needed, but you can add logic here if needed
                         }
                     }
                 });
@@ -1927,7 +2097,7 @@
 
             // --- Update populateMemberDetails to load these fields as well ---
 
-// Replace the override for populateMemberDetails with:
+            // Replace the override for populateMemberDetails with:
 
             const originalPopulateMemberDetails2 = populateMemberDetails;
             populateMemberDetails = function(member) {
@@ -2420,6 +2590,266 @@
             updateStats();
             updateMemberSelect();
             renderMembersList();
+
+            // Before/After image preview
+                function previewImage(input, previewId) {
+                    const file = input.files[0];
+                    const preview = document.getElementById(previewId);
+                    if (file && preview) {
+                        const reader = new FileReader();
+                        reader.onload = e => {
+                            preview.src = e.target.result;
+                            preview.style.display = 'block';
+                        };
+                        reader.readAsDataURL(file);
+                    } else if (preview) {
+                        preview.src = '';
+                        preview.style.display = 'none';
+                    }
+                }
+
+                document.getElementById('beforeImage').addEventListener('change', function() {
+                    previewImage(this, 'beforePreview');
+                });
+                document.getElementById('afterImage').addEventListener('change', function() {
+                    previewImage(this, 'afterPreview');
+                });
+
+                // Save before/after images as Base64 (for demo; for production, upload to a host and save the URL)
+                document.getElementById('beforeAfterForm').addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    const nfcId = document.querySelector('.currentMemberNfcId')?.value;
+                    const member = members.find(m => m.nfcId === nfcId);
+                    if (!member) return;
+
+                    const beforeFile = document.getElementById('beforeImage').files[0];
+                    const afterFile = document.getElementById('afterImage').files[0];
+
+                    const saveImages = (beforeBase64, afterBase64) => {
+                        member.beforeAfter = {
+                            before: beforeBase64,
+                            after: afterBase64
+                        };
+                        saveMembers();
+                        showSnackbar('Fotos guardadas');
+                    };
+
+                    // Convert images to Base64
+                    const toBase64 = file => new Promise((resolve, reject) => {
+                        if (!file) return resolve('');
+                        const reader = new FileReader();
+                        reader.onload = e => resolve(e.target.result);
+                        reader.onerror = reject;
+                        reader.readAsDataURL(file);
+                    });
+
+                    Promise.all([toBase64(beforeFile), toBase64(afterFile)]).then(([beforeBase64, afterBase64]) => {
+                        saveImages(beforeBase64, afterBase64);
+                    });
+                });
+
+                // Purchases data structure
+                if (!window.purchases) window.purchases = []; // [{ nfcId, name, points }]
+
+                // Navigation: show purchases page
+                document.querySelector('.nav-item[data-page="purchases"]').addEventListener('click', () => {
+                    renderPurchasesList();
+                });
+
+                // Register Purchase button
+                document.getElementById('registerPurchaseBtn').addEventListener('click', () => {
+                    document.getElementById('purchaseModal').style.display = 'flex';
+                });
+
+                // Close Purchase Modal
+                document.getElementById('closePurchaseModal').addEventListener('click', () => {
+                    document.getElementById('purchaseModal').style.display = 'none';
+                });
+
+                // Scan NFC for purchase
+                document.getElementById('scanPurchaseNfcBtn').addEventListener('click', () => {
+                    startNFCScan((tagId) => {
+                        registerPurchase(tagId);
+                        document.getElementById('purchaseModal').style.display = 'none';
+                    });
+                });
+
+                // Manual purchase registration
+                document.getElementById('submitManualPurchase').addEventListener('click', () => {
+                    const val = document.getElementById('manualPurchaseMemberId').value.trim();
+                    let member = members.find(m => m.nfcId === val || m.name.toLowerCase().includes(val.toLowerCase()) || m.email === val || m.phone === val);
+                    if (!member) {
+                        showSnackbar('Miembro no encontrado', 'error');
+                        return;
+                    }
+                    registerPurchase(member.nfcId);
+                    document.getElementById('purchaseModal').style.display = 'none';
+                });
+
+                // Register purchase logic
+                function registerPurchase(nfcId) {
+                    let member = members.find(m => m.nfcId === nfcId);
+                    if (!member) return showSnackbar('Miembro no encontrado', 'error');
+                    if (!member.purchasePoints) member.purchasePoints = 0;
+                    member.purchasePoints++;
+                    // Add to purchases list if not present
+                    if (!window.purchases.some(p => p.nfcId === nfcId)) {
+                        window.purchases.push({ nfcId, name: member.name, points: 1 });
+                    } else {
+                        let p = window.purchases.find(p => p.nfcId === nfcId);
+                        p.points++;
+                    }
+                    saveMembers();
+                    showSnackbar(`Compra registrada para ${member.name}`);
+                    renderPurchasesList(); 
+                }
+
+                // Render purchases list
+                function renderPurchasesList() {
+                    const list = document.getElementById('purchasesList');
+                    const banner = document.getElementById('raffleWinnerBanner');
+                    if (banner) {
+                        const todayKey = getTodayKey();
+                        const winner = localStorage.getItem('raffleWinner_' + todayKey);
+                        if (winner) {
+                            const [yyyy, mm, dd] = todayKey.split('-');
+                            banner.innerHTML = `<div class="bg-yellow-400 text-[#140059] font-bold text-center rounded-lg py-2 shadow mb-2">
+                                Ganador del sorteo (${dd}/${mm}/${yyyy}): <span class="underline">${winner}</span>
+                            </div>`;
+                        } else {
+                            banner.innerHTML = '';
+                        }
+                    }
+                    if (!list) return;
+                    list.innerHTML = '';
+                    if (!window.purchases.length) {
+                        list.innerHTML = '<div class="text-gray-400 text-center py-8">No hay compras registradas</div>';
+                        return;
+                    }
+                    window.purchases.forEach(p => {
+                        list.innerHTML += `
+                            <div class="member-item flex items-center justify-between">
+                                <div>
+                                    <span class="font-semibold text-white">${p.name}</span>
+                                    <span class="ml-2 text-yellow-400 font-bold">${p.points} punto${p.points > 1 ? 's' : ''}</span>
+                                </div>
+                            </div>
+                        `;
+                    });
+                }
+
+                // Raffle button
+                document.getElementById('raffleBtn').addEventListener('click', () => {
+                    if (!window.purchases.length) {
+                        showSnackbar('No hay participantes para el sorteo', 'warning');
+                        return;
+                    }
+                    // Build weighted array
+                    let weighted = [];
+                    window.purchases.forEach(p => {
+                        for (let i = 0; i < p.points; i++) weighted.push(p.name);
+                    });
+                    const winner = weighted[Math.floor(Math.random() * weighted.length)];
+                    showSnackbar(`¡Ganador: ${winner}! 🎉`, 'success');
+                    // Store winner in localStorage with today's date
+                    const todayKey = getTodayKey();
+                    localStorage.setItem('raffleWinner_' + todayKey, winner);
+                    // Clear purchases and update list/banner
+                    window.purchases = [];
+                    renderPurchasesList();
+                });
+
+            // Theme toggle
+            const themeToggle = document.getElementById('themeToggle');
+            const themeSwitchBg = document.getElementById('themeSwitchBg');
+            const themeSwitchDot = document.getElementById('themeSwitchDot');
+            if (themeToggle) {
+                // Load theme from localStorage
+                if (localStorage.getItem('theme') === 'light') {
+                    document.body.classList.add('light-mode');
+                    themeToggle.checked = true;
+                    themeSwitchBg.classList.add('bg-yellow-300');
+                    themeSwitchDot.classList.add('translate-x-4');
+                }
+                themeToggle.addEventListener('change', function() {
+                    if (this.checked) {
+                        document.body.classList.add('light-mode');
+                        localStorage.setItem('theme', 'light');
+                        themeSwitchBg.classList.add('bg-yellow-300');
+                        themeSwitchDot.classList.add('translate-x-4');
+                    } else {
+                        document.body.classList.remove('light-mode');
+                        localStorage.setItem('theme', 'dark');
+                        themeSwitchBg.classList.remove('bg-yellow-300');
+                        themeSwitchDot.classList.remove('translate-x-4');
+                    }
+                });
+            }
+
+            // Export from settings
+            document.getElementById('exportBtnSettings').addEventListener('click', () => {
+                hapticFeedback('medium');
+                const data = JSON.stringify(members, null, 2);
+                const blob = new Blob([data], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'gimnasio_miembros_export_' + new Date().toISOString().split('T')[0] + '.json';
+                a.click();
+                URL.revokeObjectURL(url);
+                showSnackbar('¡Datos exportados exitosamente!');
+            });
+
+            // Import from settings
+            document.getElementById('importBtnSettings').addEventListener('click', () => {
+                document.getElementById('importFileInput').click();
+            });
+            document.getElementById('importFileInput').addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (!file) return;
+                const reader = new FileReader();
+                reader.onload = function(evt) {
+                    try {
+                        const imported = JSON.parse(evt.target.result);
+                        if (Array.isArray(imported)) {
+                            members = imported;
+                            saveMembers();
+                            showSnackbar('¡Datos importados exitosamente!');
+                        } else {
+                            showSnackbar('Archivo inválido', 'error');
+                        }
+                    } catch {
+                        showSnackbar('Archivo inválido', 'error');
+                    }
+                };
+                reader.readAsText(file);
+            });
+
+            // Reset with confirmation
+            document.getElementById('resetBtnSettings').addEventListener('click', () => {
+                if (confirm('¿Estás seguro de que quieres resetear todos los datos? Esta acción no se puede deshacer.')) {
+                    if (confirm('¿Seguro seguro? ¡Esto eliminará todos los miembros y datos!')) {
+                        localStorage.removeItem(STORAGE_KEY);
+                        members = [];
+                        saveMembers();
+                        showSnackbar('¡Datos reseteados!');
+                    }
+                }
+            });
+
+            document.getElementById('deleteMemberBtn').addEventListener('click', function() {
+                const nfcId = document.getElementById('editMemberId').value;
+                const member = members.find(m => m.nfcId === nfcId);
+                if (!member) return;
+                if (confirm(`¿Seguro que deseas eliminar a ${member.name}? Esta acción no se puede deshacer.`)) {
+                    // Remove member from array
+                    members = members.filter(m => m.nfcId !== nfcId);
+                    saveMembers();
+                    showSnackbar('Miembro eliminado');
+                    document.getElementById('memberDetailsModal').style.display = 'none';
+                    renderMembersList();
+                }
+            });
         });
 
         // Global functions for onclick handlers
